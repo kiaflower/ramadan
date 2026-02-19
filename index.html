@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notre Espace Ramadan 🌙</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Nunito:wght@300;400;600;700&display=swap');
+
+:root {
+  --night: #0d1117;
+  --deep: #161b22;
+  --card: #1c2333;
+  --border: #30363d;
+  --gold: #d4a843;
+  --gold-light: #f0c96e;
+  --teal: #2dd4bf;
+  --rose: #fb7185;
+  --text: #e6edf3;
+  --muted: #8b949e;
+  --green: #3fb950;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--night);
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Stars background */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 10% 20%, rgba(212,168,67,0.6) 0%, transparent 100%),
+    radial-gradient(1px 1px at 25% 60%, rgba(255,255,255,0.4) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 50% 10%, rgba(212,168,67,0.5) 0%, transparent 100%),
+    radial-gradient(1px 1px at 70% 40%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 85% 15%, rgba(212,168,67,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 90% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1px 1px at 15% 85%, rgba(255,255,255,0.3) 0%, transparent 100%),
+    radial-gradient(1.5px 1.5px at 40% 75%, rgba(212,168,67,0.4) 0%, transparent 100%),
+    radial-gradient(1px 1px at 60% 90%, rgba(255,255,255,0.2) 0%, transparent 100%),
+    radial-gradient(1px 1px at 35% 35%, rgba(255,255,255,0.3) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* LOGIN */
+#loginScreen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.login-box {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 60px rgba(212,168,67,0.08);
+}
+
+.moon-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  display: block;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.login-box h1 {
+  font-family: 'Amiri', serif;
+  font-size: 1.8rem;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+
+.arabic-sub {
+  font-family: 'Amiri', serif;
+  font-size: 1.2rem;
+  color: var(--muted);
+  margin-bottom: 32px;
+  direction: rtl;
+}
+
+.input-group {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--muted);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.input-group input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus { border-color: var(--gold); }
+
+.btn-gold {
+  width: 100%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border: none;
+  border-radius: 12px;
+  padding: 14px;
+  color: var(--night);
+  font-family: 'Nunito', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-gold:hover { opacity: 0.9; transform: translateY(-1px); }
+.btn-gold:active { transform: translateY(0); }
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* MAIN APP */
+#app {
+  display: none;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* TOP BAR */
+.topbar {
+  background: rgba(22, 27, 34, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-title {
+  font-family: 'Amiri', serif;
+  font-size: 1.2rem;
+  color: var(--gold);
+}
+
+.online-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.online-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.user-chip {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.78rem;
+  color: var(--gold);
+}
+
+/* NAV */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0; right: 0;
+  background: rgba(22, 27, 34, 0.97);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 4px;
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.62rem;
+  cursor: pointer;
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-btn.active { color: var(--gold); }
+.nav-btn .nav-icon { font-size: 1.3rem; }
+
+.badge {
+  position: absolute;
+  top: 6px;
+  right: calc(50% - 18px);
+  background: var(--rose);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  border-radius: 10px;
+  padding: 1px 5px;
+  min-width: 16px;
+  text-align: center;
+}
+
+/* CONTENT */
+.content {
+  padding: 20px 16px 90px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* SECTIONS */
+.section { display: none; }
+.section.active { display: block; animation: fadeUp 0.3s ease; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* CARDS */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+/* HOME */
+.greeting {
+  text-align: center;
+  padding: 24px 0 8px;
+  margin-bottom: 8px;
+}
+
+.greeting-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 2rem;
+  color: var(--gold);
+  direction: rtl;
+  line-height: 1.4;
+  margin-bottom: 4px;
+}
+
+.greeting-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.progress-section {
+  margin-bottom: 8px;
+}
+
+.progress-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.85rem;
+}
+
+.progress-track {
+  height: 6px;
+  background: var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 10px;
+  transition: width 0.5s ease;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.stat-box {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 10px;
+  text-align: center;
+}
+
+.stat-num {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--gold);
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.68rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.verset-box {
+  background: linear-gradient(135deg, rgba(212,168,67,0.08), rgba(45,212,191,0.05));
+  border: 1px solid rgba(212,168,67,0.2);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.verset-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 1.4rem;
+  color: var(--gold-light);
+  direction: rtl;
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.verset-fr {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.6;
+  font-style: italic;
+}
+
+.verset-ref {
+  font-size: 0.72rem;
+  color: var(--gold);
+  margin-top: 8px;
+}
+
+/* QUIZ */
+.quiz-intro {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.quiz-icon { font-size: 3rem; margin-bottom: 16px; }
+
+.quiz-intro h2 {
+  font-family: 'Amiri', serif;
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.quiz-intro p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border: none;
+  border-radius: 12px;
+  padding: 14px 32px;
+  color: var(--night);
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+
+.quiz-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 28px 24px;
+  margin-bottom: 16px;
+}
+
+.quiz-progress-text {
+  font-size: 0.75rem;
+  color: var(--muted);
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.quiz-question {
+  font-size: 1.05rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  color: var(--text);
+}
+
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-option {
+  background: var(--deep);
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: left;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.quiz-option:hover { border-color: var(--gold); background: rgba(212,168,67,0.05); }
+.quiz-option.correct { border-color: var(--green); background: rgba(63,185,80,0.1); color: var(--green); }
+.quiz-option.wrong { border-color: var(--rose); background: rgba(251,113,133,0.1); color: var(--rose); }
+
+.quiz-result {
+  text-align: center;
+  padding: 32px 0;
+}
+
+.quiz-result .score {
+  font-size: 3.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.quiz-result p { color: var(--muted); margin-bottom: 24px; }
+
+/* HADITHS */
+.hadith-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.hadith-card:hover { border-color: var(--gold); }
+
+.hadith-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 1.2rem;
+  direction: rtl;
+  color: var(--gold-light);
+  line-height: 1.8;
+  margin-bottom: 12px;
+}
+
+.hadith-fr {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.hadith-source {
+  font-size: 0.72rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hadith-source::before {
+  content: '';
+  width: 20px;
+  height: 1px;
+  background: var(--border);
+  display: inline-block;
+}
+
+/* DOUAAS */
+.doua-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 14px;
+}
+
+.doua-title {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--teal);
+  margin-bottom: 12px;
+}
+
+.doua-arabic {
+  font-family: 'Amiri', serif;
+  font-size: 1.3rem;
+  direction: rtl;
+  color: var(--gold-light);
+  line-height: 1.8;
+  margin-bottom: 10px;
+  text-align: right;
+}
+
+.doua-phonetic {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.doua-fr {
+  font-size: 0.85rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+/* ZIKR */
+.zikr-main {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.zikr-name-ar {
+  font-family: 'Amiri', serif;
+  font-size: 2.5rem;
+  color: var(--gold);
+  direction: rtl;
+  margin-bottom: 4px;
+}
+
+.zikr-name-fr {
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin-bottom: 32px;
+}
+
+.zikr-counter {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(212,168,67,0.15), rgba(212,168,67,0.05));
+  border: 2px solid rgba(212,168,67,0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 32px;
+  cursor: pointer;
+  transition: all 0.1s;
+  user-select: none;
+  box-shadow: 0 0 30px rgba(212,168,67,0.1);
+}
+
+.zikr-counter:active {
+  transform: scale(0.95);
+  background: linear-gradient(135deg, rgba(212,168,67,0.25), rgba(212,168,67,0.1));
+}
+
+.zikr-count {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.zikr-label {
+  font-size: 0.72rem;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+.zikr-progress {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.zikr-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.zikr-tab {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.8rem;
+  color: var(--muted);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.zikr-tab.active {
+  background: rgba(212,168,67,0.15);
+  border-color: var(--gold);
+  color: var(--gold);
+}
+
+.btn-reset {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 24px;
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-reset:hover { border-color: var(--rose); color: var(--rose); }
+
+/* CHAT */
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 120px);
+  padding: 0;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.chat-messages::-webkit-scrollbar-track { background: transparent; }
+.chat-messages::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.msg {
+  max-width: 78%;
+  animation: fadeUp 0.2s ease;
+}
+
+.msg.mine { align-self: flex-end; }
+.msg.theirs { align-self: flex-start; }
+
+.msg-bubble {
+  border-radius: 18px;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.msg.mine .msg-bubble {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: var(--night);
+  border-bottom-right-radius: 4px;
+}
+
+.msg.theirs .msg-bubble {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+}
+
+.msg-meta {
+  font-size: 0.65rem;
+  color: var(--muted);
+  margin-top: 4px;
+  padding: 0 4px;
+}
+
+.msg.mine .msg-meta { text-align: right; }
+
+.chat-input-bar {
+  padding: 12px 16px;
+  background: rgba(22,27,34,0.97);
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 10px 16px;
+  color: var(--text);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  resize: none;
+  max-height: 100px;
+  transition: border-color 0.2s;
+}
+
+.chat-input:focus { border-color: var(--gold); }
+
+.send-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  border: none;
+  color: var(--night);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: opacity 0.2s;
+}
+
+.send-btn:hover { opacity: 0.9; }
+
+.chat-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--muted);
+  text-align: center;
+  gap: 12px;
+  font-size: 0.9rem;
+}
+
+.chat-empty .icon { font-size: 2.5rem; }
+
+/* FIREBASE CONFIG MODAL */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal {
+  background: var(--deep);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 28px;
+  max-width: 480px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+}
+
+.modal h3 {
+  font-family: 'Amiri', serif;
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.modal p {
+  color: var(--muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.modal .input-group { margin-bottom: 12px; }
+
+.modal .input-group input {
+  font-size: 0.82rem;
+  padding: 10px 14px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.btn-secondary {
+  flex: 1;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  color: var(--muted);
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.code-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font-size: 0.75rem;
+  color: var(--teal);
+  font-family: monospace;
+  margin: 12px 0;
+  line-height: 1.6;
+  overflow-x: auto;
+}
+
+.step-list {
+  list-style: none;
+  counter-reset: steps;
+}
+
+.step-list li {
+  counter-increment: steps;
+  display: flex;
+  gap: 12px;
+  margin-bottom: 12px;
+  font-size: 0.84rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.step-list li::before {
+  content: counter(steps);
+  background: rgba(212,168,67,0.15);
+  color: var(--gold);
+  border-radius: 50%;
+  min-width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.firebase-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+.firebase-status.connected {
+  background: rgba(63,185,80,0.1);
+  border: 1px solid rgba(63,185,80,0.3);
+  color: var(--green);
+}
+
+.firebase-status.disconnected {
+  background: rgba(251,113,133,0.1);
+  border: 1px solid rgba(251,113,133,0.3);
+  color: var(--rose);
+}
+
+/* Section titles */
+.section-title {
+  font-family: 'Amiri', serif;
+  font-size: 1.5rem;
+  color: var(--gold);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 20px;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: all 0.3s;
+  z-index: 150;
+  white-space: nowrap;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="loginScreen">
+  <div class="login-box">
+    <span class="moon-icon">🌙</span>
+    <h1>Notre Espace Ramadan</h1>
+    <p class="arabic-sub">رمضان كريم</p>
+
+    <div class="input-group">
+      <label>Ton prénom</label>
+      <input type="text" id="loginName" placeholder="Ex: Yasmine" maxlength="20">
+    </div>
+    <div class="input-group">
+      <label>Code de l'espace (partagé avec ton/ta partenaire)</label>
+      <input type="text" id="loginCode" placeholder="Ex: ramadan2025" maxlength="30">
+    </div>
+    <button class="btn-gold" onclick="login()">Entrer dans l'espace ✨</button>
+    <p style="font-size:0.72rem;color:var(--muted);margin-top:16px;line-height:1.6">
+      Utilise le même code que ton partenaire pour partager le même espace. Le chat nécessite Firebase (configurable dans le chat).
+    </p>
+  </div>
+</div>
+
+<!-- FIREBASE CONFIG MODAL -->
+<div class="modal-overlay" id="firebaseModal" style="display:none">
+  <div class="modal">
+    <h3>🔥 Configurer Firebase</h3>
+    <p>Pour activer le chat en temps réel, tu dois créer un projet Firebase gratuit. Suis ces étapes :</p>
+
+    <ol class="step-list">
+      <li>Va sur <strong>console.firebase.google.com</strong> et connecte-toi avec Google</li>
+      <li>Crée un projet → nomme-le <strong>ramadan-space</strong></li>
+      <li>Dans le projet → <strong>Realtime Database</strong> → Créer une base de données → Mode test</li>
+      <li>Va dans ⚙️ Paramètres du projet → Tes applications → Ajouter une appli Web (</>)</li>
+      <li>Copie les valeurs de config ci-dessous dans les champs</li>
+    </ol>
+
+    <div id="fbStatus" class="firebase-status disconnected">
+      ● Chat non connecté — mode local uniquement
+    </div>
+
+    <div class="input-group"><label>apiKey</label><input type="text" id="fb-apiKey" placeholder="AIzaSy..."></div>
+    <div class="input-group"><label>authDomain</label><input type="text" id="fb-authDomain" placeholder="mon-projet.firebaseapp.com"></div>
+    <div class="input-group"><label>databaseURL</label><input type="text" id="fb-databaseURL" placeholder="https://mon-projet-default-rtdb.firebaseio.com"></div>
+    <div class="input-group"><label>projectId</label><input type="text" id="fb-projectId" placeholder="mon-projet"></div>
+
+    <div class="modal-actions">
+      <button class="btn-secondary" onclick="closeFirebaseModal()">Pas maintenant</button>
+      <button class="btn-gold" style="flex:1;margin-top:0" onclick="saveFirebaseConfig()">Connecter 🔥</button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="app">
+  <div class="topbar">
+    <div class="topbar-title">🌙 Ramadan</div>
+    <div class="online-badge">
+      <div class="online-dot"></div>
+      <span id="onlineCount">1 en ligne</span>
+    </div>
+    <div class="user-chip" id="userChip">—</div>
+  </div>
+
+  <div class="content">
+
+    <!-- HOME -->
+    <div class="section active" id="sec-home">
+      <div class="greeting">
+        <div class="greeting-arabic">رمضان كريم</div>
+        <div class="greeting-sub" id="homeGreeting">Bienvenue dans votre espace</div>
+      </div>
+
+      <div class="verset-box">
+        <div class="verset-arabic">شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ</div>
+        <div class="verset-fr">« Le mois de Ramadan est celui durant lequel le Coran fut révélé comme guide pour les hommes »</div>
+        <div class="verset-ref">— Sourate Al-Baqara, 2:185</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Votre progression</div>
+        <div class="stat-grid">
+          <div class="stat-box">
+            <span class="stat-num" id="statQuiz">0</span>
+            <div class="stat-label">Quiz réussis</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num" id="statHadiths">0</span>
+            <div class="stat-label">Hadiths lus</div>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num" id="statZikr">0</span>
+            <div class="stat-label">Dhikr total</div>
+          </div>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="globalProgress" style="width:0%"></div>
+        </div>
+        <div style="font-size:0.78rem;color:var(--muted);text-align:right">Progression spirituelle</div>
+      </div>
+
+      <div class="card" style="background:linear-gradient(135deg,rgba(45,212,191,0.08),rgba(212,168,67,0.05));border-color:rgba(45,212,191,0.2)">
+        <div style="font-size:0.78rem;color:var(--teal);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.08em">💬 Espace partagé</div>
+        <div style="font-size:0.88rem;line-height:1.6">Vous partagez cet espace avec le code <strong id="spaceCodeDisplay" style="color:var(--gold)">—</strong>. Envoyez ce code à votre partenaire pour vous connecter.</div>
+      </div>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="section" id="sec-quiz">
+      <div class="section-title">🎯 Quiz Islam</div>
+      <div id="quizIntro" class="quiz-intro">
+        <div class="quiz-icon">🎯</div>
+        <h2>Quiz Ramadan</h2>
+        <p>Testez vos connaissances islamiques avec 10 questions aléatoires. Bonne chance !</p>
+        <button class="btn-primary" onclick="startQuiz()">Commencer le quiz</button>
+      </div>
+      <div id="quizGame" style="display:none">
+        <div class="quiz-card">
+          <div class="quiz-progress-text">
+            <span id="qNum">Question 1 / 10</span>
+            <span id="qScore" style="color:var(--gold)">Score: 0</span>
+          </div>
+          <div class="progress-track" style="margin-bottom:20px">
+            <div class="progress-fill" id="quizProgressBar" style="width:10%"></div>
+          </div>
+          <div class="quiz-question" id="questionText"></div>
+          <div class="quiz-options" id="quizOptions"></div>
+        </div>
+      </div>
+      <div id="quizResult" style="display:none">
+        <div class="card quiz-result">
+          <div class="score" id="finalScore"></div>
+          <p id="resultMsg"></p>
+          <button class="btn-primary" onclick="startQuiz()">Rejouer</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- HADITHS -->
+    <div class="section" id="sec-hadiths">
+      <div class="section-title">📖 Hadiths du Ramadan</div>
+      <div id="hadithsList"></div>
+    </div>
+
+    <!-- DOUAAS -->
+    <div class="section" id="sec-douaas">
+      <div class="section-title">🤲 Douaas essentielles</div>
+      <div id="douaasList"></div>
+    </div>
+
+    <!-- ZIKR -->
+    <div class="section" id="sec-zikr">
+      <div class="section-title">📿 Dhikr</div>
+      <div class="zikr-tabs" id="zikrTabs"></div>
+      <div class="zikr-main">
+        <div class="zikr-name-ar" id="zikrArabic">سُبْحَانَ اللهِ</div>
+        <div class="zikr-name-fr" id="zikrFr">Gloire à Allah</div>
+        <div class="zikr-counter" onclick="incrementZikr()" id="zikrBtn">
+          <div class="zikr-count" id="zikrCount">0</div>
+          <div class="zikr-label">Appuie pour compter</div>
+        </div>
+        <div class="zikr-progress" id="zikrProgress">0 / 33</div>
+        <button class="btn-reset" onclick="resetZikr()">↩ Réinitialiser</button>
+      </div>
+    </div>
+
+    <!-- CHAT -->
+    <div class="section" id="sec-chat">
+      <div id="chatFirebaseWarning" class="card" style="margin-bottom:16px;background:rgba(251,113,133,0.08);border-color:rgba(251,113,133,0.2);display:none">
+        <div style="font-size:0.85rem;line-height:1.6;margin-bottom:12px">⚠️ Le chat en temps réel nécessite Firebase. Sans configuration, les messages ne sont visibles que par toi.</div>
+        <button class="btn-primary" style="font-size:0.82rem;padding:10px 20px" onclick="openFirebaseModal()">Configurer Firebase 🔥</button>
+      </div>
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMessages">
+          <div class="chat-empty" id="chatEmpty">
+            <div class="icon">💬</div>
+            <div>Aucun message pour l'instant.<br>Dis salam à ton/ta partenaire !</div>
+          </div>
+        </div>
+        <div class="chat-input-bar">
+          <textarea class="chat-input" id="chatInput" placeholder="Écris un message…" rows="1" onkeydown="chatKeydown(event)"></textarea>
+          <button class="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" onclick="showSection('home', this)">
+      <span class="nav-icon">🏠</span>Accueil
+    </button>
+    <button class="nav-btn" onclick="showSection('quiz', this)">
+      <span class="nav-icon">🎯</span>Quiz
+    </button>
+    <button class="nav-btn" onclick="showSection('hadiths', this)">
+      <span class="nav-icon">📖</span>Hadiths
+    </button>
+    <button class="nav-btn" onclick="showSection('douaas', this)">
+      <span class="nav-icon">🤲</span>Douaas
+    </button>
+    <button class="nav-btn" onclick="showSection('zikr', this)">
+      <span class="nav-icon">📿</span>Dhikr
+    </button>
+    <button class="nav-btn" onclick="showSection('chat', this)" id="chatNavBtn">
+      <span class="nav-icon">💬</span>Chat
+    </button>
+  </nav>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ================== DATA ==================
+
+const QUIZ_QUESTIONS = [
+  { q: "Combien de fois par jour un musulman doit-il prier ?", options: ["3 fois", "5 fois", "7 fois", "4 fois"], a: 1 },
+  { q: "Quelle est la première sourate du Coran ?", options: ["Al-Baqara", "Al-Ikhlas", "Al-Fatiha", "Al-Nas"], a: 2 },
+  { q: "Quel est le jeûne du mois de Ramadan appelé en arabe ?", options: ["Salat", "Sawm", "Zakat", "Hajj"], a: 1 },
+  { q: "Quelle est la direction vers laquelle les musulmans prient ?", options: ["Jérusalem", "Médine", "La Mecque", "Le Caire"], a: 2 },
+  { q: "Combien de piliers compte l'Islam ?", options: ["4", "5", "6", "7"], a: 1 },
+  { q: "Quel ange a révélé le Coran au Prophète ﷺ ?", options: ["Israfil", "Mikail", "Jibrail", "Izrail"], a: 2 },
+  { q: "Quelle est la nuit la plus sacrée du Ramadan ?", options: ["Laylat al-Qadr", "Laylat al-Miraj", "Laylat al-Bara'a", "Laylat al-Raghaib"], a: 0 },
+  { q: "Que signifie « Inshallah » ?", options: ["Merci à Allah", "Si Allah le veut", "Gloire à Allah", "Allah est grand"], a: 1 },
+  { q: "Quelle est la durée du jeûne de Ramadan ?", options: ["10 jours", "21 jours", "29 ou 30 jours", "40 jours"], a: 2 },
+  { q: "Comment s'appelle le repas avant l'aube pendant le Ramadan ?", options: ["Iftar", "Suhoor", "Tarawih", "Zakat"], a: 1 },
+  { q: "Qu'est-ce que l'Iftar ?", options: ["Le repas de midi", "La prière du soir", "La rupture du jeûne au coucher du soleil", "L'aumône obligatoire"], a: 2 },
+  { q: "Combien de sourates contient le Coran ?", options: ["100", "114", "120", "99"], a: 1 },
+  { q: "Quel est le cinquième pilier de l'Islam ?", options: ["La Zakat", "La Shahada", "Le Hajj", "Le Sawm"], a: 2 },
+  { q: "Que signifie « Alhamdulillah » ?", options: ["Allah est grand", "Louange à Allah", "Si Allah le veut", "Au nom d'Allah"], a: 1 },
+  { q: "Avec quoi est-il sunnah de rompre le jeûne ?", options: ["Eau et pain", "Dattes et eau", "Lait et miel", "Fruits"], a: 1 },
+  { q: "Comment s'appellent les prières surérogatoires du Ramadan ?", options: ["Witr", "Tarawih", "Tahajjud", "Duha"], a: 1 },
+  { q: "Que signifie « Bismillah » ?", options: ["Gloire à Allah", "Au nom d'Allah", "Allah est Un", "Louange à Allah"], a: 1 },
+  { q: "Quelle est la signification de « Ramadan » en arabe ?", options: ["Lune", "Chaleur intense / brûlure", "Paix", "Lumière"], a: 1 },
+  { q: "Quelle est la Zakat al-Fitr ?", options: ["Une prière spéciale", "Une aumône obligatoire à la fin du Ramadan", "Un jeûne supplémentaire", "Une invocation spéciale"], a: 1 },
+  { q: "Que dit le Prophète ﷺ pour commencer les repas ?", options: ["Alhamdulillah", "Bismillah", "Allahu Akbar", "Inshallah"], a: 1 }
+];
+
+const HADITHS = [
+  {
+    ar: "مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا غُفِرَ لَهُ مَا تَقَدَّمَ مِنْ ذَنْبِهِ",
+    fr: "Quiconque jeûne le mois de Ramadan par foi sincère et dans l'espoir de la récompense d'Allah, ses péchés passés lui seront pardonnés.",
+    source: "Bukhari & Muslim"
+  },
+  {
+    ar: "إِذَا جَاءَ رَمَضَانُ فُتِحَتْ أَبْوَابُ الْجَنَّةِ وَغُلِّقَتْ أَبْوَابُ النَّارِ وَصُفِّدَتِ الشَّيَاطِينُ",
+    fr: "Quand arrive le Ramadan, les portes du paradis sont ouvertes, les portes de l'enfer sont fermées et les démons sont enchaînés.",
+    source: "Bukhari & Muslim"
+  },
+  {
+    ar: "الصَّوْمُ جُنَّةٌ",
+    fr: "Le jeûne est un bouclier.",
+    source: "Bukhari"
+  },
+  {
+    ar: "لِلصَّائِمِ فَرْحَتَانِ يَفْرَحُهُمَا إِذَا أَفْطَرَ فَرِحَ بِفِطْرِهِ وَإِذَا لَقِيَ رَبَّهُ فَرِحَ بِصَوْمِهِ",
+    fr: "Pour le jeûneur, il y a deux joies : quand il rompt le jeûne, il se réjouit de sa rupture, et quand il rencontre son Seigneur, il se réjouit de son jeûne.",
+    source: "Bukhari & Muslim"
+  },
+  {
+    ar: "مَنْ لَمْ يَدَعْ قَوْلَ الزُّورِ وَالْعَمَلَ بِهِ فَلَيْسَ لِلَّهِ حَاجَةٌ فِي أَنْ يَدَعَ طَعَامَهُ وَشَرَابَهُ",
+    fr: "Celui qui ne renonce pas au faux témoignage et aux mauvaises actions, Allah n'a que faire qu'il abandonne sa nourriture et sa boisson.",
+    source: "Bukhari"
+  },
+  {
+    ar: "تَسَحَّرُوا فَإِنَّ فِي السَّحُورِ بَرَكَةً",
+    fr: "Prenez le repas du Suhoor car dans le Suhoor il y a une bénédiction.",
+    source: "Bukhari & Muslim"
+  }
+];
+
+const DOUAAS = [
+  {
+    title: "Rupture du jeûne (Iftar)",
+    ar: "اللَّهُمَّ لَكَ صُمْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ",
+    phonetic: "Allahumma laka sumtu wa 'ala rizqika aftartu",
+    fr: "Ô Allah, j'ai jeûné pour Toi et c'est avec Ta provision que je romps le jeûne."
+  },
+  {
+    title: "Repas du Suhoor",
+    ar: "اللَّهُمَّ بَارِكْ لَنَا فِيمَا رَزَقْتَنَا وَقِنَا عَذَابَ النَّارِ",
+    phonetic: "Allahumma barik lana fima razaqtana wa qina 'adhab an-nar",
+    fr: "Ô Allah, bénis ce que Tu nous as accordé comme provision et protège-nous du tourment du feu."
+  },
+  {
+    title: "Laylat al-Qadr",
+    ar: "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
+    phonetic: "Allahumma innaka 'afuwwun tuhibbul-'afwa fa'fu 'anni",
+    fr: "Ô Allah, Tu es Le Pardonneur, Tu aimes le pardon, pardonne-moi."
+  },
+  {
+    title: "Avant de commencer à manger",
+    ar: "بِسْمِ اللهِ",
+    phonetic: "Bismillah",
+    fr: "Au nom d'Allah."
+  },
+  {
+    title: "Après avoir mangé",
+    ar: "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
+    phonetic: "Alhamdulillahil-ladhi at'amana wa saqana wa ja'alana muslimin",
+    fr: "Louange à Allah qui nous a nourris, abreuvés et nous a faits musulmans."
+  },
+  {
+    title: "Invocation du matin",
+    ar: "أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ",
+    phonetic: "Asbahna wa asbahal-mulku lillah, walhamdulillah",
+    fr: "Nous sommes entrés dans le matin, et la royauté appartient à Allah. Louange à Allah."
+  }
+];
+
+const ZIKR_LIST = [
+  { ar: "سُبْحَانَ اللهِ", fr: "Gloire à Allah", target: 33 },
+  { ar: "الْحَمْدُ لِلَّهِ", fr: "Louange à Allah", target: 33 },
+  { ar: "اللهُ أَكْبَرُ", fr: "Allah est le Plus Grand", target: 33 },
+  { ar: "لَا إِلَهَ إِلَّا اللهُ", fr: "Pas de divinité sauf Allah", target: 100 },
+  { ar: "أَسْتَغْفِرُ اللهَ", fr: "Je demande pardon à Allah", target: 100 }
+];
+
+// ================== STATE ==================
+let userName = '';
+let spaceCode = '';
+let currentZikr = 0;
+let zikrCounts = [0, 0, 0, 0, 0];
+let quizQuestions = [];
+let quizIndex = 0;
+let quizScore = 0;
+let stats = { quiz: 0, hadiths: 0, zikr: 0 };
+let firebaseApp = null;
+let firebaseDB = null;
+let messages = [];
+let hadithsRead = new Set();
+
+// ================== LOGIN ==================
+function login() {
+  const name = document.getElementById('loginName').value.trim();
+  const code = document.getElementById('loginCode').value.trim();
+  if (!name) { showToast('Entre ton prénom 🌙'); return; }
+  if (!code) { showToast('Entre un code d\'espace'); return; }
+
+  userName = name;
+  spaceCode = code;
+
+  // Save to localStorage
+  localStorage.setItem('rmd_name', name);
+  localStorage.setItem('rmd_code', code);
+
+  // Load saved stats
+  const saved = localStorage.getItem('rmd_stats_' + code);
+  if (saved) stats = JSON.parse(saved);
+
+  const savedZikr = localStorage.getItem('rmd_zikr_' + code);
+  if (savedZikr) zikrCounts = JSON.parse(savedZikr);
+
+  initApp();
+}
+
+function initApp() {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  document.getElementById('userChip').textContent = userName;
+  document.getElementById('homeGreeting').textContent = `Ahlan wa Sahlan, ${userName} 🌙`;
+  document.getElementById('spaceCodeDisplay').textContent = spaceCode;
+
+  updateStats();
+  renderHadiths();
+  renderDouaas();
+  renderZikrTabs();
+  setZikr(0);
+  checkFirebaseConfig();
+
+  // Try to load firebase config
+  const fbConfig = localStorage.getItem('rmd_fb_config');
+  if (fbConfig) {
+    try {
+      const config = JSON.parse(fbConfig);
+      initFirebase(config);
+    } catch(e) {}
+  }
+}
+
+// ================== SECTIONS ==================
+function showSection(name, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('sec-' + name).classList.add('active');
+  btn.classList.add('active');
+
+  if (name === 'chat') {
+    checkFirebaseConfig();
+    setTimeout(() => scrollChatToBottom(), 100);
+  }
+}
+
+// ================== STATS ==================
+function updateStats() {
+  document.getElementById('statQuiz').textContent = stats.quiz;
+  document.getElementById('statHadiths').textContent = stats.hadiths;
+  document.getElementById('statZikr').textContent = stats.zikr;
+  const progress = Math.min(100, (stats.quiz * 5 + stats.hadiths * 3 + Math.floor(stats.zikr / 10)));
+  document.getElementById('globalProgress').style.width = progress + '%';
+  localStorage.setItem('rmd_stats_' + spaceCode, JSON.stringify(stats));
+}
+
+// ================== QUIZ ==================
+function startQuiz() {
+  quizQuestions = [...QUIZ_QUESTIONS].sort(() => Math.random() - 0.5).slice(0, 10);
+  quizIndex = 0;
+  quizScore = 0;
+  document.getElementById('quizIntro').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'none';
+  document.getElementById('quizGame').style.display = 'block';
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = quizQuestions[quizIndex];
+  document.getElementById('qNum').textContent = `Question ${quizIndex + 1} / 10`;
+  document.getElementById('qScore').textContent = `Score: ${quizScore}`;
+  document.getElementById('quizProgressBar').style.width = ((quizIndex + 1) * 10) + '%';
+  document.getElementById('questionText').textContent = q.q;
+
+  const opts = document.getElementById('quizOptions');
+  opts.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'quiz-option';
+    btn.textContent = opt;
+    btn.onclick = () => answerQuiz(i, btn, q.a);
+    opts.appendChild(btn);
+  });
+}
+
+function answerQuiz(selected, btn, correct) {
+  document.querySelectorAll('.quiz-option').forEach(b => b.onclick = null);
+  const opts = document.querySelectorAll('.quiz-option');
+  opts[correct].classList.add('correct');
+  if (selected !== correct) {
+    btn.classList.add('wrong');
+  } else {
+    quizScore++;
+  }
+
+  setTimeout(() => {
+    quizIndex++;
+    if (quizIndex < 10) {
+      showQuestion();
+    } else {
+      endQuiz();
+    }
+  }, 1200);
+}
+
+function endQuiz() {
+  document.getElementById('quizGame').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'block';
+  document.getElementById('finalScore').textContent = `${quizScore} / 10`;
+
+  let msg = '';
+  if (quizScore >= 9) msg = 'Mashallah ! Excellent résultat ! 🌟';
+  else if (quizScore >= 7) msg = 'Très bien ! Continue comme ça ! 🌙';
+  else if (quizScore >= 5) msg = 'Pas mal ! Continue à apprendre ! 📚';
+  else msg = 'Continue à étudier, tu vas progresser ! 💪';
+
+  document.getElementById('resultMsg').textContent = msg;
+  stats.quiz++;
+  updateStats();
+}
+
+// ================== HADITHS ==================
+function renderHadiths() {
+  const container = document.getElementById('hadithsList');
+  container.innerHTML = '';
+  HADITHS.forEach((h, i) => {
+    const div = document.createElement('div');
+    div.className = 'hadith-card';
+    div.innerHTML = `
+      <div class="hadith-arabic">${h.ar}</div>
+      <div class="hadith-fr">${h.fr}</div>
+      <div class="hadith-source">${h.source}</div>
+    `;
+    div.onclick = () => {
+      if (!hadithsRead.has(i)) {
+        hadithsRead.add(i);
+        stats.hadiths++;
+        updateStats();
+        showToast('Hadith lu ✓');
+      }
+    };
+    container.appendChild(div);
+  });
+}
+
+// ================== DOUAAS ==================
+function renderDouaas() {
+  const container = document.getElementById('douaasList');
+  container.innerHTML = '';
+  DOUAAS.forEach(d => {
+    const div = document.createElement('div');
+    div.className = 'doua-card';
+    div.innerHTML = `
+      <div class="doua-title">${d.title}</div>
+      <div class="doua-arabic">${d.ar}</div>
+      <div class="doua-phonetic">${d.phonetic}</div>
+      <div class="doua-fr">${d.fr}</div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// ================== ZIKR ==================
+function renderZikrTabs() {
+  const tabs = document.getElementById('zikrTabs');
+  tabs.innerHTML = '';
+  ZIKR_LIST.forEach((z, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'zikr-tab' + (i === 0 ? ' active' : '');
+    btn.textContent = z.ar;
+    btn.onclick = () => setZikr(i);
+    tabs.appendChild(btn);
+  });
+}
+
+function setZikr(i) {
+  currentZikr = i;
+  const z = ZIKR_LIST[i];
+  document.getElementById('zikrArabic').textContent = z.ar;
+  document.getElementById('zikrFr').textContent = z.fr;
+  document.getElementById('zikrCount').textContent = zikrCounts[i];
+  document.getElementById('zikrProgress').textContent = `${zikrCounts[i]} / ${z.target}`;
+
+  document.querySelectorAll('.zikr-tab').forEach((t, j) => {
+    t.classList.toggle('active', j === i);
+  });
+}
+
+function incrementZikr() {
+  const z = ZIKR_LIST[currentZikr];
+  zikrCounts[currentZikr]++;
+  stats.zikr++;
+
+  document.getElementById('zikrCount').textContent = zikrCounts[currentZikr];
+  document.getElementById('zikrProgress').textContent = `${zikrCounts[currentZikr]} / ${z.target}`;
+
+  // Haptic feedback simulation
+  const btn = document.getElementById('zikrBtn');
+  btn.style.transform = 'scale(0.95)';
+  setTimeout(() => btn.style.transform = '', 100);
+
+  if (zikrCounts[currentZikr] === z.target) {
+    showToast('Mashallah ! ' + z.target + ' fois accomplis ! 🌟');
+  }
+
+  updateStats();
+  localStorage.setItem('rmd_zikr_' + spaceCode, JSON.stringify(zikrCounts));
+}
+
+function resetZikr() {
+  zikrCounts[currentZikr] = 0;
+  setZikr(currentZikr);
+  localStorage.setItem('rmd_zikr_' + spaceCode, JSON.stringify(zikrCounts));
+}
+
+// ================== CHAT (FIREBASE) ==================
+function checkFirebaseConfig() {
+  const warning = document.getElementById('chatFirebaseWarning');
+  if (!firebaseDB) {
+    warning.style.display = 'block';
+  } else {
+    warning.style.display = 'none';
+  }
+}
+
+function openFirebaseModal() {
+  document.getElementById('firebaseModal').style.display = 'flex';
+}
+
+function closeFirebaseModal() {
+  document.getElementById('firebaseModal').style.display = 'none';
+}
+
+function saveFirebaseConfig() {
+  const config = {
+    apiKey: document.getElementById('fb-apiKey').value.trim(),
+    authDomain: document.getElementById('fb-authDomain').value.trim(),
+    databaseURL: document.getElementById('fb-databaseURL').value.trim(),
+    projectId: document.getElementById('fb-projectId').value.trim(),
+  };
+
+  if (!config.apiKey || !config.databaseURL) {
+    showToast('Remplis au moins apiKey et databaseURL');
+    return;
+  }
+
+  localStorage.setItem('rmd_fb_config', JSON.stringify(config));
+  initFirebase(config);
+}
+
+function initFirebase(config) {
+  try {
+    // Load Firebase SDK dynamically
+    if (!window.firebase) {
+      loadFirebaseSDK(config);
+    } else {
+      connectFirebase(config);
+    }
+  } catch(e) {
+    console.error('Firebase init error:', e);
+    showToast('Erreur de connexion Firebase');
+  }
+}
+
+function loadFirebaseSDK(config) {
+  const scripts = [
+    'https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js',
+    'https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js'
+  ];
+
+  let loaded = 0;
+  scripts.forEach(src => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = () => {
+      loaded++;
+      if (loaded === scripts.length) connectFirebase(config);
+    };
+    document.head.appendChild(s);
+  });
+}
+
+function connectFirebase(config) {
+  try {
+    if (!firebase.apps.length) {
+      firebase.initializeApp(config);
+    }
+    firebaseDB = firebase.database();
+
+    // Test connection
+    const ref = firebaseDB.ref('.info/connected');
+    ref.on('value', snap => {
+      if (snap.val()) {
+        document.getElementById('fbStatus').className = 'firebase-status connected';
+        document.getElementById('fbStatus').textContent = '● Chat connecté en temps réel ✓';
+        document.getElementById('onlineCount').textContent = '2 en ligne';
+        checkFirebaseConfig();
+        closeFirebaseModal();
+        showToast('Chat Firebase connecté ! 🔥');
+        listenMessages();
+      }
+    });
+  } catch(e) {
+    console.error(e);
+    showToast('Erreur Firebase: ' + e.message);
+  }
+}
+
+function listenMessages() {
+  if (!firebaseDB) return;
+  const ref = firebaseDB.ref('spaces/' + spaceCode + '/messages');
+  ref.limitToLast(50).on('child_added', snap => {
+    const msg = snap.val();
+    if (msg) addMessageToUI(msg);
+  });
+}
+
+function addMessageToUI(msg) {
+  const container = document.getElementById('chatMessages');
+  const empty = document.getElementById('chatEmpty');
+  if (empty) empty.style.display = 'none';
+
+  const div = document.createElement('div');
+  div.className = 'msg ' + (msg.author === userName ? 'mine' : 'theirs');
+
+  const time = new Date(msg.timestamp).toLocaleTimeString('fr', { hour: '2-digit', minute: '2-digit' });
+
+  div.innerHTML = `
+    <div class="msg-bubble">${escapeHTML(msg.text)}</div>
+    <div class="msg-meta">${msg.author} · ${time}</div>
+  `;
+
+  container.appendChild(div);
+  scrollChatToBottom();
+}
+
+function sendMessage() {
+  const input = document.getElementById('chatInput');
+  const text = input.value.trim();
+  if (!text) return;
+
+  const msg = {
+    author: userName,
+    text: text,
+    timestamp: Date.now()
+  };
+
+  if (firebaseDB) {
+    firebaseDB.ref('spaces/' + spaceCode + '/messages').push(msg);
+  } else {
+    // Local mode
+    addMessageToUI(msg);
+    messages.push(msg);
+  }
+
+  input.value = '';
+  input.style.height = 'auto';
+}
+
+function chatKeydown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+}
+
+function scrollChatToBottom() {
+  const c = document.getElementById('chatMessages');
+  c.scrollTop = c.scrollHeight;
+}
+
+function escapeHTML(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ================== UTILS ==================
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Auto-login if saved
+window.onload = () => {
+  const name = localStorage.getItem('rmd_name');
+  const code = localStorage.getItem('rmd_code');
+  if (name && code) {
+    document.getElementById('loginName').value = name;
+    document.getElementById('loginCode').value = code;
+  }
+};
+</script>
+</body>
+</html>
