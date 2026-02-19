@@ -1344,15 +1344,7 @@ function initApp() {
   renderZikrTabs();
   setZikr(0);
   checkFirebaseConfig();
-
-  // Try to load firebase config
-  const fbConfig = localStorage.getItem('rmd_fb_config');
-  if (fbConfig) {
-    try {
-      const config = JSON.parse(fbConfig);
-      initFirebase(config);
-    } catch(e) {}
-  }
+  initFirebase(FIREBASE_CONFIG);
 }
 
 // ================== SECTIONS ==================
@@ -1538,6 +1530,13 @@ function resetZikr() {
 }
 
 // ================== CHAT (FIREBASE) ==================
+const FIREBASE_CONFIG = {
+  apiKey: "AIzaSyDNYqvNg6goVwEn-UJ5ll9ZKFMEqe7W4yA",
+  authDomain: "ramadan-space.firebaseapp.com",
+  databaseURL: "https://ramadan-space-default-rtdb.firebaseio.com",
+  projectId: "ramadan-space",
+};
+
 function checkFirebaseConfig() {
   const warning = document.getElementById('chatFirebaseWarning');
   if (!firebaseDB) {
