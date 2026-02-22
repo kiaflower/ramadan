@@ -3,375 +3,610 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>Sakina Space</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="theme-color" content="#f5f0e8">
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<title>Sakina Space</title>
 <style>
-:root{
-  --bg:#f5f0e8;--bg2:#ede8df;--bg3:#e6e0d5;
-  --card:#ffffff;--card2:#f9f5ef;--card3:#f0ebe2;
-  --border:#d8d0c4;--border2:#c8bfb0;
-  --gold:#b8860b;--gold2:#9a6e00;--gold3:rgba(184,134,11,.1);--gold-light:#fdf3d7;
-  --teal:#0e7a6e;--teal2:#0a9988;--teal3:rgba(14,122,110,.1);--teal-light:#e8f7f5;
-  --rose:#c0435c;--rose2:#a83550;--rose-light:#fceef1;
-  --purple:#6d3dcc;--purple2:#5a2eb5;--purple-light:#f0eaf9;
-  --text:#1a1612;--text2:#3d3530;--muted:#7a7060;--muted2:#a09080;
-  --green:#1a8a3e;--success-bg:#e8f7ee;
-  --shadow:0 2px 12px rgba(0,0,0,.08);--shadow2:0 4px 24px rgba(0,0,0,.12);
-  --safe-bottom:env(safe-area-inset-bottom,0px);
-  --r:14px;
-}
-*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-html{height:100%;height:-webkit-fill-available}
-body{
-  height:100%;height:100dvh;overflow:hidden;
-  font-family:'Plus Jakarta Sans',sans-serif;
-  background:var(--bg);color:var(--text);font-size:15px;
-  touch-action:manipulation;
-}
-button,input{font-family:'Plus Jakarta Sans',sans-serif;cursor:pointer}
-::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px}
-svg.icon{display:inline-block;vertical-align:middle;flex-shrink:0}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Amiri:wght@400;700&display=swap');
 
-/* ── BACKGROUND ── */
-#bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(160deg,#fdf8f0 0%,#f0ebe0 50%,#e8e0d3 100%)}
-.float-orb{position:absolute;border-radius:50%;filter:blur(60px);animation:orbFloat var(–d,8s) ease-in-out infinite alternate var(–dl,0s);opacity:.35}
-@keyframes orbFloat{0%{transform:translate(0,0)}100%{transform:translate(var(–tx,20px),var(–ty,30px))}}
-.particle{position:fixed;border-radius:50%;pointer-events:none;z-index:999;animation:floatUp var(–dur,1s) ease-out forwards}
-@keyframes floatUp{0%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-80px) scale(.3)}}
+:root {
+–bg:#f5f0e8; –bg2:#ede8df; –bg3:#e0d9ce;
+–card:#ffffff; –card2:#f9f5ef; –card3:#f0ebe2;
+–border:#d8d0c4; –border2:#c8bfb0;
+–gold:#b8860b; –gold2:#9a6e00; –gold3:rgba(184,134,11,.12); –gold-light:#fdf3d7;
+–teal:#0e7a6e; –teal2:#0a9988; –teal3:rgba(14,122,110,.12); –teal-light:#e8f7f5;
+–rose:#c0435c; –rose2:#a83550; –rose-light:#fceef1;
+–purple:#6d3dcc; –purple2:#5a2eb5; –purple-light:#f0eaf9;
+–text:#1a1612; –text2:#3d3530; –muted:#7a7060; –muted2:#a09080;
+–green:#1a8a3e; –green-bg:#e8f7ee;
+–shadow:0 1px 6px rgba(0,0,0,.07), 0 2px 12px rgba(0,0,0,.05);
+–shadow2:0 4px 20px rgba(0,0,0,.12);
+–r:14px;
+}
 
-/* ── APP ── */
-#app{position:relative;z-index:1;height:100dvh;display:flex;flex-direction:column}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+height: 100%;
+overflow: hidden;
+font-family: ‘Plus Jakarta Sans’, system-ui, -apple-system, sans-serif;
+background: var(–bg);
+color: var(–text);
+font-size: 15px;
+-webkit-text-size-adjust: 100%;
+text-size-adjust: 100%;
+}
+
+button, input, textarea { font-family: inherit; cursor: pointer; }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: var(–border2); border-radius: 4px; }
+
+/* ── APP SHELL ── */
+#app { height: 100vh; display: flex; flex-direction: column; background: var(–bg); }
 
 /* ── LOGIN ── */
-#login-screen{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;background:rgba(245,240,232,.92);backdrop-filter:blur(8px);overflow-y:auto}
-.lcard{background:var(–card);border:1px solid var(–border);border-radius:24px;padding:32px 28px;width:100%;max-width:400px;box-shadow:var(–shadow2);margin:auto}
-.lcard-top{text-align:center;margin-bottom:28px}
-.lcard-top .logo-icon{width:56px;height:56px;background:linear-gradient(135deg,var(–gold-light),#fff7e0);border:2px solid rgba(184,134,11,.3);border-radius:16px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-family:‘Amiri’,serif;font-size:1.6rem;color:var(–gold)}
-.lcard-top h1{font-size:1.6rem;font-weight:800;color:var(–text);letter-spacing:-.5px}
-.lcard-top .ls{font-size:.75rem;color:var(–muted);margin-top:4px}
-label.lbl{display:block;font-size:.7rem;font-weight:600;letter-spacing:.5px;color:var(–text2);margin-bottom:6px}
-input.li{width:100%;background:var(–bg);border:1.5px solid var(–border);border-radius:10px;padding:13px 14px;color:var(–text);font-size:.95rem;outline:none;transition:border-color .2s,box-shadow .2s;margin-bottom:14px}
-input.li:focus{border-color:var(–gold);box-shadow:0 0 0 3px rgba(184,134,11,.12)}
-input.li::placeholder{color:var(–muted2)}
-.hint{font-size:.72rem;color:var(–muted);margin-bottom:16px;line-height:1.6;padding:10px 12px;background:var(–gold3);border-radius:10px;border:1px solid rgba(184,134,11,.2)}
-.hint strong{color:var(–gold2)}
-.btn-gold{background:linear-gradient(135deg,#c8960d,#b8860b);border:none;border-radius:10px;padding:14px;color:#fff;font-weight:700;font-size:.82rem;letter-spacing:.5px;transition:opacity .2s,transform .1s;width:100%;margin-top:4px;display:block;box-shadow:0 2px 8px rgba(184,134,11,.3)}
-.btn-gold:hover{opacity:.9;transform:translateY(-1px)}
-.btn-gold:active{transform:translateY(0)}
-.btn-teal{background:linear-gradient(135deg,#0f8c7e,#0a9988);border:none;border-radius:10px;padding:14px;color:#fff;font-weight:700;font-size:.82rem;transition:opacity .2s,transform .1s;width:100%;display:block;box-shadow:0 2px 8px rgba(14,122,110,.25)}
-.btn-teal:hover{opacity:.9;transform:translateY(-1px)}
-.btn-ghost{background:var(–card);border:1.5px solid var(–border);border-radius:10px;padding:12px;color:var(–text2);font-size:.8rem;font-weight:600;transition:all .2s;width:100%;display:block}
-.btn-ghost:hover{border-color:var(–gold);color:var(–gold2);background:var(–gold-light)}
-.btn-sm{background:var(–card2);border:1.5px solid var(–border);border-radius:999px;padding:6px 14px;font-size:.72rem;font-weight:600;color:var(–text2);transition:all .2s}
-.btn-sm:hover{border-color:var(–gold);color:var(–gold2);background:var(–gold-light)}
-.btn-back{background:var(–card2);border:1.5px solid var(–border);border-radius:999px;padding:5px 12px;font-size:.7rem;font-weight:600;color:var(–muted);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
-.btn-back:hover{border-color:var(–text2);color:var(–text2)}
+#login-screen {
+position: fixed; inset: 0; z-index: 200;
+display: flex; align-items: center; justify-content: center;
+padding: 20px; background: var(–bg); overflow-y: auto;
+}
+.lcard {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 24px; padding: 32px 28px;
+width: 100%; max-width: 380px;
+box-shadow: var(–shadow2);
+}
+.lcard-logo {
+width: 52px; height: 52px;
+background: var(–gold-light); border: 1.5px solid rgba(184,134,11,.3);
+border-radius: 14px; display: flex; align-items: center; justify-content: center;
+margin: 0 auto 12px; font-family: ‘Amiri’, serif; font-size: 1.5rem; color: var(–gold2);
+}
+.lcard h1 { text-align: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 2px; }
+.lcard-sub { text-align: center; font-size: .73rem; color: var(–muted); margin-bottom: 24px; }
+.lbl { display: block; font-size: .68rem; font-weight: 700; letter-spacing: .5px; color: var(–text2); margin-bottom: 5px; text-transform: uppercase; }
+.fi {
+width: 100%; background: var(–bg); border: 1.5px solid var(–border);
+border-radius: 10px; padding: 12px 14px; color: var(–text); font-size: .9rem;
+outline: none; transition: border-color .2s, box-shadow .2s; margin-bottom: 14px;
+}
+.fi:focus { border-color: var(–gold); box-shadow: 0 0 0 3px rgba(184,134,11,.1); }
+.fi::placeholder { color: var(–muted2); }
+.hint-box {
+background: var(–gold3); border: 1px solid rgba(184,134,11,.2);
+border-radius: 10px; padding: 10px 12px; font-size: .71rem;
+color: var(–text2); line-height: 1.6; margin-bottom: 16px;
+}
+.hint-box strong { color: var(–gold2); }
+.btn { border: none; border-radius: 10px; padding: 13px 20px; font-weight: 700; font-size: .8rem; letter-spacing: .3px; transition: opacity .18s, transform .1s; cursor: pointer; display: block; width: 100%; }
+.btn:hover { opacity: .88; transform: translateY(-1px); }
+.btn:active { transform: translateY(0); opacity: 1; }
+.btn-gold { background: linear-gradient(135deg, #c8960d, #b8860b); color: #fff; box-shadow: 0 2px 8px rgba(184,134,11,.3); }
+.btn-teal { background: linear-gradient(135deg, #0f8c7e, #0a9988); color: #fff; box-shadow: 0 2px 8px rgba(14,122,110,.25); margin-top: 8px; }
+.btn-outline { background: var(–card); border: 1.5px solid var(–border); color: var(–text2); }
+.btn-outline:hover { border-color: var(–gold); color: var(–gold2); background: var(–gold-light); }
+.btn-sm {
+background: var(–card2); border: 1.5px solid var(–border);
+border-radius: 999px; padding: 5px 14px; font-size: .71rem;
+font-weight: 600; color: var(–text2); cursor: pointer; transition: all .18s;
+}
+.btn-sm:hover { border-color: var(–gold); color: var(–gold2); background: var(–gold-light); }
 
 /* ── TOPBAR ── */
-.topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:rgba(255,255,255,.85);border-bottom:1.5px solid var(–border);backdrop-filter:blur(12px);flex-shrink:0;gap:8px}
-.tb-logo{font-size:1rem;font-weight:800;color:var(–text);letter-spacing:-.5px}
-.tb-level{background:var(–gold-light);border:1.5px solid rgba(184,134,11,.3);border-radius:999px;padding:3px 10px;font-size:.62rem;font-weight:700;letter-spacing:.5px;color:var(–gold2)}
-.tb-nour{display:flex;align-items:center;gap:5px;background:var(–gold-light);border:1.5px solid rgba(184,134,11,.3);border-radius:999px;padding:5px 12px;font-size:.74rem;font-weight:700;color:var(–gold2)}
-.av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;border:2px solid;flex-shrink:0}
-.av.me{background:var(–gold-light);border-color:var(–gold);color:var(–gold2)}
-.av.other{background:var(–teal3);border-color:var(–teal2);color:var(–teal);margin-left:-6px}
-.online-badge{display:flex;align-items:center;gap:5px;background:var(–teal-light);border:1.5px solid rgba(14,122,110,.3);border-radius:999px;padding:4px 10px;font-size:.62rem;font-weight:700;color:var(–teal)}
-.live-dot{width:6px;height:6px;border-radius:50%;background:var(–teal);animation:blink 1.5s infinite;flex-shrink:0}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.topbar {
+display: flex; align-items: center; justify-content: space-between;
+padding: 0 12px; height: 50px; min-height: 50px;
+background: var(–card); border-bottom: 1.5px solid var(–border);
+flex-shrink: 0; gap: 8px;
+}
+.tb-logo { font-size: .95rem; font-weight: 800; letter-spacing: -.3px; white-space: nowrap; }
+.tb-chip {
+background: var(–gold-light); border: 1.5px solid rgba(184,134,11,.3);
+border-radius: 999px; padding: 3px 10px; font-size: .62rem;
+font-weight: 700; letter-spacing: .3px; color: var(–gold2); white-space: nowrap;
+}
+.tb-nour {
+display: flex; align-items: center; gap: 5px;
+background: var(–gold-light); border: 1.5px solid rgba(184,134,11,.3);
+border-radius: 999px; padding: 4px 11px; font-size: .72rem; font-weight: 700; color: var(–gold2);
+}
+.av {
+width: 28px; height: 28px; border-radius: 50%;
+display: flex; align-items: center; justify-content: center;
+font-size: .68rem; font-weight: 700; flex-shrink: 0; border: 2px solid;
+}
+.av-me { background: var(–gold-light); border-color: var(–gold); color: var(–gold2); }
+.av-other { background: var(–teal-light); border-color: var(–teal2); color: var(–teal); margin-left: -6px; }
+.online-pill {
+display: flex; align-items: center; gap: 4px;
+background: var(–teal-light); border: 1.5px solid rgba(14,122,110,.3);
+border-radius: 999px; padding: 3px 9px; font-size: .62rem; font-weight: 700; color: var(–teal);
+}
+.dot-live { width: 5px; height: 5px; border-radius: 50%; background: var(–teal); animation: blink 1.5s infinite; }
+@keyframes blink { 0%,100%{opacity:1}50%{opacity:.2} }
+.tb-exit {
+background: var(–bg); border: 1.5px solid var(–border);
+border-radius: 999px; padding: 4px 10px; font-size: .68rem;
+font-weight: 600; color: var(–muted); cursor: pointer; transition: all .18s;
+display: flex; align-items: center; gap: 4px;
+}
+.tb-exit:hover { border-color: var(–text2); color: var(–text2); }
 
 /* ── LAYOUT ── */
-.main{flex:1;display:flex;overflow:hidden;min-height:0}
-.sidebar{width:210px;flex-shrink:0;background:rgba(255,255,255,.7);border-right:1.5px solid var(–border);display:flex;flex-direction:column;overflow-y:auto;padding:8px 8px}
-@media(max-width:640px){.sidebar{width:56px}.nlabel,.stitle{display:none}}
-.stitle{font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(–muted2);padding:10px 8px 4px}
-.ni{display:flex;align-items:center;gap:9px;padding:9px 10px;border-radius:10px;cursor:pointer;transition:all .18s;color:var(–muted);font-size:.83rem;font-weight:500;margin-bottom:2px;border:1.5px solid transparent}
-.ni:hover{background:var(–bg2);color:var(–text2)}
-.ni.active{background:var(–gold-light);border-color:rgba(184,134,11,.3);color:var(–gold2);font-weight:700}
-.ni-icon{width:20px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.nbadge{margin-left:auto;background:var(–rose);border-radius:999px;font-size:.58rem;font-weight:700;min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;padding:0 4px;color:#fff}
-.content{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0}
-.panel{display:none;flex:1;flex-direction:column;overflow:hidden;min-height:0}
-.panel.active{display:flex}
-.scroll-area{flex:1;overflow-y:auto;padding:16px;-webkit-overflow-scrolling:touch}
+.main { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+
+/* SIDEBAR */
+.sidebar {
+width: 200px; flex-shrink: 0;
+background: var(–card); border-right: 1.5px solid var(–border);
+display: flex; flex-direction: column; overflow-y: auto; padding: 8px;
+}
+@media (max-width: 600px) {
+.sidebar { width: 52px; }
+.nl, .s-title { display: none; }
+}
+.s-title {
+font-size: .6rem; font-weight: 700; letter-spacing: .5px;
+text-transform: uppercase; color: var(–muted2); padding: 10px 8px 4px;
+}
+.ni {
+display: flex; align-items: center; gap: 8px;
+padding: 8px 10px; border-radius: 10px; cursor: pointer;
+transition: all .15s; color: var(–muted); font-size: .8rem;
+font-weight: 500; margin-bottom: 2px; border: 1.5px solid transparent;
+position: relative;
+}
+.ni:hover { background: var(–bg2); color: var(–text2); }
+.ni.active { background: var(–gold-light); border-color: rgba(184,134,11,.3); color: var(–gold2); font-weight: 700; }
+.ni-icon { width: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.n-badge {
+position: absolute; top: 4px; right: 4px;
+background: var(–rose); border-radius: 999px; font-size: .55rem;
+font-weight: 700; min-width: 16px; height: 16px;
+display: flex; align-items: center; justify-content: center;
+padding: 0 3px; color: #fff;
+}
+
+/* CONTENT */
+.content { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+.panel { display: none; flex: 1; flex-direction: column; overflow: hidden; min-height: 0; }
+.panel.active { display: flex; }
+.scroll { flex: 1; overflow-y: auto; padding: 14px; -webkit-overflow-scrolling: touch; }
 
 /* ── SHARED COMPONENTS ── */
-.card{background:var(–card);border:1.5px solid var(–border);border-radius:var(–r);padding:16px;box-shadow:var(–shadow)}
-.tag{display:inline-block;border-radius:999px;padding:3px 10px;font-size:.62rem;font-weight:700;letter-spacing:.3px}
-.tag.gold{background:var(–gold-light);border:1.5px solid rgba(184,134,11,.3);color:var(–gold2)}
-.tag.teal{background:var(–teal-light);border:1.5px solid rgba(14,122,110,.3);color:var(–teal)}
-.tag.rose{background:var(–rose-light);border:1.5px solid rgba(192,67,92,.3);color:var(–rose)}
-.tag.purple{background:var(–purple-light);border:1.5px solid rgba(109,61,204,.3);color:var(–purple2)}
-.prog-bar{background:var(–bg3);border-radius:999px;height:6px;overflow:hidden}
-.prog-fill{height:100%;border-radius:999px;transition:width .8s ease;position:relative;overflow:hidden}
-.prog-fill::after{content:’’;position:absolute;top:0;left:-200%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:shimmer 2s infinite}
-@keyframes shimmer{to{left:200%}}
-.pb-gold{background:linear-gradient(90deg,#c8960d,#e8b020)}
-.pb-teal{background:linear-gradient(90deg,var(–teal),var(–teal2))}
-.pb-rose{background:linear-gradient(90deg,var(–rose),var(–rose2))}
-.pb-purple{background:linear-gradient(90deg,var(–purple2),var(–purple))}
-.section-title{font-size:.65rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(–muted);margin-bottom:10px}
-.panel-title{font-size:1.3rem;font-weight:800;color:var(–text);margin-bottom:3px;letter-spacing:-.3px}
-.panel-sub{font-size:.76rem;color:var(–muted);margin-bottom:14px}
-.start-screen{text-align:center;padding:28px 16px}
-.start-icon{display:flex;justify-content:center;margin-bottom:12px}
-.start-title{font-size:1.3rem;font-weight:800;color:var(–text);margin-bottom:8px;letter-spacing:-.3px}
-.start-desc{font-size:.78rem;color:var(–muted);margin-bottom:20px;line-height:1.7}
+.card {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: var(–r); padding: 14px; box-shadow: var(–shadow);
+}
+.tag {
+display: inline-block; border-radius: 999px;
+padding: 2px 9px; font-size: .6rem; font-weight: 700; letter-spacing: .3px;
+}
+.tag-gold { background: var(–gold-light); border: 1.5px solid rgba(184,134,11,.3); color: var(–gold2); }
+.tag-teal { background: var(–teal-light); border: 1.5px solid rgba(14,122,110,.3); color: var(–teal); }
+.tag-rose { background: var(–rose-light); border: 1.5px solid rgba(192,67,92,.3); color: var(–rose2); }
+.tag-purple { background: var(–purple-light); border: 1.5px solid rgba(109,61,204,.3); color: var(–purple2); }
+.prog { background: var(–bg3); border-radius: 999px; height: 5px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 999px; transition: width .7s ease; }
+.pf-gold { background: linear-gradient(90deg, #c8960d, #e8b020); }
+.pf-teal { background: linear-gradient(90deg, var(–teal), var(–teal2)); }
+.pf-rose { background: linear-gradient(90deg, var(–rose), var(–rose2)); }
+.pf-purple { background: linear-gradient(90deg, var(–purple2), var(–purple)); }
+.panel-title { font-size: 1.2rem; font-weight: 800; color: var(–text); margin-bottom: 2px; letter-spacing: -.3px; }
+.panel-sub { font-size: .73rem; color: var(–muted); margin-bottom: 12px; }
+.sec-title { font-size: .62rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(–muted); margin-bottom: 8px; }
+.start-screen { text-align: center; padding: 24px 16px; }
+.start-icon { display: flex; justify-content: center; margin-bottom: 10px; }
+.start-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 6px; }
+.start-desc { font-size: .76rem; color: var(–muted); line-height: 1.7; margin-bottom: 18px; }
 
 /* ── HOME ── */
-.home-banner{background:linear-gradient(135deg,var(–gold-light),#fff8e6);border:1.5px solid rgba(184,134,11,.25);border-radius:18px;padding:22px;margin-bottom:14px;text-align:center;box-shadow:var(–shadow)}
-.hb-ar{font-family:‘Amiri’,serif;font-size:1.4rem;color:var(–gold2);line-height:1.5}
-.hb-en{font-size:1.4rem;font-weight:800;color:var(–text);margin-top:4px;letter-spacing:-.5px}
-.hb-sub{font-size:.76rem;color:var(–muted);margin-top:4px}
-.nour-wrap{background:var(–card);border:1.5px solid var(–border);border-radius:var(–r);padding:14px;margin-bottom:14px;box-shadow:var(–shadow)}
-.nour-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.nour-label{font-size:.65rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(–gold2)}
-.nour-pts{font-size:1.5rem;font-weight:800;color:var(–text)}
-.level-info{display:flex;justify-content:space-between;margin-top:4px;font-size:.63rem;font-weight:600;color:var(–muted)}
-.games-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-@media(max-width:460px){.games-grid{grid-template-columns:1fr}}
-.gc{background:var(–card);border:1.5px solid var(–border);border-radius:var(–r);padding:16px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;box-shadow:var(–shadow)}
-.gc:hover{transform:translateY(-2px);box-shadow:var(–shadow2);border-color:var(–gca,var(–gold))}
-.gc-bg{position:absolute;top:-15px;right:-15px;width:60px;height:60px;border-radius:50%;background:var(–gcbg,var(–gold-light));opacity:.6}
-.gc-icon{margin-bottom:7px;color:var(–gca,var(–gold2))}
-.gc-title{font-weight:700;font-size:.85rem;margin-bottom:2px;color:var(–text)}
-.gc-sub{font-size:.69rem;color:var(–muted)}
-.gc-nour{position:absolute;bottom:10px;right:10px;font-size:.58rem;font-weight:700;padding:2px 8px;border-radius:999px;background:var(–gcbg,var(–gold-light));border:1.5px solid var(–gcbo,rgba(184,134,11,.3));color:var(–gca,var(–gold2))}
-.ayah-box{background:var(–card);border-left:3px solid var(–gold);border-radius:var(–r);padding:16px;margin-bottom:14px;box-shadow:var(–shadow)}
-.ayah-lbl{font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(–gold2);margin-bottom:8px}
-.ayah-ar{font-family:‘Amiri’,serif;font-size:1.2rem;line-height:1.8;text-align:right;direction:rtl;color:var(–text);margin-bottom:6px}
-.ayah-fr{font-size:.78rem;color:var(–muted);font-style:italic;line-height:1.6}
-.ayah-ref{font-size:.64rem;color:var(–gold2);margin-top:5px;font-weight:600}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.stat-item{padding:4px 0}
-.stat-lbl{font-size:.62rem;font-weight:700;color:var(–muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:3px}
-.stat-val{font-size:1.3rem;font-weight:800;color:var(–text)}
+.banner {
+background: linear-gradient(135deg, var(–gold-light), #fff8e6);
+border: 1.5px solid rgba(184,134,11,.25); border-radius: 18px;
+padding: 18px; text-align: center; margin-bottom: 12px; box-shadow: var(–shadow);
+}
+.banner-ar { font-family: ‘Amiri’, serif; font-size: 1.3rem; color: var(–gold2); line-height: 1.5; }
+.banner-title { font-size: 1.3rem; font-weight: 800; letter-spacing: -.3px; margin-top: 4px; }
+.banner-sub { font-size: .73rem; color: var(–muted); margin-top: 3px; }
+.nour-card { background: var(–card); border: 1.5px solid var(–border); border-radius: var(–r); padding: 14px; margin-bottom: 12px; box-shadow: var(–shadow); }
+.nour-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.nour-label { font-size: .62rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(–gold2); }
+.nour-val { font-size: 1.6rem; font-weight: 800; }
+.level-info { display: flex; justify-content: space-between; margin-top: 4px; font-size: .61rem; font-weight: 600; color: var(–muted); }
+.ayah-box {
+background: var(–card); border-left: 3px solid var(–gold);
+border-radius: var(–r); padding: 14px; margin-bottom: 12px; box-shadow: var(–shadow);
+}
+.ayah-lbl { font-size: .6rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; color: var(–gold2); margin-bottom: 6px; }
+.ayah-ar { font-family: ‘Amiri’, serif; font-size: 1.15rem; line-height: 1.8; text-align: right; direction: rtl; margin-bottom: 5px; }
+.ayah-fr { font-size: .75rem; color: var(–muted); font-style: italic; line-height: 1.6; }
+.ayah-ref { font-size: .62rem; color: var(–gold2); margin-top: 4px; font-weight: 600; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.stat-item .s-lbl { font-size: .6rem; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(–muted); margin-bottom: 2px; }
+.stat-item .s-val { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+
+/* ── GAMES MENU ── */
+.games-list { display: flex; flex-direction: column; gap: 8px; }
+.game-row {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: var(–r); padding: 14px 16px;
+display: flex; align-items: center; gap: 14px;
+cursor: pointer; transition: all .18s; box-shadow: var(–shadow);
+}
+.game-row:hover { border-color: var(–gold); box-shadow: var(–shadow2); transform: translateY(-1px); }
+.game-row-icon {
+width: 40px; height: 40px; border-radius: 10px;
+display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.game-row-info { flex: 1; }
+.game-row-title { font-weight: 700; font-size: .88rem; margin-bottom: 2px; }
+.game-row-sub { font-size: .69rem; color: var(–muted); }
+.game-row-nour { font-size: .62rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; }
 
 /* ── CHAT ── */
-.chat-wrap{flex:1;display:flex;flex-direction:column;overflow:hidden;min-height:0}
-.chat-msgs{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:8px;-webkit-overflow-scrolling:touch;background:var(–bg2)}
-.msg-sys{align-self:center;font-size:.68rem;font-weight:600;color:var(–muted);background:var(–card);border:1.5px solid var(–border);border-radius:999px;padding:4px 14px;box-shadow:var(–shadow)}
-.msg-wrap{display:flex;gap:8px;max-width:84%;animation:msgIn .25s ease}
-@keyframes msgIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-.msg-wrap.mine{align-self:flex-end;flex-direction:row-reverse}
-.m-av{width:30px;height:30px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:700;margin-top:2px;border:2px solid}
-.msg-wrap:not(.mine) .m-av{background:var(–teal-light);border-color:var(–teal);color:var(–teal)}
-.msg-wrap.mine .m-av{background:var(–gold-light);border-color:var(–gold);color:var(–gold2)}
-.m-name{font-size:.62rem;font-weight:600;color:var(–muted);margin-bottom:3px}
-.msg-wrap.mine .m-name{text-align:right}
-.m-bubble{padding:10px 14px;border-radius:14px;font-size:.86rem;line-height:1.55;word-break:break-word;box-shadow:var(–shadow)}
-.msg-wrap:not(.mine) .m-bubble{background:var(–card);border:1.5px solid var(–border);border-top-left-radius:4px;color:var(–text)}
-.msg-wrap.mine .m-bubble{background:linear-gradient(135deg,#c8960d,#b8860b);border:none;border-top-right-radius:4px;color:#fff}
-.m-bubble a{color:inherit;text-decoration:underline;opacity:.9;word-break:break-all}
-.msg-wrap.mine .m-bubble a{color:#fff}
-.m-bubble.invite-bubble{background:var(–teal-light);border:1.5px solid rgba(14,122,110,.3);color:var(–text);box-shadow:var(–shadow)}
-.invite-btn{background:linear-gradient(135deg,var(–teal),var(–teal2));border:none;border-radius:8px;padding:8px 14px;color:#fff;font-size:.74rem;font-weight:700;cursor:pointer;margin-top:8px;display:block;width:100%;transition:opacity .2s}
-.invite-btn:hover{opacity:.85}
-.invite-btn:disabled{opacity:.4;cursor:default}
-.m-time{font-size:.6rem;color:var(–muted);margin-top:3px;font-weight:500}
-.msg-wrap.mine .m-time{text-align:right}
-.chat-quickbtns{display:flex;gap:6px;padding:8px 12px;flex-wrap:wrap;border-top:1.5px solid var(–border);background:var(–card2)}
-.qb{background:var(–card);border:1.5px solid var(–border);border-radius:999px;padding:5px 11px;font-size:.7rem;font-weight:600;color:var(–text2);cursor:pointer;transition:all .18s;display:flex;align-items:center;gap:4px;white-space:nowrap;box-shadow:var(–shadow)}
-.qb:hover{border-color:var(–gold);color:var(–gold2);background:var(–gold-light)}
-.chat-input-row{padding:8px 12px;padding-bottom:calc(10px + var(–safe-bottom));border-top:1.5px solid var(–border);display:flex;gap:8px;align-items:center;background:var(–card);flex-shrink:0}
-.chat-input{flex:1;background:var(–bg);border:1.5px solid var(–border);border-radius:20px;padding:10px 14px;color:var(–text);font-size:.86rem;outline:none;transition:border-color .2s,box-shadow .2s}
-.chat-input:focus{border-color:var(–gold);box-shadow:0 0 0 3px rgba(184,134,11,.1)}
-.chat-input::placeholder{color:var(–muted2)}
-.send-btn{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#c8960d,#b8860b);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff;transition:opacity .2s,transform .1s;box-shadow:0 2px 8px rgba(184,134,11,.3)}
-.send-btn:hover{opacity:.9;transform:scale(1.05)}
-/* Media upload */
-.media-btn{width:36px;height:36px;border-radius:50%;background:var(–bg);border:1.5px solid var(–border);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(–muted);transition:all .2s}
-.media-btn:hover{border-color:var(–teal);color:var(–teal);background:var(–teal-light)}
-.m-bubble img.chat-img{max-width:220px;border-radius:10px;display:block;margin-top:6px;cursor:pointer}
-.m-bubble video.chat-vid{max-width:220px;border-radius:10px;display:block;margin-top:6px}
+.chat-wrap { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
+.chat-msgs {
+flex: 1; overflow-y: auto; padding: 10px 12px;
+display: flex; flex-direction: column; gap: 6px;
+background: var(–bg2);
+}
+.msg-sys {
+align-self: center; font-size: .65rem; font-weight: 600;
+color: var(–muted); background: var(–card);
+border: 1.5px solid var(–border); border-radius: 999px; padding: 3px 12px;
+}
+.msg-wrap { display: flex; gap: 7px; max-width: 85%; animation: msgIn .2s ease; }
+@keyframes msgIn { from{opacity:0;transform:translateY(4px)} to{opacity:1;transform:translateY(0)} }
+.msg-wrap.mine { align-self: flex-end; flex-direction: row-reverse; }
+.m-av {
+width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+display: flex; align-items: center; justify-content: center;
+font-size: .62rem; font-weight: 700; margin-top: 2px; border: 2px solid;
+}
+.msg-wrap:not(.mine) .m-av { background: var(–teal-light); border-color: var(–teal); color: var(–teal); }
+.msg-wrap.mine .m-av { background: var(–gold-light); border-color: var(–gold); color: var(–gold2); }
+.m-name { font-size: .6rem; font-weight: 600; color: var(–muted); margin-bottom: 2px; }
+.msg-wrap.mine .m-name { text-align: right; }
+.m-bubble {
+padding: 9px 13px; border-radius: 13px;
+font-size: .84rem; line-height: 1.55; word-break: break-word;
+box-shadow: var(–shadow);
+}
+.msg-wrap:not(.mine) .m-bubble { background: var(–card); border: 1.5px solid var(–border); border-top-left-radius: 4px; }
+.msg-wrap.mine .m-bubble { background: linear-gradient(135deg, #c8960d, #b8860b); border-top-right-radius: 4px; color: #fff; }
+.m-bubble a { color: inherit; text-decoration: underline; opacity: .85; word-break: break-all; }
+.m-time { font-size: .58rem; color: var(–muted); margin-top: 2px; }
+.msg-wrap.mine .m-time { text-align: right; }
+
+/* Typing indicator */
+.typing-indicator { display: flex; align-items: center; gap: 3px; padding: 8px 12px; }
+.typing-dot {
+width: 7px; height: 7px; border-radius: 50%; background: var(–muted2);
+animation: typingBounce 1.2s infinite ease-in-out;
+}
+.typing-dot:nth-child(2) { animation-delay: .2s; }
+.typing-dot:nth-child(3) { animation-delay: .4s; }
+@keyframes typingBounce { 0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)} }
+
+/* Invite bubble */
+.invite-bubble { background: var(–teal-light); border: 1.5px solid rgba(14,122,110,.3); color: var(–text); }
+.invite-btn {
+background: linear-gradient(135deg, var(–teal), var(–teal2));
+border: none; border-radius: 8px; padding: 7px 14px;
+color: #fff; font-size: .72rem; font-weight: 700;
+cursor: pointer; margin-top: 7px; display: block; width: 100%;
+}
+.invite-btn:disabled { opacity: .4; cursor: default; }
+.chat-quick { display: flex; gap: 6px; padding: 7px 10px; flex-wrap: wrap; border-top: 1.5px solid var(–border); background: var(–card2); }
+.qb {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 999px; padding: 4px 10px; font-size: .68rem;
+font-weight: 600; color: var(–text2); cursor: pointer;
+transition: all .15s; display: flex; align-items: center; gap: 4px;
+white-space: nowrap; box-shadow: var(–shadow);
+}
+.qb:hover { border-color: var(–gold); color: var(–gold2); background: var(–gold-light); }
+.chat-input-row {
+padding: 8px 10px; border-top: 1.5px solid var(–border);
+display: flex; gap: 7px; align-items: center;
+background: var(–card); flex-shrink: 0;
+}
+.chat-inp {
+flex: 1; background: var(–bg); border: 1.5px solid var(–border);
+border-radius: 20px; padding: 9px 13px; color: var(–text);
+font-size: .84rem; outline: none; transition: border-color .2s;
+}
+.chat-inp:focus { border-color: var(–gold); }
+.chat-inp::placeholder { color: var(–muted2); }
+.send-btn {
+width: 38px; height: 38px; border-radius: 50%;
+background: linear-gradient(135deg, #c8960d, #b8860b);
+border: none; cursor: pointer; display: flex; align-items: center;
+justify-content: center; color: #fff; flex-shrink: 0;
+transition: opacity .18s; box-shadow: 0 2px 8px rgba(184,134,11,.3);
+}
+.send-btn:hover { opacity: .88; }
+.media-btn {
+width: 34px; height: 34px; border-radius: 50%; background: var(–bg);
+border: 1.5px solid var(–border); cursor: pointer;
+display: flex; align-items: center; justify-content: center; color: var(–muted);
+transition: all .18s; flex-shrink: 0;
+}
+.media-btn:hover { border-color: var(–teal); color: var(–teal); background: var(–teal-light); }
+.chat-img { max-width: 200px; border-radius: 9px; display: block; margin-top: 6px; cursor: pointer; }
 
 /* ── QUIZ ── */
-.quiz-header{flex-shrink:0;padding:10px 14px;border-bottom:1.5px solid var(–border);background:var(–card)}
-.quiz-scoreline{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-bottom:6px}
-.qsc{flex:1;text-align:center}
-.qsc-name{font-size:.62rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(–muted)}
-.qsc-name.gold{color:var(–gold2)}
-.qsc-val{font-size:1.8rem;font-weight:800;color:var(–text)}
-.qsc-sep{color:var(–gold2);font-size:1.2rem;padding:0 4px;font-weight:300}
-.qprogress{height:4px;background:var(–bg3)}
-.qprogress-fill{height:100%;background:linear-gradient(90deg,var(–teal),var(–gold));transition:width .5s}
-.quiz-body{flex:1;overflow-y:auto;padding:14px;background:var(–bg2)}
-.q-card{background:var(–card);border:1.5px solid var(–border);border-radius:var(–r);padding:16px;margin-bottom:10px;box-shadow:var(–shadow)}
-.q-text{font-size:.95rem;font-weight:600;line-height:1.5;color:var(–text)}
-.q-answers{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-@media(max-width:440px){.q-answers{grid-template-columns:1fr}}
-.q-ans{background:var(–card);border:1.5px solid var(–border);border-radius:10px;padding:11px 13px;cursor:pointer;font-size:.82rem;text-align:left;color:var(–text);display:flex;align-items:flex-start;gap:8px;transition:all .18s;width:100%;font-weight:500;box-shadow:var(–shadow)}
-.q-ans:hover:not(:disabled){border-color:var(–gold);background:var(–gold-light)}
-.q-ans.correct{background:var(–success-bg);border-color:var(–green);color:var(–green)}
-.q-ans.wrong{background:var(–rose-light);border-color:var(–rose);color:var(–rose2)}
-.q-ans.reveal{background:var(–success-bg);border-color:rgba(26,138,62,.4)}
-.q-lbl{flex-shrink:0;width:20px;height:20px;border-radius:50%;background:var(–bg2);border:1.5px solid var(–border);color:var(–text2);font-size:.62rem;font-weight:700;display:flex;align-items:center;justify-content:center}
-.q-expl{background:var(–teal-light);border-left:3px solid var(–teal);border-radius:10px;padding:10px 12px;font-size:.77rem;line-height:1.6;color:var(–teal);display:none;margin-top:6px}
-.q-expl.show{display:block;animation:msgIn .3s ease}
-.q-next{display:none;width:100%;background:linear-gradient(135deg,var(–teal),var(–teal2));border:none;border-radius:10px;padding:12px;color:#fff;font-weight:700;font-size:.78rem;letter-spacing:.3px;cursor:pointer;margin-top:8px;box-shadow:0 2px 8px rgba(14,122,110,.25)}
-.q-next.show{display:block;animation:msgIn .3s ease}
-.q-next:hover{opacity:.9}
-.score-flash{animation:sf .4s ease}
-@keyframes sf{0%{transform:scale(1.4);color:var(–gold2)}100%{transform:scale(1)}}
-.wait-overlay{position:absolute;inset:0;background:rgba(245,240,232,.9);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;z-index:10}
-.wait-spinner{width:36px;height:36px;border-radius:50%;border:3px solid var(–border2);border-top-color:var(–gold);animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-
-/* ── MULTI QUIZ TURN INDICATOR ── */
-.turn-bar{padding:8px 14px;text-align:center;font-size:.74rem;font-weight:700;border-bottom:1.5px solid var(–border);transition:background .3s}
-.turn-bar.my-turn{background:var(–gold-light);color:var(–gold2)}
-.turn-bar.their-turn{background:var(–teal-light);color:var(–teal)}
+.quiz-header { flex-shrink: 0; padding: 10px 14px; border-bottom: 1.5px solid var(–border); background: var(–card); }
+.quiz-scores { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
+.qs { flex: 1; text-align: center; }
+.qs-name { font-size: .6rem; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(–muted); }
+.qs-name.gold { color: var(–gold2); }
+.qs-val { font-size: 1.8rem; font-weight: 800; }
+.qs-sep { color: var(–gold2); font-size: 1.1rem; }
+.q-prog { height: 3px; background: var(–bg3); }
+.q-prog-fill { height: 100%; background: linear-gradient(90deg, var(–teal), var(–gold)); transition: width .5s; }
+.turn-bar {
+flex-shrink: 0; padding: 7px 14px; text-align: center;
+font-size: .72rem; font-weight: 700; border-bottom: 1.5px solid var(–border);
+}
+.turn-bar.mine { background: var(–gold-light); color: var(–gold2); }
+.turn-bar.theirs { background: var(–teal-light); color: var(–teal); }
+.quiz-body { flex: 1; overflow-y: auto; padding: 12px; background: var(–bg2); }
+.q-card { background: var(–card); border: 1.5px solid var(–border); border-radius: var(–r); padding: 14px; margin-bottom: 10px; box-shadow: var(–shadow); }
+.q-text { font-size: .92rem; font-weight: 600; line-height: 1.5; }
+.q-answers { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 6px; }
+@media (max-width: 420px) { .q-answers { grid-template-columns: 1fr; } }
+.q-ans {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 10px; padding: 10px 12px; cursor: pointer;
+font-size: .8rem; text-align: left; color: var(–text);
+display: flex; align-items: flex-start; gap: 7px;
+transition: all .15s; width: 100%; font-weight: 500; box-shadow: var(–shadow);
+}
+.q-ans:hover:not(:disabled) { border-color: var(–gold); background: var(–gold-light); }
+.q-ans.correct { background: var(–green-bg); border-color: var(–green); color: var(–green); }
+.q-ans.wrong { background: var(–rose-light); border-color: var(–rose); color: var(–rose2); }
+.q-ans.reveal { background: var(–green-bg); border-color: rgba(26,138,62,.4); }
+.q-lbl {
+flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+background: var(–bg2); border: 1.5px solid var(–border);
+font-size: .58rem; font-weight: 700; color: var(–text2);
+display: flex; align-items: center; justify-content: center;
+}
+.q-expl {
+background: var(–teal-light); border-left: 3px solid var(–teal);
+border-radius: 10px; padding: 9px 12px; font-size: .74rem;
+line-height: 1.6; color: var(–teal); display: none; margin-top: 5px;
+}
+.q-expl.show { display: block; animation: msgIn .25s ease; }
+.q-next {
+display: none; width: 100%; background: linear-gradient(135deg, var(–teal), var(–teal2));
+border: none; border-radius: 10px; padding: 11px; color: #fff;
+font-weight: 700; font-size: .76rem; cursor: pointer; margin-top: 7px;
+}
+.q-next.show { display: block; animation: msgIn .25s ease; }
+.wait-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 40px 20px; text-align: center; }
+.spinner { width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(–border2); border-top-color: var(–gold); animation: spin .8s linear infinite; }
+@keyframes spin { to{transform:rotate(360deg)} }
 
 /* ── SPRINT ── */
-.sprint-score-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:10px 14px;background:var(–card);border-radius:var(–r);border:1.5px solid var(–border);box-shadow:var(–shadow)}
-.sprint-q{font-size:.95rem;font-weight:600;line-height:1.5;text-align:center;margin:10px 0;color:var(–text)}
-.sprint-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
-@media(max-width:440px){.sprint-opts{grid-template-columns:1fr}}
-.sprint-opt{background:var(–card);border:1.5px solid var(–border);border-radius:10px;padding:11px 12px;cursor:pointer;font-size:.82rem;font-weight:500;color:var(–text);transition:all .18s;text-align:center;width:100%;box-shadow:var(–shadow)}
-.sprint-opt:hover:not(:disabled){border-color:var(–rose);background:var(–rose-light)}
-.sprint-opt.correct{background:var(–success-bg);border-color:var(–green);color:var(–green);pointer-events:none}
-.sprint-opt.wrong{background:var(–rose-light);border-color:var(–rose);color:var(–rose2);pointer-events:none}
-.timer-ring-wrap{position:relative;width:80px;height:80px;margin:0 auto 12px}
+.sprint-score-bar {
+display: flex; justify-content: space-between; align-items: center;
+padding: 10px 12px; background: var(–card); border-radius: var(–r);
+border: 1.5px solid var(–border); margin-bottom: 10px; box-shadow: var(–shadow);
+}
+.timer-wrap { position: relative; width: 76px; height: 76px; margin: 0 auto 10px; }
+.sprint-q { font-size: .92rem; font-weight: 600; line-height: 1.5; text-align: center; margin: 8px 0; }
+.sprint-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
+@media (max-width: 420px) { .sprint-opts { grid-template-columns: 1fr; } }
+.sprint-opt {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 10px; padding: 10px 12px; cursor: pointer;
+font-size: .8rem; font-weight: 500; color: var(–text);
+transition: all .15s; text-align: center; width: 100%; box-shadow: var(–shadow);
+}
+.sprint-opt:hover:not(:disabled) { border-color: var(–rose); background: var(–rose-light); }
+.sprint-opt.correct { background: var(–green-bg); border-color: var(–green); color: var(–green); pointer-events: none; }
+.sprint-opt.wrong { background: var(–rose-light); border-color: var(–rose); color: var(–rose2); pointer-events: none; }
 
 /* ── MEMORY ── */
-.mem-stats{display:flex;gap:10px;justify-content:center;margin-bottom:12px}
-.mem-stat{background:var(–card);border:1.5px solid var(–border);border-radius:10px;padding:8px 16px;text-align:center;box-shadow:var(–shadow)}
-.mem-stat-val{font-size:1.2rem;font-weight:800;color:var(–text)}
-.mem-stat-lbl{font-size:.6rem;font-weight:600;color:var(–muted)}
-.memory-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
-@media(max-width:420px){.memory-grid{grid-template-columns:repeat(3,1fr);gap:6px}}
-.mem-card{aspect-ratio:.85;border-radius:12px;cursor:pointer;border:1.5px solid var(–border);position:relative;overflow:hidden;transition:border-color .3s,box-shadow .3s;background:var(–card);box-shadow:var(–shadow)}
-.mem-card.matched{border-color:var(–teal);box-shadow:0 0 14px rgba(14,122,110,.2);pointer-events:none}
-.mem-face-back{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:var(–bg2);transition:opacity .25s}
-.mem-face-front{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:8px;text-align:center;background:var(–card);opacity:0;transition:opacity .25s;pointer-events:none}
-.mem-card.flipped .mem-face-back{opacity:0;pointer-events:none}
-.mem-card.flipped .mem-face-front{opacity:1}
-.mem-ar{font-family:‘Amiri’,serif;font-size:1.05rem;color:var(–text);line-height:1.3;margin-bottom:4px}
-.mem-fr{font-size:.56rem;color:var(–muted);line-height:1.3;font-weight:500}
-.mem-ph{font-size:.5rem;color:var(–gold2);font-style:italic;margin-top:2px;font-weight:600}
-.mem-type{font-size:.5rem;letter-spacing:1px;text-transform:uppercase;color:var(–teal);margin-top:3px;font-weight:700}
-.mem-card[data-type=“ar”] .mem-face-front{background:var(–gold-light)}
-.mem-card[data-type=“fr”] .mem-face-front{background:var(–teal-light)}
+.mem-stats { display: flex; gap: 8px; justify-content: center; margin-bottom: 10px; }
+.mem-stat { background: var(–card); border: 1.5px solid var(–border); border-radius: 10px; padding: 6px 14px; text-align: center; box-shadow: var(–shadow); }
+.mem-stat-val { font-size: 1.1rem; font-weight: 800; }
+.mem-stat-lbl { font-size: .58rem; font-weight: 600; color: var(–muted); }
+.memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 7px; margin-bottom: 10px; }
+@media (max-width: 380px) { .memory-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; } }
+.mem-card {
+aspect-ratio: .85; border-radius: 11px; cursor: pointer;
+border: 1.5px solid var(–border); position: relative;
+overflow: hidden; background: var(–card); box-shadow: var(–shadow);
+}
+.mem-card.matched { border-color: var(–teal); opacity: .7; pointer-events: none; }
+.mem-face-back {
+position: absolute; inset: 0;
+display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+background: var(–bg2); transition: opacity .2s;
+}
+.mem-face-front {
+position: absolute; inset: 0;
+display: flex; flex-direction: column; align-items: center; justify-content: center;
+padding: 6px; text-align: center; background: var(–card);
+opacity: 0; transition: opacity .2s; pointer-events: none;
+}
+.mem-card.flipped .mem-face-back { opacity: 0; pointer-events: none; }
+.mem-card.flipped .mem-face-front { opacity: 1; }
+.mem-ar { font-family: ‘Amiri’, serif; font-size: 1rem; line-height: 1.3; margin-bottom: 3px; }
+.mem-fr { font-size: .54rem; color: var(–muted); line-height: 1.3; font-weight: 500; }
+.mem-ph { font-size: .48rem; color: var(–gold2); font-style: italic; margin-top: 2px; font-weight: 600; }
+.mem-card[data-type=“ar”] .mem-face-front { background: var(–gold-light); }
+.mem-card[data-type=“fr”] .mem-face-front { background: var(–teal-light); }
 
 /* ── WORD SEARCH ── */
-.ws-words{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
-.ws-word{background:var(–card);border:1.5px solid var(–border);border-radius:999px;padding:4px 12px;font-size:.72rem;font-weight:600;color:var(–text2);box-shadow:var(–shadow);transition:all .3s}
-.ws-word.found{background:var(–teal-light);border-color:var(–teal);color:var(–teal);text-decoration:line-through;opacity:.7}
-.ws-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:3px;margin-bottom:12px;user-select:none;-webkit-user-select:none}
-.ws-cell{aspect-ratio:1;background:var(–card);border:1.5px solid var(–border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:700;cursor:pointer;transition:all .15s;text-transform:uppercase;color:var(–text2)}
-.ws-cell.selected{background:var(–gold-light);border-color:var(–gold);color:var(–gold2)}
-.ws-cell.found-cell{background:var(–teal-light);border-color:var(–teal);color:var(–teal)}
+.ws-words { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.ws-word {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 999px; padding: 3px 10px; font-size: .7rem;
+font-weight: 600; color: var(–text2); box-shadow: var(–shadow); transition: all .3s;
+}
+.ws-word.found { background: var(–teal-light) !important; border-color: var(–teal) !important; color: var(–teal) !important; text-decoration: line-through; opacity: .8; }
+.ws-grid { display: grid; grid-template-columns: repeat(10,1fr); gap: 2px; margin-bottom: 10px; user-select: none; -webkit-user-select: none; }
+.ws-cell {
+aspect-ratio: 1; background: var(–card); border: 1.5px solid var(–border);
+border-radius: 5px; display: flex; align-items: center; justify-content: center;
+font-size: .65rem; font-weight: 700; cursor: pointer; transition: background .15s, border-color .15s, color .15s;
+text-transform: uppercase; color: var(–text2);
+}
+.ws-cell.selected { background: var(–gold-light) !important; border-color: var(–gold) !important; color: var(–gold2) !important; }
+.ws-cell.found-cell { background: var(–teal-light) !important; border-color: var(–teal) !important; color: var(–teal) !important; }
 
 /* ── HADITHS ── */
-.h-card{background:var(–card);border-radius:var(–r);padding:16px;margin-bottom:10px;border:1.5px solid var(–border);cursor:pointer;transition:all .2s;position:relative;overflow:hidden;box-shadow:var(–shadow)}
-.h-card:hover{border-color:rgba(184,134,11,.4);box-shadow:var(–shadow2)}
-.h-card::before{content:’’;position:absolute;top:0;left:0;width:3px;height:100%;background:linear-gradient(180deg,var(–gold),var(–teal))}
-.h-num{font-size:.62rem;font-weight:700;color:var(–muted);margin-bottom:8px}
-.h-ar{font-family:‘Amiri’,serif;font-size:1.15rem;line-height:1.8;text-align:right;direction:rtl;margin-bottom:8px;color:var(–text)}
-.h-fr{font-size:.8rem;color:var(–text2);font-style:italic;line-height:1.6}
-.h-src{font-size:.64rem;color:var(–gold2);margin-top:6px;font-weight:700}
-.h-reveal{display:none;margin-top:10px;padding-top:10px;border-top:1.5px solid var(–border)}
-.h-card.open .h-reveal{display:block}
-.h-vertu{font-size:.78rem;color:var(–muted);line-height:1.6}
-.h-actions{display:flex;gap:6px;margin-top:10px}
-.action-btn{background:var(–card2);border:1.5px solid var(–border);border-radius:999px;padding:5px 12px;font-size:.7rem;font-weight:600;color:var(–text2);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px}
-.action-btn:hover{border-color:var(–gold);color:var(–gold2);background:var(–gold-light)}
-.action-btn.liked{background:var(–rose-light);border-color:var(–rose);color:var(–rose2)}
+.h-card {
+background: var(–card); border-radius: var(–r); padding: 14px;
+margin-bottom: 8px; border: 1.5px solid var(–border);
+cursor: pointer; transition: all .18s; position: relative; overflow: hidden; box-shadow: var(–shadow);
+}
+.h-card::before { content:’’; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: linear-gradient(180deg, var(–gold), var(–teal)); }
+.h-card:hover { border-color: rgba(184,134,11,.4); }
+.h-num { font-size: .6rem; font-weight: 700; color: var(–muted); margin-bottom: 7px; }
+.h-ar { font-family: ‘Amiri’, serif; font-size: 1.1rem; line-height: 1.8; text-align: right; direction: rtl; margin-bottom: 6px; }
+.h-fr { font-size: .77rem; color: var(–text2); font-style: italic; line-height: 1.6; }
+.h-src { font-size: .62rem; color: var(–gold2); margin-top: 5px; font-weight: 700; }
+.h-reveal { display: none; margin-top: 8px; padding-top: 8px; border-top: 1.5px solid var(–border); }
+.h-card.open .h-reveal { display: block; }
+.h-vertu { font-size: .76rem; color: var(–muted); line-height: 1.6; }
+.h-actions { display: flex; gap: 6px; margin-top: 8px; }
+.action-btn {
+background: var(–card2); border: 1.5px solid var(–border);
+border-radius: 999px; padding: 4px 11px; font-size: .68rem;
+font-weight: 600; color: var(–text2); cursor: pointer; transition: all .18s;
+display: flex; align-items: center; gap: 4px;
+}
+.action-btn:hover { border-color: var(–gold); color: var(–gold2); background: var(–gold-light); }
+.action-btn.liked { background: var(–rose-light); border-color: var(–rose); color: var(–rose2); }
 
 /* ── DUAS ── */
-.dua-cats{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.dua-cat{background:var(–card);border:1.5px solid var(–border);border-radius:999px;padding:6px 13px;font-size:.72rem;font-weight:600;cursor:pointer;transition:all .2s;color:var(–text2);box-shadow:var(–shadow)}
-.dua-cat.active{background:var(–gold-light);border-color:rgba(184,134,11,.4);color:var(–gold2)}
-.dua-card{background:var(–card);border-radius:var(–r);padding:16px;margin-bottom:10px;border:1.5px solid var(–border);box-shadow:var(–shadow)}
-.dua-sit{font-size:.64rem;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:var(–teal);margin-bottom:8px}
-.dua-ar{font-family:‘Amiri’,serif;font-size:1.2rem;line-height:1.8;text-align:right;direction:rtl;margin-bottom:8px;color:var(–text)}
-.dua-ph{font-size:.76rem;color:var(–gold2);font-style:italic;margin-bottom:6px;line-height:1.5;font-weight:500}
-.dua-fr{font-size:.78rem;color:var(–text2);line-height:1.6}
-.dua-src{font-size:.64px;color:var(–muted);margin-top:5px;font-size:.64rem}
+.dua-cats { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 10px; }
+.dua-cat {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 999px; padding: 5px 12px; font-size: .7rem;
+font-weight: 600; cursor: pointer; transition: all .18s; color: var(–text2); box-shadow: var(–shadow);
+}
+.dua-cat.active { background: var(–gold-light); border-color: rgba(184,134,11,.4); color: var(–gold2); }
+.dua-card { background: var(–card); border-radius: var(–r); padding: 14px; margin-bottom: 8px; border: 1.5px solid var(–border); box-shadow: var(–shadow); }
+.dua-sit { font-size: .62rem; font-weight: 700; letter-spacing: .3px; text-transform: uppercase; color: var(–teal); margin-bottom: 7px; }
+.dua-ar { font-family: ‘Amiri’, serif; font-size: 1.1rem; line-height: 1.8; text-align: right; direction: rtl; margin-bottom: 6px; }
+.dua-ph { font-size: .73rem; color: var(–gold2); font-style: italic; margin-bottom: 5px; line-height: 1.5; font-weight: 500; }
+.dua-fr { font-size: .75rem; color: var(–text2); line-height: 1.6; }
+.dua-src { font-size: .62rem; color: var(–muted); margin-top: 4px; }
 
 /* ── DHIKR ── */
-.dhikr-select{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
-.dhikr-opt{background:var(–card);border:1.5px solid var(–border);border-radius:10px;padding:8px 12px;font-size:.74rem;font-weight:500;cursor:pointer;color:var(–text2);transition:all .2s;text-align:center;box-shadow:var(–shadow)}
-.dhikr-opt.active{background:var(–gold-light);border-color:rgba(184,134,11,.4);color:var(–gold2);font-weight:700}
-.dhikr-opt .do-ar{font-family:‘Amiri’,serif;font-size:.95rem;display:block;color:var(–text)}
-.dhikr-opt .do-fr{font-size:.6rem;margin-top:2px;color:var(–muted)}
-.dhikr-display{background:var(–card);border:1.5px solid var(–border);border-radius:20px;padding:22px;text-align:center;margin-bottom:12px;box-shadow:var(–shadow2)}
-.dhikr-ar{font-family:‘Amiri’,serif;font-size:1.8rem;color:var(–text);margin-bottom:4px}
-.dhikr-ph-txt{font-size:.78rem;color:var(–gold2);font-style:italic;margin-bottom:2px;font-weight:600}
-.dhikr-fr-txt{font-size:.74rem;color:var(–muted);margin-bottom:16px}
-.dhikr-tap{width:110px;height:110px;border-radius:50%;margin:0 auto 14px;cursor:pointer;position:relative;-webkit-user-select:none;user-select:none;transition:transform .1s}
-.dhikr-tap:active{transform:scale(.93)}
-.dhikr-count-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:2.4rem;font-weight:800;color:var(–text);z-index:1}
-.dhikr-target-txt{font-size:.7rem;font-weight:600;color:var(–muted);margin-bottom:14px}
-.dhikr-target-sel{display:flex;gap:8px;justify-content:center;margin-bottom:14px}
-.dhikr-target-btn{background:var(–card);border:1.5px solid var(–border);border-radius:999px;padding:5px 16px;font-size:.72rem;font-weight:700;color:var(–text2);cursor:pointer;transition:all .2s;box-shadow:var(–shadow)}
-.dhikr-target-btn.active{background:var(–gold-light);border-color:var(–gold);color:var(–gold2)}
-.dhikr-btn-row{display:flex;gap:8px;justify-content:center}
+.dhikr-sel { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+.dhikr-opt {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 10px; padding: 7px 11px; font-size: .72rem;
+font-weight: 500; cursor: pointer; color: var(–text2);
+transition: all .18s; text-align: center; box-shadow: var(–shadow);
+}
+.dhikr-opt.active { background: var(–gold-light); border-color: rgba(184,134,11,.4); color: var(–gold2); font-weight: 700; }
+.dhikr-opt .do-ar { font-family: ‘Amiri’, serif; font-size: .9rem; display: block; }
+.dhikr-opt .do-fr { font-size: .58rem; margin-top: 2px; color: var(–muted); }
+.dhikr-display { background: var(–card); border: 1.5px solid var(–border); border-radius: 20px; padding: 20px; text-align: center; margin-bottom: 10px; box-shadow: var(–shadow2); }
+.dhikr-main-ar { font-family: ‘Amiri’, serif; font-size: 1.7rem; margin-bottom: 3px; }
+.dhikr-ph { font-size: .76rem; color: var(–gold2); font-style: italic; margin-bottom: 2px; font-weight: 600; }
+.dhikr-fr { font-size: .72rem; color: var(–muted); margin-bottom: 14px; }
+.dhikr-tap {
+width: 100px; height: 100px; border-radius: 50%;
+margin: 0 auto 12px; cursor: pointer; position: relative;
+-webkit-user-select: none; user-select: none; transition: transform .1s;
+}
+.dhikr-tap:active { transform: scale(.93); }
+.dhikr-count { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 2.2rem; font-weight: 800; z-index: 1; }
+.dhikr-target-lbl { font-size: .68rem; font-weight: 600; color: var(–muted); margin-bottom: 12px; }
+.dhikr-targets { display: flex; gap: 7px; justify-content: center; margin-bottom: 12px; }
+.dhikr-tb {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 999px; padding: 4px 14px; font-size: .7rem;
+font-weight: 700; color: var(–text2); cursor: pointer; transition: all .18s; box-shadow: var(–shadow);
+}
+.dhikr-tb.active { background: var(–gold-light); border-color: var(–gold); color: var(–gold2); }
+.dhikr-btns { display: flex; gap: 7px; justify-content: center; }
 
 /* ── LEADERBOARD ── */
-.lb-card{background:var(–card);border:1.5px solid var(–border);border-radius:var(–r);padding:14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;box-shadow:var(–shadow)}
-.lb-card.me{border-color:rgba(184,134,11,.4);background:var(–gold-light)}
-.lb-rank{font-size:1.4rem;font-weight:800;color:var(–muted);width:28px;text-align:center;flex-shrink:0}
-.lb-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.84rem;flex-shrink:0;border:2px solid}
-.lb-info{flex:1}
-.lb-name{font-weight:700;font-size:.86rem;color:var(–text)}
-.lb-pts{font-size:.7rem;color:var(–muted);font-weight:500}
-.lb-nour{font-size:1.4rem;font-weight:800;color:var(–text)}
-.lb-nour-lbl{font-size:.58rem;font-weight:600;color:var(–muted)}
-.badges-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-@media(max-width:380px){.badges-grid{grid-template-columns:repeat(2,1fr)}}
-.badge-card{background:var(–card);border:1.5px solid var(–border);border-radius:12px;padding:12px;text-align:center;box-shadow:var(–shadow)}
-.badge-card.unlocked{border-color:rgba(184,134,11,.4);background:var(–gold-light)}
-.badge-card.locked{opacity:.35;filter:grayscale(.8)}
-.bc-icon{margin-bottom:5px;display:flex;justify-content:center}
-.bc-name{font-size:.7rem;font-weight:700;color:var(–text)}
-.bc-req{font-size:.6rem;color:var(–muted);margin-top:2px}
+.lb-item {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: var(–r); padding: 12px 14px; margin-bottom: 7px;
+display: flex; align-items: center; gap: 10px; box-shadow: var(–shadow);
+}
+.lb-item.me { border-color: rgba(184,134,11,.4); background: var(–gold-light); }
+.lb-rank { font-size: 1.2rem; font-weight: 800; color: var(–muted); width: 26px; text-align: center; flex-shrink: 0; }
+.lb-av { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: .8rem; flex-shrink: 0; border: 2px solid; }
+.lb-info { flex: 1; }
+.lb-name { font-weight: 700; font-size: .84rem; }
+.lb-pts { font-size: .68rem; color: var(–muted); }
+.lb-nour { text-align: right; }
+.lb-n-val { font-size: 1.3rem; font-weight: 800; }
+.lb-n-lbl { font-size: .56rem; font-weight: 600; color: var(–muted); }
+.badges-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 7px; }
+@media (max-width: 360px) { .badges-grid { grid-template-columns: repeat(2,1fr); } }
+.badge-card { background: var(–card); border: 1.5px solid var(–border); border-radius: 11px; padding: 10px; text-align: center; box-shadow: var(–shadow); }
+.badge-card.unlocked { border-color: rgba(184,134,11,.4); background: var(–gold-light); }
+.badge-card.locked { opacity: .3; filter: grayscale(.9); }
+.bc-name { font-size: .68rem; font-weight: 700; margin-top: 5px; }
+.bc-req { font-size: .58rem; color: var(–muted); margin-top: 2px; }
 
 /* ── MODAL / TOAST ── */
-.modal-bg{position:fixed;inset:0;z-index:150;background:rgba(245,240,232,.7);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;padding:16px}
-.modal{background:var(–card);border:1.5px solid var(–border);border-radius:20px;padding:24px;width:100%;max-width:320px;text-align:center;animation:modalIn .3s ease;box-shadow:var(–shadow2)}
-@keyframes modalIn{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:scale(1)}}
-.modal h2{font-size:1.3rem;font-weight:800;color:var(–text);margin-bottom:5px}
-.modal p{font-size:.78rem;color:var(–muted);line-height:1.55;margin-bottom:16px}
-.badge-icon-modal{display:flex;justify-content:center;margin-bottom:8px;animation:badgePop .55s cubic-bezier(.34,1.56,.64,1)}
-@keyframes badgePop{from{transform:scale(0) rotate(-20deg)}to{transform:scale(1) rotate(0)}}
-.modal-close{background:var(–card2);border:1.5px solid var(–border);color:var(–text2);border-radius:999px;padding:8px 22px;font-size:.74rem;font-weight:700;cursor:pointer;transition:all .2s}
-.modal-close:hover{border-color:var(–gold);color:var(–gold2);background:var(–gold-light)}
-.toast{position:fixed;bottom:calc(20px + var(–safe-bottom));left:50%;transform:translateX(-50%) translateY(60px);background:var(–text);border-radius:999px;font-size:.76rem;font-weight:600;z-index:300;transition:transform .3s ease;white-space:nowrap;pointer-events:none;padding:9px 20px;color:#fff;box-shadow:var(–shadow2)}
-.toast.show{transform:translateX(-50%) translateY(0)}
-
-/* ── IMAGE LIGHTBOX ── */
-#lightbox{position:fixed;inset:0;z-index:400;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center;cursor:pointer}
-#lightbox img{max-width:92vw;max-height:92vh;border-radius:12px;object-fit:contain}
+.modal-bg {
+position: fixed; inset: 0; z-index: 300;
+background: rgba(245,240,232,.8); backdrop-filter: blur(6px);
+display: flex; align-items: center; justify-content: center; padding: 16px;
+}
+.modal {
+background: var(–card); border: 1.5px solid var(–border);
+border-radius: 20px; padding: 22px; width: 100%; max-width: 300px;
+text-align: center; animation: modalIn .3s ease; box-shadow: var(–shadow2);
+}
+@keyframes modalIn { from{opacity:0;transform:scale(.92)} to{opacity:1;transform:scale(1)} }
+.modal h2 { font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
+.modal p { font-size: .75rem; color: var(–muted); line-height: 1.55; margin-bottom: 14px; }
+.modal-icon { display: flex; justify-content: center; margin-bottom: 8px; animation: badgePop .5s cubic-bezier(.34,1.56,.64,1); }
+@keyframes badgePop { from{transform:scale(0) rotate(-20deg)} to{transform:scale(1)} }
+.toast {
+position: fixed; bottom: 20px; left: 50%;
+transform: translateX(-50%) translateY(60px);
+background: var(–text); border-radius: 999px;
+font-size: .74rem; font-weight: 600; z-index: 400;
+transition: transform .28s ease; white-space: nowrap; pointer-events: none;
+padding: 8px 18px; color: #fff; box-shadow: var(–shadow2);
+}
+.toast.show { transform: translateX(-50%) translateY(0); }
+#lightbox {
+position: fixed; inset: 0; z-index: 500; background: rgba(0,0,0,.88);
+display: none; align-items: center; justify-content: center; cursor: pointer;
+}
+#lightbox img { max-width: 92vw; max-height: 92vh; border-radius: 10px; object-fit: contain; }
 </style>
 
 </head>
 <body>
 
-<div id="bg-canvas">
-  <div class="float-orb" style="width:300px;height:300px;top:10%;left:5%;background:rgba(184,134,11,.15);--d:10s;--tx:30px;--ty:20px"></div>
-  <div class="float-orb" style="width:250px;height:250px;top:40%;right:5%;background:rgba(14,122,110,.12);--d:12s;--dl:-4s;--tx:-25px;--ty:35px"></div>
-  <div class="float-orb" style="width:200px;height:200px;bottom:10%;left:30%;background:rgba(109,61,204,.1);--d:9s;--dl:-2s;--tx:20px;--ty:-25px"></div>
-</div>
-
 <!-- LOGIN -->
 
 <div id="login-screen">
   <div class="lcard">
-    <div class="lcard-top">
-      <div class="logo-icon">✦</div>
-      <h1>Sakina Space</h1>
-      <div class="ls">Ton espace spirituel partagé</div>
-    </div>
+    <div class="lcard-logo">&#x2736;</div>
+    <h1>Sakina Space</h1>
+    <div class="lcard-sub">Ton espace spirituel partagé</div>
     <label class="lbl">Ton prénom</label>
-    <input class="li" id="ln" type="text" placeholder="Ex : Amina" maxlength="16" autocomplete="off">
+    <input class="fi" id="ln" type="text" placeholder="Ex : Amina" maxlength="16" autocomplete="off">
     <label class="lbl">Code de l'espace</label>
-    <input class="li" id="lcode" type="text" placeholder="Ex : FAMILLE · NOUR2025" maxlength="24"
-      style="letter-spacing:1px;text-transform:uppercase"
-      onkeydown="if(event.key==='Enter')goToRoom()">
-    <div class="hint"><strong>Comment ça marche</strong><br>Invente un code et partage-le. Tous ceux qui entrent le même code partagent le même espace.</div>
-    <button class="btn-gold" onclick="goToRoom()">Entrer dans l'espace</button>
+    <input class="fi" id="lcode" type="text" placeholder="Ex : NOUR2025" maxlength="24" style="letter-spacing:1px;text-transform:uppercase" autocomplete="off">
+    <label class="lbl">Mot de passe de session</label>
+    <input class="fi" id="lpwd" type="password" placeholder="Choisis un mot de passe" maxlength="32" autocomplete="new-password" onkeydown="if(event.key==='Enter')goToRoom()">
+    <div class="hint-box">
+      <strong>Sécurité :</strong> Code + mot de passe forment la clé de ton espace. Seules les personnes ayant les deux peuvent accéder aux données. Change le mot de passe pour repartir à zéro.
+    </div>
+    <button class="btn btn-gold" onclick="goToRoom()">Entrer dans l'espace</button>
   </div>
 </div>
 
@@ -380,96 +615,80 @@ input.li::placeholder{color:var(–muted2)}
 <div id="app" style="display:none">
   <div class="topbar">
     <div style="display:flex;align-items:center;gap:8px">
-      <div class="tb-logo">✦ Sakina</div>
-      <div class="tb-level" id="tb-level">Mubtadi</div>
+      <div class="tb-logo">&#x2736; Sakina</div>
+      <div class="tb-chip" id="tb-level">Mubtadi</div>
     </div>
     <div class="tb-nour">
-      <svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      <span id="tb-nour">0</span> Nour
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span id="tb-nour">0</span>
     </div>
     <div style="display:flex;align-items:center;gap:6px">
       <div id="av-wrap" style="display:flex"></div>
-      <div class="online-badge"><div class="live-dot"></div><span id="online-count">1</span></div>
-      <button class="btn-back" onclick="confirmBack()" title="Changer d'espace">
-        <svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+      <div class="online-pill"><div class="dot-live"></div><span id="online-count">1</span></div>
+      <button class="tb-exit" onclick="confirmBack()">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Quitter
       </button>
     </div>
   </div>
 
   <div class="main">
+    <!-- SIDEBAR -->
     <div class="sidebar">
-      <div class="stitle">Principal</div>
+      <div class="s-title">Principal</div>
       <div class="ni active" id="nav-home" onclick="showPanel('home')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
-        <span class="nlabel">Accueil</span>
+        <span class="ni-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></span>
+        <span class="nl">Accueil</span>
       </div>
       <div class="ni" id="nav-chat" onclick="showPanel('chat')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
-        <span class="nlabel">Chat</span>
-        <span class="nbadge" id="chat-badge" style="display:none">0</span>
+        <span class="ni-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></span>
+        <span class="nl">Chat</span>
+        <span class="n-badge" id="chat-badge" style="display:none">0</span>
       </div>
-      <div class="stitle" style="margin-top:6px">Jeux</div>
-      <div class="ni" id="nav-quiz" onclick="showPanel('quiz')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></span>
-        <span class="nlabel">Quiz</span>
+      <div class="s-title" style="margin-top:6px">Jeux</div>
+      <div class="ni" id="nav-games" onclick="showPanel('games')">
+        <span class="ni-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 2l-4 5-4-5"/><line x1="9" y1="14" x2="15" y2="14"/><line x1="12" y1="11" x2="12" y2="17"/></svg></span>
+        <span class="nl">Jeux</span>
       </div>
-      <div class="ni" id="nav-sprint" onclick="showPanel('sprint')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span>
-        <span class="nlabel">Sprint 30s</span>
-      </div>
-      <div class="ni" id="nav-memory" onclick="showPanel('memory')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></span>
-        <span class="nlabel">Memory Dhikr</span>
-      </div>
-      <div class="ni" id="nav-wordsearch" onclick="showPanel('wordsearch')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></span>
-        <span class="nlabel">Mots mêlés</span>
-      </div>
-      <div class="stitle" style="margin-top:6px">Spirituel</div>
+      <div class="s-title" style="margin-top:6px">Spirituel</div>
       <div class="ni" id="nav-hadith" onclick="showPanel('hadith')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
-        <span class="nlabel">Hadiths</span>
+        <span class="ni-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+        <span class="nl">Hadiths</span>
       </div>
       <div class="ni" id="nav-dua" onclick="showPanel('dua')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
-        <span class="nlabel">Douaas</span>
+        <span class="ni-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg></span>
+        <span class="nl">Douaas</span>
       </div>
       <div class="ni" id="nav-dhikr" onclick="showPanel('dhikr')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></span>
-        <span class="nlabel">Dhikr</span>
+        <span class="ni-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <span class="nl">Dhikr</span>
       </div>
-      <div class="stitle" style="margin-top:6px">Classement</div>
+      <div class="s-title" style="margin-top:6px">Classement</div>
       <div class="ni" id="nav-leaderboard" onclick="showPanel('leaderboard')">
-        <span class="ni-icon"><svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
-        <span class="nlabel">Classement</span>
+        <span class="ni-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span>
+        <span class="nl">Classement</span>
       </div>
     </div>
 
 ```
+<!-- CONTENT -->
 <div class="content">
 
   <!-- HOME -->
   <div class="panel active" id="panel-home">
-    <div class="scroll-area">
-      <div class="home-banner">
-        <div class="hb-ar">بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
-        <div class="hb-en">Sakina Space</div>
-        <div class="hb-sub" id="home-welcome">Bienvenue</div>
+    <div class="scroll">
+      <div class="banner">
+        <div class="banner-ar">بِسْمِ اللهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+        <div class="banner-title">Sakina Space</div>
+        <div class="banner-sub" id="home-welcome">Bienvenue</div>
       </div>
-      <div class="nour-wrap">
+      <div class="nour-card">
         <div class="nour-row">
-          <div><div class="nour-label">Points de Nour</div><div id="level-name" style="font-size:.72rem;color:var(--muted);margin-top:2px;font-weight:500"></div></div>
-          <div style="text-align:right"><div class="nour-pts" id="home-nour">0</div><div style="font-size:.6rem;color:var(--muted);font-weight:500">pts total</div></div>
+          <div><div class="nour-label">Points de Nour</div><div id="level-name" style="font-size:.7rem;color:var(--muted);margin-top:1px"></div></div>
+          <div style="text-align:right"><div class="nour-val" id="home-nour">0</div><div style="font-size:.58rem;color:var(--muted)">pts total</div></div>
         </div>
-        <div class="prog-bar"><div class="prog-fill pb-gold" id="nour-bar-fill" style="width:0%"></div></div>
-        <div class="level-info"><span id="level-from">0</span><span id="level-next-name" style="color:var(--gold2)"></span><span id="level-to">100</span></div>
-      </div>
-      <div class="section-title">Mini-jeux</div>
-      <div class="games-grid">
-        <div class="gc" style="--gca:var(--gold2);--gcbg:var(--gold-light);--gcbo:rgba(184,134,11,.3)" onclick="showPanel('quiz')"><div class="gc-bg"></div><div class="gc-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div><div class="gc-title">Quiz Islam</div><div class="gc-sub">55 questions · multi</div><div class="gc-nour">+50 Nour</div></div>
-        <div class="gc" style="--gca:var(--rose2);--gcbg:var(--rose-light);--gcbo:rgba(192,67,92,.3)" onclick="showPanel('sprint')"><div class="gc-bg"></div><div class="gc-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div><div class="gc-title">Sprint 30s</div><div class="gc-sub">Max de réponses</div><div class="gc-nour">+10/rép</div></div>
-        <div class="gc" style="--gca:var(--teal);--gcbg:var(--teal-light);--gcbo:rgba(14,122,110,.3)" onclick="showPanel('memory')"><div class="gc-bg"></div><div class="gc-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg></div><div class="gc-title">Memory Dhikr</div><div class="gc-sub">Dhikr en jouant</div><div class="gc-nour">+15/paire</div></div>
-        <div class="gc" style="--gca:var(--purple2);--gcbg:var(--purple-light);--gcbo:rgba(109,61,204,.3)" onclick="showPanel('wordsearch')"><div class="gc-bg"></div><div class="gc-icon"><svg class="icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div><div class="gc-title">Mots mêlés</div><div class="gc-sub">Mots islamiques</div><div class="gc-nour">+35/mot</div></div>
+        <div class="prog"><div class="prog-fill pf-gold" id="nour-bar" style="width:0%"></div></div>
+        <div class="level-info"><span id="lv-from">0</span><span id="lv-next" style="color:var(--gold2)"></span><span id="lv-to">100</span></div>
       </div>
       <div class="ayah-box">
         <div class="ayah-lbl">Verset du jour</div>
@@ -477,13 +696,13 @@ input.li::placeholder{color:var(–muted2)}
         <div class="ayah-fr" id="aw-fr"></div>
         <div class="ayah-ref" id="aw-ref"></div>
       </div>
-      <div class="section-title">Ma progression</div>
-      <div class="card" style="margin-bottom:14px">
+      <div class="sec-title">Ma progression</div>
+      <div class="card">
         <div class="stat-grid">
-          <div class="stat-item"><div class="stat-lbl">Quiz</div><div class="stat-val" id="stat-quiz">0</div><div class="prog-bar" style="margin-top:3px"><div class="prog-fill pb-gold" id="pf-quiz" style="width:0%"></div></div></div>
-          <div class="stat-item"><div class="stat-lbl">Hadiths</div><div class="stat-val" id="stat-hadith">0</div><div class="prog-bar" style="margin-top:3px"><div class="prog-fill pb-teal" id="pf-hadith" style="width:0%"></div></div></div>
-          <div class="stat-item"><div class="stat-lbl">Dhikr total</div><div class="stat-val" id="stat-dhikr">0</div><div class="prog-bar" style="margin-top:3px"><div class="prog-fill pb-rose" id="pf-dhikr" style="width:0%"></div></div></div>
-          <div class="stat-item"><div class="stat-lbl">Mots trouvés</div><div class="stat-val" id="stat-words">0</div><div class="prog-bar" style="margin-top:3px"><div class="prog-fill pb-purple" id="pf-words" style="width:0%"></div></div></div>
+          <div class="stat-item"><div class="s-lbl">Quiz</div><div class="s-val" id="st-quiz">0</div><div class="prog"><div class="prog-fill pf-gold" id="pf-quiz" style="width:0%"></div></div></div>
+          <div class="stat-item"><div class="s-lbl">Hadiths lus</div><div class="s-val" id="st-hadith">0</div><div class="prog"><div class="prog-fill pf-teal" id="pf-hadith" style="width:0%"></div></div></div>
+          <div class="stat-item"><div class="s-lbl">Dhikr total</div><div class="s-val" id="st-dhikr">0</div><div class="prog"><div class="prog-fill pf-rose" id="pf-dhikr" style="width:0%"></div></div></div>
+          <div class="stat-item"><div class="s-lbl">Mots trouvés</div><div class="s-val" id="st-words">0</div><div class="prog"><div class="prog-fill pf-purple" id="pf-words" style="width:0%"></div></div></div>
         </div>
       </div>
     </div>
@@ -495,116 +714,178 @@ input.li::placeholder{color:var(–muted2)}
       <div class="chat-msgs" id="chat-msgs">
         <div class="msg-sys">Assalamu Alaykoum — Bienvenue dans Sakina Space</div>
       </div>
-      <div class="chat-quickbtns">
-        <button class="qb" onclick="quickSend('Assalamu alaykoum 🌙')">🌙 Salam</button>
-        <button class="qb" onclick="quickSend('Al Hamdoulilah ✨')">✨ Al Hamdoulilah</button>
-        <button class="qb" onclick="quickSend('Machallah ! 🤲')">🤲 Machallah</button>
-        <button class="qb" onclick="sendGameInvite('quiz')">🎯 Inviter Quiz</button>
+      <div class="chat-quick">
+        <button class="qb" onclick="quickSend('Assalamu alaykoum')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          Salam
+        </button>
+        <button class="qb" onclick="quickSend('Al Hamdoulilah')">Al Hamdoulilah</button>
+        <button class="qb" onclick="quickSend('Machallah !')">Machallah</button>
+        <button class="qb" onclick="sendGameInvite('quiz');showPanel('chat')">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Inviter Quiz
+        </button>
       </div>
       <div class="chat-input-row">
-        <input type="file" id="media-input" accept="image/*,video/*" style="display:none" onchange="sendMedia(event)">
-        <button class="media-btn" onclick="document.getElementById('media-input').click()" title="Photo / Vidéo">
-          <svg class="icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        <input type="file" id="media-input" accept="image/*" style="display:none" onchange="sendMedia(event)">
+        <button class="media-btn" onclick="document.getElementById('media-input').click()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
         </button>
-        <input class="chat-input" id="chat-inp" placeholder="Écris un message…" onkeydown="if(event.key==='Enter')sendChat()">
+        <input class="chat-inp" id="chat-inp" placeholder="Écris un message…"
+          onkeydown="if(event.key==='Enter')sendChat()"
+          oninput="onTyping()">
         <button class="send-btn" onclick="sendChat()">
-          <svg class="icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GAMES MENU -->
+  <div class="panel" id="panel-games">
+    <div class="scroll">
+      <div class="panel-title">Jeux</div>
+      <div class="panel-sub">Choisis un jeu pour commencer</div>
+      <div class="games-list">
+        <div class="game-row" onclick="showPanel('quiz')">
+          <div class="game-row-icon" style="background:var(--gold-light)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          </div>
+          <div class="game-row-info">
+            <div class="game-row-title">Quiz Islam</div>
+            <div class="game-row-sub">55 questions · Solo ou multijoueur tour par tour</div>
+          </div>
+          <span class="tag tag-gold game-row-nour">+50 Nour</span>
+        </div>
+        <div class="game-row" onclick="showPanel('sprint')">
+          <div class="game-row-icon" style="background:var(--rose-light)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--rose2)" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="game-row-info">
+            <div class="game-row-title">Sprint 30 secondes</div>
+            <div class="game-row-sub">Max de bonnes réponses en 30s</div>
+          </div>
+          <span class="tag tag-rose game-row-nour">+10/rép</span>
+        </div>
+        <div class="game-row" onclick="showPanel('memory')">
+          <div class="game-row-icon" style="background:var(--teal-light)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <div class="game-row-info">
+            <div class="game-row-title">Memory Dhikr</div>
+            <div class="game-row-sub">Associe dhikr arabe et traduction</div>
+          </div>
+          <span class="tag tag-teal game-row-nour">+15/paire</span>
+        </div>
+        <div class="game-row" onclick="showPanel('wordsearch')">
+          <div class="game-row-icon" style="background:var(--purple-light)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--purple2)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          </div>
+          <div class="game-row-info">
+            <div class="game-row-title">Mots mêlés</div>
+            <div class="game-row-sub">Retrouve les mots islamiques cachés</div>
+          </div>
+          <span class="tag tag-purple game-row-nour">+35/mot</span>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- QUIZ -->
   <div class="panel" id="panel-quiz" style="position:relative">
-    <div id="quiz-turn-bar" class="turn-bar my-turn" style="display:none"></div>
+    <div id="quiz-turn-bar" style="display:none"></div>
     <div class="quiz-header" id="quiz-header" style="display:none">
-      <div class="quiz-scoreline">
-        <div class="qsc"><div class="qsc-name gold" id="qn1">Moi</div><div class="qsc-val" id="qs1">0</div></div>
-        <div class="qsc-sep">✦</div>
-        <div class="qsc"><div class="qsc-name" id="qn2">Solo</div><div class="qsc-val" id="qs2">—</div></div>
+      <div class="quiz-scores">
+        <div class="qs"><div class="qs-name gold" id="qn1">Moi</div><div class="qs-val" id="qs1">0</div></div>
+        <div class="qs-sep">&#x2736;</div>
+        <div class="qs"><div class="qs-name" id="qn2">Solo</div><div class="qs-val" id="qs2">—</div></div>
       </div>
-      <div class="qprogress"><div class="qprogress-fill" id="qpf" style="width:0%"></div></div>
+      <div class="q-prog"><div class="q-prog-fill" id="qpf" style="width:0%"></div></div>
     </div>
     <div class="quiz-body" id="quiz-body">
       <div class="start-screen">
-        <div class="start-icon"><svg class="icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+        <div class="start-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
         <div class="start-title">Quiz Islam</div>
-        <div class="start-desc">20 questions · Bonne réponse = <strong>+50 Nour</strong><br><span style="color:var(--teal);font-weight:600">En multijoueur : chacun répond à son tour — le premier à 10 bonnes réponses gagne !</span></div>
-        <button class="btn-gold" style="max-width:220px;margin:0 auto 10px" onclick="startQuiz(false)">Jouer en solo</button>
-        <button class="btn-teal" style="max-width:220px;margin:0 auto" onclick="sendGameInvite('quiz');showPanel('chat')">Inviter quelqu'un</button>
+        <div class="start-desc">20 questions · Bonne réponse = <strong>+50 Nour</strong><br><span style="color:var(--teal);font-weight:600">Multijoueur : chacun répond à son tour</span></div>
+        <button class="btn btn-gold" style="max-width:220px;margin:0 auto 8px" onclick="startQuiz()">Jouer en solo</button>
+        <button class="btn btn-teal" style="max-width:220px;margin:0 auto" onclick="sendGameInvite('quiz');showPanel('chat')">Inviter quelqu'un</button>
       </div>
     </div>
   </div>
 
   <!-- SPRINT -->
   <div class="panel" id="panel-sprint">
-    <div class="scroll-area" id="sprint-wrap">
+    <div class="scroll" id="sprint-wrap">
       <div class="start-screen">
-        <div class="start-icon"><svg class="icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--rose2)" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+        <div class="start-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--rose2)" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
         <div class="start-title">Sprint 30 secondes</div>
         <div class="start-desc">Max de bonnes réponses en 30s.<br><strong>+10 Nour</strong> par bonne réponse</div>
-        <button class="btn-ghost" style="max-width:200px;margin:0 auto" onclick="startSprint()">Lancer</button>
+        <button class="btn btn-outline" style="max-width:200px;margin:0 auto" onclick="startSprint()">Lancer</button>
       </div>
     </div>
   </div>
 
   <!-- MEMORY -->
   <div class="panel" id="panel-memory">
-    <div class="scroll-area" id="memory-wrap">
+    <div class="scroll" id="memory-wrap">
       <div class="start-screen">
-        <div class="start-icon"><svg class="icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/></svg></div>
+        <div class="start-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/></svg></div>
         <div class="start-title">Memory Dhikr</div>
-        <div class="start-desc">Associe le dhikr arabe ↔ sa traduction.<br><strong>+15 Nour</strong> par paire</div>
-        <button class="btn-teal" style="max-width:200px;margin:0 auto" onclick="startMemory()">Commencer</button>
+        <div class="start-desc">Associe le dhikr arabe à sa traduction.<br><strong>+15 Nour</strong> par paire</div>
+        <button class="btn btn-teal" style="max-width:200px;margin:0 auto" onclick="startMemory()">Commencer</button>
       </div>
     </div>
   </div>
 
   <!-- WORD SEARCH -->
   <div class="panel" id="panel-wordsearch">
-    <div class="scroll-area" id="ws-wrap">
+    <div class="scroll" id="ws-wrap">
       <div class="start-screen">
-        <div class="start-icon"><svg class="icon" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--purple2)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+        <div class="start-icon"><svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--purple2)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
         <div class="start-title">Mots mêlés</div>
-        <div class="start-desc">Retrouve les mots islamiques.<br><strong>+35 Nour</strong> par mot</div>
-        <button class="btn-ghost" style="max-width:200px;margin:0 auto;border-color:var(--purple);color:var(--purple2)" onclick="startWS()">Lancer</button>
+        <div class="start-desc">Retrouve les mots islamiques cachés.<br><strong>+35 Nour</strong> par mot trouvé</div>
+        <button class="btn btn-outline" style="max-width:200px;margin:0 auto;border-color:var(--purple);color:var(--purple2)" onclick="startWS()">Lancer</button>
       </div>
     </div>
   </div>
 
   <!-- HADITH -->
-  <div class="panel" id="panel-hadith"><div class="scroll-area"><div class="panel-title">Hadiths</div><div class="panel-sub">Clique pour développer · +5 Nour par hadith lu</div><div id="hadith-list"></div></div></div>
+  <div class="panel" id="panel-hadith">
+    <div class="scroll"><div class="panel-title">Hadiths</div><div class="panel-sub">Clique pour développer · +5 Nour par hadith lu</div><div id="hadith-list"></div></div>
+  </div>
 
   <!-- DUA -->
-  <div class="panel" id="panel-dua"><div class="scroll-area"><div class="panel-title">Douaas</div><div class="panel-sub">Invocations essentielles</div><div class="dua-cats" id="dua-cats"></div><div id="dua-list"></div></div></div>
+  <div class="panel" id="panel-dua">
+    <div class="scroll"><div class="panel-title">Douaas</div><div class="panel-sub">Invocations essentielles</div><div class="dua-cats" id="dua-cats"></div><div id="dua-list"></div></div>
+  </div>
 
   <!-- DHIKR -->
   <div class="panel" id="panel-dhikr">
-    <div class="scroll-area">
+    <div class="scroll">
       <div class="panel-title">Dhikr</div>
-      <div style="margin-bottom:14px"></div>
-      <div class="dhikr-select" id="dhikr-select"></div>
+      <div style="margin-bottom:12px"></div>
+      <div class="dhikr-sel" id="dhikr-sel"></div>
       <div class="dhikr-display">
-        <div class="dhikr-ar" id="dhikr-ar">سُبْحَانَ اللهِ</div>
-        <div class="dhikr-ph-txt" id="dhikr-ph-txt">Subhanallah</div>
-        <div class="dhikr-fr-txt" id="dhikr-fr-txt">Gloire à Allah</div>
+        <div class="dhikr-main-ar" id="dhikr-ar">سُبْحَانَ اللهِ</div>
+        <div class="dhikr-ph" id="dhikr-ph">Subhanallah</div>
+        <div class="dhikr-fr" id="dhikr-fr">Gloire à Allah</div>
         <div class="dhikr-tap" id="dhikr-tap" onclick="tapDhikr()">
           <svg style="position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)" viewBox="0 0 110 110">
-            <circle cx="55" cy="55" r="48" fill="none" stroke="var(--bg3)" stroke-width="8"/>
-            <circle id="dhikr-ring" cx="55" cy="55" r="48" fill="none" stroke="var(--gold)" stroke-width="8" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="301.6" style="transition:stroke-dashoffset .3s ease"/>
+            <circle cx="55" cy="55" r="48" fill="none" stroke="var(--bg3)" stroke-width="7"/>
+            <circle id="dhikr-ring" cx="55" cy="55" r="48" fill="none" stroke="var(--gold)" stroke-width="7" stroke-linecap="round" stroke-dasharray="301.6" stroke-dashoffset="301.6" style="transition:stroke-dashoffset .3s ease"/>
           </svg>
-          <div style="position:absolute;inset:8px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--border)"></div>
-          <div class="dhikr-count-num" id="dhikr-count">0</div>
+          <div style="position:absolute;inset:7px;border-radius:50%;background:var(--bg2);border:1.5px solid var(--border)"></div>
+          <div class="dhikr-count" id="dhikr-count">0</div>
         </div>
-        <div class="dhikr-target-sel" id="dhikr-target-sel">
-          <button class="dhikr-target-btn active" onclick="setTarget(33,this)">33×</button>
-          <button class="dhikr-target-btn" onclick="setTarget(99,this)">99×</button>
-          <button class="dhikr-target-btn" onclick="setTarget(100,this)">100×</button>
+        <div class="dhikr-targets" id="dhikr-targets">
+          <button class="dhikr-tb active" onclick="setTarget(33,this)">33×</button>
+          <button class="dhikr-tb" onclick="setTarget(99,this)">99×</button>
+          <button class="dhikr-tb" onclick="setTarget(100,this)">100×</button>
         </div>
-        <div class="dhikr-target-txt" id="dhikr-target">0 / 33</div>
-        <div class="dhikr-btn-row">
+        <div class="dhikr-target-lbl" id="dhikr-target-lbl">0 / 33</div>
+        <div class="dhikr-btns">
           <button class="btn-sm" onclick="undoDhikr()">Annuler</button>
-          <button class="btn-sm" onclick="resetDhikr()" style="color:var(--rose2);border-color:rgba(192,67,92,.4)">Reset</button>
+          <button class="btn-sm" style="color:var(--rose2);border-color:rgba(192,67,92,.3)" onclick="resetDhikr()">Réinitialiser</button>
         </div>
       </div>
     </div>
@@ -612,11 +893,14 @@ input.li::placeholder{color:var(–muted2)}
 
   <!-- LEADERBOARD -->
   <div class="panel" id="panel-leaderboard">
-    <div class="scroll-area">
+    <div class="scroll">
       <div class="panel-title">Classement</div>
-      <div class="panel-sub" id="lb-code-sub">Espace</div>
-      <div id="lb-list"></div>
-      <div style="margin-top:16px"><div class="section-title">Badges spirituels</div><div class="badges-grid" id="badges-grid"></div></div>
+      <div class="panel-sub" id="lb-sub">Espace partagé</div>
+      <div id="lb-list"><div style="color:var(--muted);font-size:.78rem;text-align:center;padding:20px">Chargement...</div></div>
+      <div style="margin-top:14px">
+        <div class="sec-title">Badges spirituels</div>
+        <div class="badges-grid" id="badges-grid"></div>
+      </div>
     </div>
   </div>
 </div>
@@ -627,50 +911,50 @@ input.li::placeholder{color:var(–muted2)}
 
 <!-- BADGE MODAL -->
 
-<div class="modal-bg" id="badge-modal" style="display:none" onclick="closeModal('badge-modal')">
+<div class="modal-bg" id="badge-modal" style="display:none" onclick="closeBadgeModal()">
   <div class="modal" onclick="event.stopPropagation()">
-    <div class="badge-icon-modal" id="bm-icon"></div>
-    <h2 id="bm-name">Badge débloqué !</h2>
+    <div class="modal-icon" id="bm-icon"></div>
+    <h2 id="bm-name">Badge débloqué</h2>
     <p id="bm-desc"></p>
-    <button class="modal-close" onclick="closeModal('badge-modal')">Continuer</button>
+    <button class="btn btn-outline" onclick="closeBadgeModal()">Continuer</button>
   </div>
 </div>
 
-<!-- IMAGE LIGHTBOX -->
-
 <div id="lightbox" onclick="this.style.display='none'"><img id="lb-img" src="" alt=""></div>
-
 <div class="toast" id="toast"></div>
+
+<!-- Firebase -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-app-compat.min.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/9.22.0/firebase-database-compat.min.js"></script>
 
 <script>
-/* ═══════════ DATA ═══════════ */
+'use strict';
+/* ═══ DATA ═══ */
 const LEVELS=[
   {name:'Mubtadi',min:0},{name:'Taalib',min:100},{name:'Moujtahid',min:300},
   {name:'Hafidh',min:600},{name:'Aalim',min:1000},{name:'Zaahid',min:1500},{name:'Wali',min:2200}
 ];
 const BADGES=[
-  {id:'first_quiz',name:'Premier Quiz',req:'Terminer ton premier quiz',svgKey:'quiz',cond:s=>s.quizDone>=1},
-  {id:'quiz5',name:'Assidu',req:'5 quiz terminés',svgKey:'quiz',cond:s=>s.quizDone>=5},
-  {id:'sprint_ace',name:'Sprint Ace',req:'Score Sprint ≥ 8',svgKey:'sprint',cond:s=>s.sprintBest>=8},
-  {id:'memory_done',name:'Mémoire de fer',req:'Compléter le Memory Dhikr',svgKey:'mem',cond:s=>s.memoryDone>=1},
-  {id:'word5',name:'Chasseur de mots',req:'5 mots trouvés',svgKey:'search',cond:s=>s.wordsFound>=5},
-  {id:'hadith5',name:'Explorateur',req:'5 hadiths lus',svgKey:'book',cond:s=>s.hadithRead>=5},
-  {id:'dhikr100',name:'100 Dhikr',req:'100 dhikr accomplis',svgKey:'circle',cond:s=>s.dhikrTotal>=100},
-  {id:'nour500',name:'Étoile montante',req:'500 Nour',svgKey:'star',cond:s=>s.nour>=500},
-  {id:'nour2k',name:'Lumière divine',req:'2000 Nour',svgKey:'star',cond:s=>s.nour>=2000},
+  {id:'first_quiz',name:'Premier Quiz',req:'Terminer son premier quiz',svg:'quiz',cond:s=>s.quizDone>=1},
+  {id:'quiz5',name:'Assidu',req:'5 quiz terminés',svg:'quiz',cond:s=>s.quizDone>=5},
+  {id:'sprint8',name:'Sprint Ace',req:'Score Sprint ≥ 8',svg:'sprint',cond:s=>s.sprintBest>=8},
+  {id:'mem1',name:'Mémoire de fer',req:'Compléter le Memory Dhikr',svg:'mem',cond:s=>s.memDone>=1},
+  {id:'word5',name:'Chasseur de mots',req:'5 mots trouvés',svg:'search',cond:s=>s.wordsFound>=5},
+  {id:'hadith5',name:'Explorateur',req:'5 hadiths lus',svg:'book',cond:s=>s.hadithRead>=5},
+  {id:'dhikr100',name:'100 Dhikr',req:'100 dhikr accomplis',svg:'circle',cond:s=>s.dhikrTotal>=100},
+  {id:'nour500',name:'Étoile montante',req:'500 Nour gagnés',svg:'star',cond:s=>s.nour>=500},
+  {id:'nour2k',name:'Lumière divine',req:'2000 Nour gagnés',svg:'star',cond:s=>s.nour>=2000},
 ];
-const BSVG={
-  quiz:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>`,
-  sprint:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--rose2)" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>`,
-  mem:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>`,
-  search:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--purple2)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>`,
-  book:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>`,
-  circle:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>`,
-  star:`<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+const BADGE_SVG={
+  quiz:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>',
+  sprint:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--rose2)" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+  mem:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/></svg>',
+  search:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--purple2)" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>',
+  book:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>',
+  circle:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>',
+  star:'<svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>',
 };
 const QUIZ_DATA=[
   {q:"Combien de piliers a l'Islam ?",a:["3","4","5","6"],c:2,cat:"Piliers",expl:"Les 5 piliers : Chahada, Salat, Zakat, Sawm, Hajj."},
@@ -679,7 +963,7 @@ const QUIZ_DATA=[
   {q:"Combien de sourates contient le Coran ?",a:["99","100","114","120"],c:2,cat:"Coran",expl:"Le Coran contient 114 sourates."},
   {q:"Quel ange a transmis le Coran ?",a:["Mikail","Israfil","Azrael","Djibril"],c:3,cat:"Coran",expl:"Djibril (Gabriel) a révélé le Coran sur 23 ans."},
   {q:"Quel prophète a construit une arche ?",a:["Ibrahim","Musa","Nouh","Dawud"],c:2,cat:"Prophètes",expl:"Nouh (Noé) construisit l'arche pour le déluge."},
-  {q:"Dans quelle ville est né le Prophète ﷺ ?",a:["Médine","La Mecque","Taïf","Jérusalem"],c:1,cat:"Histoire",expl:"Né à La Mecque vers 570 apr. J.-C."},
+  {q:"Dans quelle ville est né le Prophète ?",a:["Médine","La Mecque","Taïf","Jérusalem"],c:1,cat:"Histoire",expl:"Né à La Mecque vers 570 apr. J.-C."},
   {q:"En quelle année a eu lieu l'Hégire ?",a:["610","622","632","640"],c:1,cat:"Histoire",expl:"En 622, migration de La Mecque vers Médine."},
   {q:"Comment s'appelle la rupture du jeûne ?",a:["Suhur","Tarawih","Iftar","Qiyam"],c:2,cat:"Ramadan",expl:"L'Iftar se fait au coucher du soleil."},
   {q:"Quel prophète a reçu la Torah ?",a:["Ibrahim","Dawud","Musa","Issa"],c:2,cat:"Prophètes",expl:"Musa (Moïse) a reçu la Torah sur le mont Sinaï."},
@@ -689,7 +973,7 @@ const QUIZ_DATA=[
   {q:"Combien de fois par jour le croyant prie-t-il ?",a:["3","4","5","7"],c:2,cat:"Piliers",expl:"5 prières : Fajr, Dhuhr, Asr, Maghrib, Isha."},
   {q:"Quel est le taux de la Zakat ?",a:["1%","2,5%","5%","10%"],c:1,cat:"Piliers",expl:"La Zakat est de 2,5% des économies."},
   {q:"Quelle sourate est surnommée cœur du Coran ?",a:["Al-Fatiha","Al-Baqara","Yassine","Al-Kahf"],c:2,cat:"Coran",expl:"La sourate Yassine (36) est le cœur du Coran."},
-  {q:"Avec quoi rompt-on traditionnellement le jeûne ?",a:["Du pain","De la soupe","Des dattes","Du lait"],c:2,cat:"Ramadan",expl:"Le Prophète ﷺ rompait le jeûne avec des dattes."},
+  {q:"Avec quoi rompt-on traditionnellement le jeûne ?",a:["Du pain","De la soupe","Des dattes","Du lait"],c:2,cat:"Ramadan",expl:"Le Prophète rompait le jeûne avec des dattes."},
   {q:"Comment s'appelle le repas avant l'aube ?",a:["Iftar","Suhur","Tarawih","Witr"],c:1,cat:"Ramadan",expl:"Le Suhur est béni, ne le manque pas !"},
   {q:"Combien de juz' compte le Coran ?",a:["10","20","30","40"],c:2,cat:"Coran",expl:"30 juz' — un par jour pendant le Ramadan."},
   {q:"Comment s'appelle la prière nocturne du Ramadan ?",a:["Tahajjud","Duha","Tarawih","Witr"],c:2,cat:"Ramadan",expl:"La Tarawih est accomplie en groupe après Isha."},
@@ -699,32 +983,32 @@ const QUIZ_DATA=[
   {q:"Combien de prophètes sont mentionnés dans le Coran ?",a:["15","20","25","30"],c:2,cat:"Prophètes",expl:"25 prophètes sont nommés dans le Coran."},
   {q:"Quel est le premier pilier de l'Islam ?",a:["La prière","Le jeûne","La Chahada","Le pèlerinage"],c:2,cat:"Piliers",expl:"La Chahada : 'Il n'y a de dieu qu'Allah...'"},
   {q:"Vers quelle direction les musulmans se tournent pour prier ?",a:["Médine","Jérusalem","La Mecque","Le Caire"],c:2,cat:"Piliers",expl:"La Qibla pointe vers la Kaaba à La Mecque."},
-  {q:"Comment s'appelle le pèlerinage à La Mecque ?",a:["Zakat","Umra","Hajj","Sawm"],c:2,cat:"Piliers",expl:"Le Hajj est le 5ème pilier."},
-  {q:"Quel est le livre sacré des musulmans ?",a:["La Bible","La Torah","Le Coran","Les Psaumes"],c:2,cat:"Coran",expl:"Le Coran a été révélé au Prophète Muhammad ﷺ."},
-  {q:"Comment s'appelle la mosquée la plus sacrée de l'Islam ?",a:["Masjid al-Aqsa","Masjid an-Nabawi","Masjid al-Haram","Masjid Quba"],c:2,cat:"Histoire",expl:"Masjid al-Haram à La Mecque est la plus sacrée."},
-  {q:"Quel est le mois du pèlerinage ?",a:["Ramadan","Rajab","Dhul-Hijja","Muharram"],c:2,cat:"Histoire",expl:"Le Hajj se déroule pendant le mois de Dhul-Hijja."},
-  {q:"Quel prophète est considéré comme le père des prophètes ?",a:["Adam","Nouh","Ibrahim","Muhammad"],c:2,cat:"Prophètes",expl:"Ibrahim (Abraham) est appelé le Khalil (ami d'Allah)."},
+  {q:"Comment s'appelle le pèlerinage à La Mecque ?",a:["Zakat","Umra","Hajj","Sawm"],c:2,cat:"Piliers",expl:"Le Hajj est le 5ème pilier de l'Islam."},
+  {q:"Quel est le livre sacré des musulmans ?",a:["La Bible","La Torah","Le Coran","Les Psaumes"],c:2,cat:"Coran",expl:"Le Coran a été révélé au Prophète Muhammad."},
+  {q:"Comment s'appelle la mosquée la plus sacrée ?",a:["Masjid al-Aqsa","Masjid an-Nabawi","Masjid al-Haram","Masjid Quba"],c:2,cat:"Histoire",expl:"Masjid al-Haram à La Mecque est la plus sacrée."},
+  {q:"Quel est le mois du pèlerinage ?",a:["Ramadan","Rajab","Dhul-Hijja","Muharram"],c:2,cat:"Histoire",expl:"Le Hajj se déroule pendant Dhul-Hijja."},
+  {q:"Quel prophète est le père des prophètes ?",a:["Adam","Nouh","Ibrahim","Muhammad"],c:2,cat:"Prophètes",expl:"Ibrahim est appelé le Khalil (ami d'Allah)."},
   {q:"Quel est le nom arabe de Jésus ?",a:["Issa","Yahya","Musa","Ibrahim"],c:0,cat:"Prophètes",expl:"Issa (Jésus) est un prophète de l'Islam."},
-  {q:"Quel prophète a survécu dans le ventre d'une baleine ?",a:["Dawud","Yunus","Musa","Ismail"],c:1,cat:"Prophètes",expl:"Yunus (Jonas) a passé du temps dans le ventre d'une baleine."},
-  {q:"Quelle est la plus grande sourate du Coran ?",a:["Al-Fatiha","Al-Imran","Al-Baqara","An-Nisa"],c:2,cat:"Coran",expl:"Al-Baqara contient 286 versets, la plus longue sourate."},
-  {q:"Combien de versets contient Al-Fatiha ?",a:["5","6","7","8"],c:2,cat:"Coran",expl:"Al-Fatiha compte 7 versets, récités dans chaque rakaat."},
+  {q:"Quel prophète a survécu dans le ventre d'une baleine ?",a:["Dawud","Yunus","Musa","Ismail"],c:1,cat:"Prophètes",expl:"Yunus (Jonas) dans le ventre d'une baleine."},
+  {q:"Quelle est la plus grande sourate du Coran ?",a:["Al-Fatiha","Al-Imran","Al-Baqara","An-Nisa"],c:2,cat:"Coran",expl:"Al-Baqara contient 286 versets."},
+  {q:"Combien de versets contient Al-Fatiha ?",a:["5","6","7","8"],c:2,cat:"Coran",expl:"Al-Fatiha compte 7 versets."},
   {q:"Comment s'appelle l'ablution en islam ?",a:["Tayammum","Wudu","Ghusl","Istainja"],c:1,cat:"Piliers",expl:"Le Wudu est l'ablution mineure avant la prière."},
-  {q:"Quel est le premier mois du calendrier islamique ?",a:["Ramadan","Dhul-Hijja","Muharram","Rajab"],c:2,cat:"Histoire",expl:"Muharram est le premier mois de l'année hégirienne."},
+  {q:"Quel est le premier mois du calendrier islamique ?",a:["Ramadan","Dhul-Hijja","Muharram","Rajab"],c:2,cat:"Histoire",expl:"Muharram est le premier mois hégirien."},
   {q:"Que signifie 'Islam' en arabe ?",a:["Paix","Soumission","Foi","Justice"],c:1,cat:"Vocabulaire",expl:"Islam signifie soumission à la volonté d'Allah."},
-  {q:"Combien de rakaat contient la prière Fajr ?",a:["2","3","4","5"],c:0,cat:"Piliers",expl:"Fajr = 2 rakaat obligatoires (+ 2 sunnah)."},
+  {q:"Combien de rakaat contient la prière Fajr ?",a:["2","3","4","5"],c:0,cat:"Piliers",expl:"Fajr = 2 rakaat obligatoires."},
   {q:"Combien de rakaat contient la prière Maghrib ?",a:["2","3","4","5"],c:1,cat:"Piliers",expl:"Maghrib = 3 rakaat obligatoires."},
-  {q:"Comment s'appelle le prophète qui a pu parler aux animaux ?",a:["Dawud","Nouh","Sulayman","Ibrahim"],c:2,cat:"Prophètes",expl:"Sulayman (Salomon) pouvait parler aux oiseaux."},
-  {q:"Quel est le nom arabe de Marie, mère de Jésus ?",a:["Fatima","Khadija","Maryam","Asiya"],c:2,cat:"Coran",expl:"Maryam est la seule femme nommée dans le Coran."},
-  {q:"Quel prophète a été jeté dans le feu et n'a pas brûlé ?",a:["Musa","Issa","Ibrahim","Yunus"],c:2,cat:"Prophètes",expl:"Allah dit 'Ô feu, sois fraîcheur et paix pour Ibrahim'."},
+  {q:"Quel prophète pouvait parler aux animaux ?",a:["Dawud","Nouh","Sulayman","Ibrahim"],c:2,cat:"Prophètes",expl:"Sulayman pouvait parler aux oiseaux."},
+  {q:"Quel est le nom arabe de Marie ?",a:["Fatima","Khadija","Maryam","Asiya"],c:2,cat:"Coran",expl:"Maryam est la seule femme nommée dans le Coran."},
+  {q:"Quel prophète a été jeté dans le feu et n'a pas brûlé ?",a:["Musa","Issa","Ibrahim","Yunus"],c:2,cat:"Prophètes",expl:"Allah dit : 'Sois fraîcheur et paix pour Ibrahim'."},
   {q:"Que signifie 'Astaghfirullah' ?",a:["Dieu merci","Je demande pardon à Dieu","Gloire à Dieu","Que Dieu te bénisse"],c:1,cat:"Vocabulaire",expl:"Astaghfirullah = Je demande pardon à Allah."},
-  {q:"Quel jour est considéré comme le plus sacré de la semaine ?",a:["Samedi","Dimanche","Lundi","Vendredi"],c:3,cat:"Piliers",expl:"Le vendredi (Yawm al-Jum'a) est le maître des jours."},
-  {q:"Quel est le nombre de Noms d'Allah mentionnés dans le hadith des 99 noms ?",a:["33","66","99","100"],c:2,cat:"Vocabulaire",expl:"Allah a 99 Noms — celui qui les dénombre entre au Paradis."},
-  {q:"Combien de fois les pèlerins tournent autour de la Kaaba ?",a:["3","5","7","9"],c:2,cat:"Histoire",expl:"Le Tawaf consiste en 7 circumambulations autour de la Kaaba."},
-  {q:"Quel prophète a fendu la mer ?",a:["Ibrahim","Sulayman","Musa","Issa"],c:2,cat:"Prophètes",expl:"Musa a fendu la mer avec sa canne par la permission d'Allah."},
+  {q:"Quel jour est le plus sacré de la semaine ?",a:["Samedi","Dimanche","Lundi","Vendredi"],c:3,cat:"Piliers",expl:"Le vendredi est le maître des jours."},
+  {q:"Combien y a-t-il de Noms d'Allah ?",a:["33","66","99","100"],c:2,cat:"Vocabulaire",expl:"Allah a 99 Noms — celui qui les dénombre entre au Paradis."},
+  {q:"Combien de fois tourne-t-on autour de la Kaaba ?",a:["3","5","7","9"],c:2,cat:"Histoire",expl:"Le Tawaf = 7 circumambulations."},
+  {q:"Quel prophète a fendu la mer ?",a:["Ibrahim","Sulayman","Musa","Issa"],c:2,cat:"Prophètes",expl:"Musa a fendu la mer avec sa canne."},
   {q:"Que signifie 'Barakallah fik' ?",a:["Que Dieu te pardonne","Que Dieu te bénisse","Dieu est grand","Gloire à Dieu"],c:1,cat:"Vocabulaire",expl:"Barakallah fik = Que la bénédiction d'Allah soit sur toi."},
   {q:"Dans quelle sourate trouve-t-on le Verset du Trône ?",a:["Al-Fatiha","Al-Baqara","Al-Imran","Yassine"],c:1,cat:"Coran",expl:"Ayat al-Kursi est le verset 255 de Al-Baqara."},
 ];
-const DHIKR_MEMORY=[
+const DHIKR_MEM=[
   {ar:"سُبْحَانَ اللهِ",ph:"Subhanallah",fr:"Gloire à Allah"},
   {ar:"الْحَمْدُ لِلَّهِ",ph:"Alhamdulillah",fr:"Louange à Allah"},
   {ar:"اللهُ أَكْبَرُ",ph:"Allahu Akbar",fr:"Allah est le Plus Grand"},
@@ -735,20 +1019,20 @@ const DHIKR_MEMORY=[
   {ar:"لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ",ph:"La hawla wala quwwata illa billah",fr:"Pas de force sauf par Allah"},
 ];
 const DHIKR_LIST=[
-  {ar:"سُبْحَانَ اللهِ",ph:"Subhanallah",fr:"Gloire à Allah",target:33},
-  {ar:"الْحَمْدُ لِلَّهِ",ph:"Alhamdulillah",fr:"Louange à Allah",target:33},
-  {ar:"اللهُ أَكْبَرُ",ph:"Allahu Akbar",fr:"Allah est le Plus Grand",target:33},
-  {ar:"لَا إِلَهَ إِلَّا اللهُ",ph:"La ilaha illallah",fr:"Il n'y a de dieu qu'Allah",target:100},
-  {ar:"أَسْتَغْفِرُ اللهَ",ph:"Astaghfirullah",fr:"Je demande pardon à Allah",target:100},
+  {ar:"سُبْحَانَ اللهِ",ph:"Subhanallah",fr:"Gloire à Allah",def:33},
+  {ar:"الْحَمْدُ لِلَّهِ",ph:"Alhamdulillah",fr:"Louange à Allah",def:33},
+  {ar:"اللهُ أَكْبَرُ",ph:"Allahu Akbar",fr:"Allah est le Plus Grand",def:33},
+  {ar:"لَا إِلَهَ إِلَّا اللهُ",ph:"La ilaha illallah",fr:"Il n'y a de dieu qu'Allah",def:100},
+  {ar:"أَسْتَغْفِرُ اللهَ",ph:"Astaghfirullah",fr:"Je demande pardon à Allah",def:100},
 ];
 const HADITHS=[
-  {num:1,ar:"مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا",fr:"Quiconque jeûne le Ramadan par foi et espérant la récompense, ses péchés passés lui seront pardonnés.",src:"Bukhari & Muslim",vertu:"Une des plus grandes promesses divines. Le jeûne sincère efface les péchés passés.",cat:"Ramadan"},
-  {num:2,ar:"إِذَا جَاءَ رَمَضَانُ فُتِحَتْ أَبْوَابُ الْجَنَّةِ",fr:"Lorsque vient le Ramadan, les portes du Paradis s'ouvrent et celles de l'Enfer se ferment.",src:"Bukhari & Muslim",vertu:"Ce mois est unique. Toutes les conditions sont réunies pour l'élévation spirituelle.",cat:"Ramadan"},
-  {num:3,ar:"الصَّوْمُ جُنَّةٌ",fr:"Le jeûne est un bouclier.",src:"Bukhari",vertu:"Un seul mot, une immense sagesse. Le jeûne protège l'âme.",cat:"Ramadan"},
+  {num:1,ar:"مَنْ صَامَ رَمَضَانَ إِيمَانًا وَاحْتِسَابًا",fr:"Quiconque jeûne le Ramadan par foi et espérant la récompense, ses péchés passés lui seront pardonnés.",src:"Bukhari & Muslim",vertu:"Une des plus grandes promesses divines.",cat:"Ramadan"},
+  {num:2,ar:"إِذَا جَاءَ رَمَضَانُ فُتِحَتْ أَبْوَابُ الْجَنَّةِ",fr:"Lorsque vient le Ramadan, les portes du Paradis s'ouvrent et celles de l'Enfer se ferment.",src:"Bukhari & Muslim",vertu:"Ce mois est unique pour l'élévation spirituelle.",cat:"Ramadan"},
+  {num:3,ar:"الصَّوْمُ جُنَّةٌ",fr:"Le jeûne est un bouclier.",src:"Bukhari",vertu:"Le jeûne protège l'âme des péchés.",cat:"Ramadan"},
   {num:4,ar:"إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ",fr:"Les actes ne valent que par les intentions.",src:"Bukhari & Muslim",vertu:"L'intention pure transforme tout acte en adoration.",cat:"Fondements"},
-  {num:5,ar:"الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",fr:"Le musulman est celui dont les autres sont à l'abri de sa langue et de sa main.",src:"Bukhari",vertu:"Nuire par la parole ou l'action contredit l'essence de la foi.",cat:"Caractère"},
-  {num:6,ar:"تَسَحَّرُوا فَإِنَّ فِي السَّحُورِ بَرَكَةً",fr:"Prenez le repas du Suhur, car dans ce repas il y a une bénédiction.",src:"Bukhari & Muslim",vertu:"Même quelques gorgées d'eau suffisent pour cette bénédiction.",cat:"Ramadan"},
-  {num:7,ar:"لِلصَّائِمِ فَرْحَتَانِ عِنْدَ فِطْرِهِ وَعِنْدَ لِقَاءِ رَبِّهِ",fr:"Le jeûneur connaît deux joies : quand il rompt le jeûne et quand il rencontre son Seigneur.",src:"Bukhari & Muslim",vertu:"La joie de l'Iftar est belle. Mais la joie devant Allah sera infiniment plus grande.",cat:"Ramadan"},
+  {num:5,ar:"الْمُسْلِمُ مَنْ سَلِمَ الْمُسْلِمُونَ مِنْ لِسَانِهِ وَيَدِهِ",fr:"Le musulman est celui dont les autres sont à l'abri de sa langue et de sa main.",src:"Bukhari",vertu:"Nuire par la parole ou l'action contredit la foi.",cat:"Caractère"},
+  {num:6,ar:"تَسَحَّرُوا فَإِنَّ فِي السَّحُورِ بَرَكَةً",fr:"Prenez le repas du Suhur, car dans ce repas il y a une bénédiction.",src:"Bukhari & Muslim",vertu:"Même quelques gorgées d'eau suffisent.",cat:"Ramadan"},
+  {num:7,ar:"لِلصَّائِمِ فَرْحَتَانِ",fr:"Le jeûneur connaît deux joies : quand il rompt le jeûne et quand il rencontre son Seigneur.",src:"Bukhari & Muslim",vertu:"La joie de l'Iftar est belle, mais celle devant Allah sera infinie.",cat:"Ramadan"},
   {num:8,ar:"خَيْرُكُمْ مَنْ تَعَلَّمَ الْقُرْآنَ وَعَلَّمَهُ",fr:"Le meilleur d'entre vous est celui qui apprend le Coran et l'enseigne.",src:"Bukhari",vertu:"Transmettre le Coran est l'une des meilleures actions.",cat:"Coran"},
 ];
 const DUAS=[
@@ -760,7 +1044,6 @@ const DUAS=[
   {cat:"Protection",sit:"Protection contre tout mal",ar:"بِسْمِ اللَّهِ الَّذِي لا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ",ph:"Bismillahi-lladhi laa yadurrou maa ismihi shayoun",fr:"Au nom d'Allah, avec Lequel rien ne peut nuire.",src:"Abu Dawud"},
   {cat:"Dua du soir",sit:"Avant de dormir",ar:"بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا",ph:"Bismikal-lahoumma amootu wa ahyaa",fr:"En Ton nom, ô Allah, je meurs et je vis.",src:"Bukhari"},
 ];
-const WS_WORDS=['ALLAH','CORAN','RAMADAN','SALAT','ZAKAT','HAJJ','SAWM','SALAM','NOUR','TAWBAH','IMAN','WUDU','DEEN','DUAA','SABR'];
 const AYAHS=[
   {ar:"شَهْرُ رَمَضَانَ الَّذِي أُنزِلَ فِيهِ الْقُرْآنُ",fr:"Le mois de Ramadan est celui durant lequel le Coran fut révélé.",ref:"Al-Baqara 2:185"},
   {ar:"وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ",fr:"Quand Mes serviteurs t'interrogent sur Moi, alors Je suis proche.",ref:"Al-Baqara 2:186"},
@@ -768,255 +1051,333 @@ const AYAHS=[
   {ar:"فَإِنَّ مَعَ الْعُسْرِ يُسْرًا",fr:"Car après la difficulté vient la facilité.",ref:"Al-Inshirah 94:5"},
   {ar:"إِنَّ اللَّهَ لَا يُضِيعُ أَجْرَ الْمُحْسِنِينَ",fr:"Allah ne laisse pas perdre la récompense des bienfaisants.",ref:"Hud 11:115"},
 ];
+const WS_WORDS=['ALLAH','CORAN','RAMADAN','SALAT','ZAKAT','HAJJ','SAWM','SALAM','NOUR','TAWBAH','IMAN','WUDU','DEEN','DUAA','SABR'];
 
-/* ═══════════ STATE ═══════════ */
-let myName='',spaceCode='',db=null;
-let unreadChat=0,inChat=false;
-let dhikrIdx=0,dhikrCount=0,dhikrTarget=33;
-let quizState=null,quizAnswered=false,quizSessionId=null,quizMulti=false,quizOtherRef=null;
-let sprintInterval=null,sprintActive=false,sprintScore=0,sprintTotal=0,sprintQIdx=0,sprintPool=[],sprintT=30;
-let memFlipped=[],memMatched=0,memCards=[],memLocked=false,memMoves=0,memTotal=0;
-let wsSelected=[],wsFound=[],wsGrid=[],wsWords=[],wsDragging=false,wsStartCell=null;
-let stats={nour:0,quizDone:0,hadithRead:0,dhikrTotal:0,wordsFound:0,sprintBest:0,memoryDone:0};
+/* ═══ STATE ═══ */
+let myName='', spaceKey='', db=null;
+let unread=0, inChat=false;
+let dhikrIdx=0, dhikrCount=0, dhikrTarget=33;
+let qState=null, qAnswered=false, qSessId=null, qMulti=false, qOtherRef=null;
+let sprintTimer=null, sprintActive=false, sprintScore=0, sprintTotal=0, sprintQIdx=0, sprintPool=[], sprintT=30;
+let memFlipped=[], memMatched=0, memCards=[], memLocked=false, memMoves=0, memTotal=0;
+let wsSelected=[], wsFound=[], wsGrid=[], wsWords=[], wsDrag=false, wsStart=null;
+let stats={nour:0,quizDone:0,hadithRead:0,dhikrTotal:0,wordsFound:0,sprintBest:0,memDone:0};
 let earnedBadges=new Set();
-let chatMsgKeys=new Set();
+let chatKeys=new Set();
+let typingTimeout=null, otherTypingTimer=null;
 
-/* ═══════════ UTILS ═══════════ */
+/* ═══ UTILS ═══ */
 const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=0|Math.random()*(i+1);[b[i],b[j]]=[b[j],b[i]];}return b};
 const esc=t=>String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const tnow=()=>new Date().toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'});
-function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800)}
-function closeModal(id){document.getElementById(id).style.display='none'}
-function spawnParticle(x,y){
-  const p=document.createElement('div');p.className='particle';
-  const sz=Math.random()*8+4;
-  const clr=Math.random()>.5?'var(--gold)':'var(--teal)';
-  p.style.cssText=`width:${sz}px;height:${sz}px;left:${x}px;top:${y}px;background:${clr};opacity:.9;--dur:${.8+Math.random()}s`;
-  document.body.appendChild(p);setTimeout(()=>p.remove(),1500);
-}
 const $=id=>document.getElementById(id);
 
-function linkify(text){
-  const urlRe=/https?:\/\/[^\s<>"]+/g;
-  return esc(text).replace(urlRe,m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
+function toast(m){
+  const t=$('toast');t.textContent=m;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2600);
+}
+function closeBadgeModal(){$('badge-modal').style.display='none';}
+
+/* Simple hash (not cryptographic, good enough for namespace isolation) */
+async function hashKey(code, pwd){
+  const enc=new TextEncoder();
+  const data=enc.encode(code.toUpperCase().trim()+'::'+pwd.trim());
+  try{
+    const buf=await crypto.subtle.digest('SHA-256',data);
+    return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('').substring(0,32);
+  }catch(e){
+    // Fallback for environments without SubtleCrypto
+    let h=0;for(const c of (code+pwd))h=Math.imul(31,h)+c.charCodeAt(0)|0;
+    return Math.abs(h).toString(16).padStart(8,'0');
+  }
 }
 
-/* ═══════════ FIREBASE ═══════════ */
+function linkify(text){
+  return esc(text).replace(/https?:\/\/[^\s<>"]+/g,m=>`<a href="${m}" target="_blank" rel="noopener">${m}</a>`);
+}
+
+/* ═══ FIREBASE ═══ */
 function initFirebase(){
   try{
-    const cfg={apiKey:"AIzaSyDNYqvNg6goVwEn-UJ5ll9ZKFMEqe7W4yA",authDomain:"ramadan-space.firebaseapp.com",databaseURL:"https://ramadan-space-default-rtdb.firebaseio.com",projectId:"ramadan-space"};
-    if(!firebase.apps.length)firebase.initializeApp(cfg);
+    const cfg={
+      apiKey:"AIzaSyDNYqvNg6goVwEn-UJ5ll9ZKFMEqe7W4yA",
+      authDomain:"ramadan-space.firebaseapp.com",
+      databaseURL:"https://ramadan-space-default-rtdb.firebaseio.com",
+      projectId:"ramadan-space"
+    };
+    if(!firebase.apps.length) firebase.initializeApp(cfg);
     db=firebase.database();
-    db.ref('.info/connected').on('value',snap=>{if(snap.val()&&myName){listenChat();listenMembers();}});
-  }catch(e){console.error('Firebase:',e)}
+    db.ref('.info/connected').on('value',snap=>{
+      if(snap.val()&&myName){listenChat();listenMembers();listenTyping();}
+    });
+  }catch(e){console.error('Firebase:',e);}
 }
+
 function listenChat(){
-  if(!db)return;
-  db.ref(`spaces/${spaceCode}/chat`).limitToLast(100).on('child_added',snap=>{
-    const msg=snap.val();if(msg)appendChatMsg(msg,snap.key);
+  if(!db) return;
+  db.ref(`sk/${spaceKey}/chat`).limitToLast(120).on('child_added',snap=>{
+    const msg=snap.val();if(msg) appendChatMsg(msg,snap.key);
   });
 }
+
 function listenMembers(){
-  if(!db)return;
-  db.ref(`spaces/${spaceCode}/members/${myName}`).set({name:myName,ts:Date.now()});
-  setInterval(()=>db&&db.ref(`spaces/${spaceCode}/members/${myName}`).update({ts:Date.now()}),25000);
-  db.ref(`spaces/${spaceCode}/members`).on('value',snap=>{
-    const active=Object.values(snap.val()||{}).filter(m=>Date.now()-m.ts<120000);
+  if(!db) return;
+  db.ref(`sk/${spaceKey}/members/${myName}`).set({name:myName,ts:Date.now()});
+  setInterval(()=>db&&db.ref(`sk/${spaceKey}/members/${myName}`).update({ts:Date.now()}),20000);
+  db.ref(`sk/${spaceKey}/members`).on('value',snap=>{
+    const now=Date.now();
+    const active=Object.values(snap.val()||{}).filter(m=>now-m.ts<90000);
     renderAvatars(active);
   });
 }
 
-/* ═══════════ QUIZ MULTI (tour par tour) ═══════════ */
-function sendGameInvite(game){
-  const inv={from:myName,game,inviteId:'inv_'+Date.now(),ts:Date.now()};
-  const msg={from:myName,text:'__INVITE__'+JSON.stringify(inv),time:tnow(),ts:Date.now()};
-  if(db)db.ref(`spaces/${spaceCode}/chat`).push(msg);
-  else appendChatMsg(msg,'local_'+Date.now());
-  toast('Invitation envoyée !');
-}
-function acceptInvite(inviteId,fromUser){
-  quizSessionId=inviteId;quizMulti=true;
-  startQuiz(true,fromUser,'joiner');
-  showPanel('quiz');
-  toast('Tu rejoins le quiz de '+fromUser+' !');
-  if(db)db.ref(`spaces/${spaceCode}/quiz/${inviteId}/joiner`).set(myName);
-}
-function startQuizAsHost(inviteId,joinerName){
-  quizSessionId=inviteId;quizMulti=true;
-  startQuiz(true,joinerName,'host');
-  showPanel('quiz');
-}
-function listenQuizMulti(sessionId,role){
-  if(!db)return;
-  if(quizOtherRef)quizOtherRef.off();
-  // Listen for turn state and opponent score
-  quizOtherRef=db.ref(`spaces/${spaceCode}/quiz/${sessionId}/state`);
-  quizOtherRef.on('value',snap=>{
-    const st=snap.val();if(!st)return;
-    if(quizState){quizState.otherScore=st.otherScore||0;quizState.currentTurn=st.currentTurn||'host';}
-    updateTurnUI();
+function listenTyping(){
+  if(!db) return;
+  db.ref(`sk/${spaceKey}/typing`).on('value',snap=>{
+    const data=snap.val()||{};
+    const others=Object.entries(data).filter(([k,v])=>k!==myName&&Date.now()-v<4000);
+    const ti=$('typing-indicator');
+    if(others.length>0){
+      if(!ti){
+        const c=$('chat-msgs');
+        const d=document.createElement('div');d.id='typing-indicator';d.className='msg-wrap';
+        d.innerHTML=`<div class="m-av" style="background:var(--teal-light);border-color:var(--teal);color:var(--teal)">${others[0][0].charAt(0).toUpperCase()}</div>
+<div><div class="m-name">${esc(others[0][0])}</div>
+<div class="m-bubble" style="padding:10px 14px"><div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div></div></div>`;
+        c.appendChild(d);c.scrollTop=c.scrollHeight;
+      }
+    }else{if(ti)ti.remove();}
   });
-  if(role==='host'){
-    // listen for joiner joining
-    db.ref(`spaces/${spaceCode}/quiz/${sessionId}/joiner`).on('value',snap=>{
-      if(snap.val()&&quizState){quizState.otherName=snap.val();$('qn2').textContent=snap.val();toast(snap.val()+' a rejoint le quiz !');}
+}
+
+function onTyping(){
+  if(!db) return;
+  db.ref(`sk/${spaceKey}/typing/${myName}`).set(Date.now());
+  clearTimeout(typingTimeout);
+  typingTimeout=setTimeout(()=>db&&db.ref(`sk/${spaceKey}/typing/${myName}`).remove(),3000);
+}
+
+function listenQuizSession(sessId, myRole){
+  if(!db) return;
+  if(qOtherRef){qOtherRef.off();qOtherRef=null;}
+  qOtherRef=db.ref(`sk/${spaceKey}/quiz/${sessId}/state`);
+  qOtherRef.on('value',snap=>{
+    const st=snap.val();if(!st||!qState) return;
+    // Update opponent score
+    const opRole=myRole==='host'?'joiner':'host';
+    qState.otherScore=st['score_'+opRole]||0;
+    // Detect turn change
+    const newTurn=st.currentTurn;
+    const wasMyTurn=isMyTurn();
+    qState.currentTurn=newTurn;
+    const nowMyTurn=isMyTurn();
+    updateTurnBar();
+    if(!wasMyTurn&&nowMyTurn){
+      // It's now my turn — advance question index and render
+      qState.cur=(st.qIndex||0);
+      renderQuizQ();
+    }
+    // Update scores display
+    $('qs1').textContent=qState.myScore;
+    $('qs2').textContent=qState.otherScore;
+  });
+  if(myRole==='host'){
+    db.ref(`sk/${spaceKey}/quiz/${sessId}/joiner`).on('value',snap=>{
+      if(snap.val()&&snap.val()!==myName&&qState){
+        qState.otherName=snap.val();$('qn2').textContent=snap.val();
+        toast(snap.val()+' a rejoint le quiz !');
+      }
     });
   }
 }
-function pushQuizTurnState(){
-  if(!db||!quizSessionId||!quizState)return;
-  db.ref(`spaces/${spaceCode}/quiz/${quizSessionId}/state`).update({
-    currentTurn:quizState.currentTurn,
-    [`score_${quizState.myRole}`]:quizState.score,
-    ts:Date.now()
-  });
-}
-function isMyTurn(){return !quizState.multi||quizState.currentTurn===quizState.myRole}
-function updateTurnUI(){
-  const tb=$('quiz-turn-bar');if(!tb||!quizState||!quizState.multi){if(tb)tb.style.display='none';return}
-  tb.style.display='block';
-  if(isMyTurn()){tb.className='turn-bar my-turn';tb.textContent='🟡 C\'est ton tour !'}
-  else{tb.className='turn-bar their-turn';tb.textContent='⏳ Tour de '+quizState.otherName+'…'}
+
+function isMyTurn(){
+  if(!qState||!qState.multi) return true;
+  return qState.currentTurn===qState.myRole;
 }
 
-/* ═══════════ LOGIN ═══════════ */
-function goToRoom(){
+function pushTurnState(){
+  if(!db||!qSessId||!qState) return;
+  const opRole=qState.myRole==='host'?'joiner':'host';
+  const nextTurn=opRole;
+  qState.currentTurn=nextTurn;
+  qState.cur++;
+  db.ref(`sk/${spaceKey}/quiz/${qSessId}/state`).update({
+    currentTurn:nextTurn,
+    [`score_${qState.myRole}`]:qState.myScore,
+    qIndex:qState.cur,
+    ts:Date.now()
+  });
+  updateTurnBar();
+}
+
+function updateTurnBar(){
+  const tb=$('quiz-turn-bar');if(!tb) return;
+  if(!qState||!qState.multi){tb.style.display='none';return;}
+  tb.style.display='block';
+  if(isMyTurn()){
+    tb.className='turn-bar mine';
+    tb.textContent='C\'est ton tour de répondre';
+  }else{
+    tb.className='turn-bar theirs';
+    tb.textContent='Tour de '+qState.otherName+'...';
+  }
+}
+
+/* ═══ LOGIN ═══ */
+async function goToRoom(){
   const name=$('ln').value.trim();
-  const code=$('lcode').value.trim().toUpperCase().replace(/\s+/g,'');
-  if(!name){toast('Entre ton prénom !');return}
-  if(!code){toast('Entre un code d\'espace !');return}
-  myName=name;spaceCode=code;
-  localStorage.setItem('sk_name',name);localStorage.setItem('sk_code',code);
+  const code=$('lcode').value.trim();
+  const pwd=$('lpwd').value.trim();
+  if(!name){toast('Entre ton prénom');return;}
+  if(!code){toast('Entre un code d\'espace');return;}
+  if(!pwd){toast('Entre un mot de passe');return;}
+  myName=name;
+  spaceKey=await hashKey(code,pwd);
+  localStorage.setItem('sk_name',name);
+  localStorage.setItem('sk_code',code);
   loadStats();
   $('login-screen').style.display='none';
   $('app').style.display='flex';
   initApp();
 }
+
 function confirmBack(){
-  if(confirm('Changer d\'espace ? Tu vas revenir à la connexion.')){
-    if(db){db.ref(`spaces/${spaceCode}/members/${myName}`).remove();db.goOffline();}
-    $('app').style.display='none';$('login-screen').style.display='flex';
-    chatMsgKeys.clear();$('chat-msgs').innerHTML='<div class="msg-sys">Assalamu Alaykoum — Bienvenue dans Sakina Space</div>';
+  if(!confirm('Quitter l\'espace ? Tu devras te reconnecter.')) return;
+  if(db){
+    db.ref(`sk/${spaceKey}/members/${myName}`).remove();
+    db.ref(`sk/${spaceKey}/typing/${myName}`).remove();
+    db.goOffline();db=null;
   }
+  chatKeys.clear();
+  $('chat-msgs').innerHTML='<div class="msg-sys">Assalamu Alaykoum — Bienvenue dans Sakina Space</div>';
+  $('app').style.display='none';
+  $('login-screen').style.display='flex';
 }
 
 function initApp(){
-  $('home-welcome').textContent='Bienvenue, '+myName+' 🌙';
-  $('lb-code-sub').textContent='Espace : '+spaceCode;
+  $('home-welcome').textContent='Bienvenue, '+myName;
+  $('lb-sub').textContent='Espace sécurisé';
   const a=AYAHS[new Date().getDate()%AYAHS.length];
-  $('aw-ar').textContent=a.ar;$('aw-fr').textContent='« '+a.fr+' »';$('aw-ref').textContent='— '+a.ref;
-  $('av-wrap').innerHTML=`<div class="av me">${myName.charAt(0).toUpperCase()}</div>`;
-  renderHadiths();renderDuas();renderDhikrSelect();
+  $('aw-ar').textContent=a.ar;$('aw-fr').textContent='\u00ab '+a.fr+' \u00bb';$('aw-ref').textContent='— '+a.ref;
+  $('av-wrap').innerHTML=`<div class="av av-me">${myName.charAt(0).toUpperCase()}</div>`;
+  renderHadiths();renderDuas();renderDhikrSel();
   updateNourUI();updateStatsUI();
   initFirebase();
-  if('visualViewport' in window){
-    window.visualViewport.addEventListener('resize',handleVP);
-    window.visualViewport.addEventListener('scroll',handleVP);
-  }
-}
-function handleVP(){
-  const vp=window.visualViewport;
-  const off=Math.max(0,window.innerHeight-vp.height-vp.offsetTop);
-  document.querySelectorAll('.chat-input-row').forEach(r=>r.style.paddingBottom=(off+10)+'px');
 }
 
 function renderAvatars(members){
   const w=$('av-wrap');
-  w.innerHTML=`<div class="av me" title="${esc(myName)}">${myName.charAt(0).toUpperCase()}</div>`;
+  w.innerHTML=`<div class="av av-me" title="${esc(myName)}">${myName.charAt(0).toUpperCase()}</div>`;
   members.filter(m=>m.name!==myName).slice(0,4).forEach(m=>{
-    const d=document.createElement('div');d.className='av other';d.title=m.name;
+    const d=document.createElement('div');d.className='av av-other';d.title=m.name;
     d.textContent=(m.name||'?').charAt(0).toUpperCase();w.appendChild(d);
   });
   $('online-count').textContent=members.length;
 }
 
-/* ═══════════ NAV ═══════════ */
+/* ═══ NAV ═══ */
 function showPanel(id){
   document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   $('panel-'+id).classList.add('active');
   const ni=$('nav-'+id);if(ni)ni.classList.add('active');
+  // map game panels back to games nav
+  if(['quiz','sprint','memory','wordsearch'].includes(id)){
+    const gni=$('nav-games');if(gni)gni.classList.add('active');
+  }
   inChat=(id==='chat');
-  if(inChat){unreadChat=0;updateChatBadge();}
+  if(inChat){unread=0;updateBadge();}
   if(id==='leaderboard')renderLeaderboard();
 }
-function updateChatBadge(){
+
+function updateBadge(){
   const b=$('chat-badge');
-  if(unreadChat>0){b.style.display='flex';b.textContent=unreadChat}else b.style.display='none';
+  if(unread>0){b.style.display='flex';b.textContent=unread;}
+  else b.style.display='none';
 }
 
-/* ═══════════ GAMIFICATION ═══════════ */
-function getLevel(n){return LEVELS.slice().reverse().find(l=>n>=l.min)||LEVELS[0]}
-function addNour(pts){stats.nour+=pts;saveStats();updateNourUI();checkBadges()}
+/* ═══ GAMIFICATION ═══ */
+function getLevel(n){return LEVELS.slice().reverse().find(l=>n>=l.min)||LEVELS[0];}
+function addNour(pts){stats.nour+=pts;saveStats();updateNourUI();checkBadges();}
 function updateNourUI(){
   const n=stats.nour,lv=getLevel(n);
-  const lvIdx=LEVELS.indexOf(lv);const lvN=LEVELS[lvIdx+1];
+  const idx=LEVELS.indexOf(lv),lvN=LEVELS[idx+1];
   const pct=lvN?Math.min((n-lv.min)/(lvN.min-lv.min)*100,100):100;
-  const s=(id,v)=>{const e=$(id);if(e)e.textContent=v};
+  const s=(id,v)=>{const e=$(id);if(e)e.textContent=v;};
   s('tb-nour',n);s('tb-level',lv.name);s('home-nour',n);
-  s('level-name','Niveau : '+lv.name);s('level-from',lv.min);
-  s('level-to',lvN?lvN.min:'MAX');s('level-next-name',lvN?'→ '+lvN.name:'');
-  const f=$('nour-bar-fill');if(f)f.style.width=pct+'%';
+  s('level-name','Niveau : '+lv.name);s('lv-from',lv.min);
+  s('lv-to',lvN?lvN.min:'MAX');s('lv-next',lvN?'→ '+lvN.name:'');
+  const f=$('nour-bar');if(f)f.style.width=pct+'%';
 }
 function checkBadges(){
   for(const b of BADGES){
     if(!earnedBadges.has(b.id)&&b.cond(stats)){
       earnedBadges.add(b.id);
-      $('bm-icon').innerHTML=BSVG[b.svgKey]||'';
+      $('bm-icon').innerHTML=BADGE_SVG[b.svg]||'';
       $('bm-name').textContent=b.name;$('bm-desc').textContent=b.req;
       $('badge-modal').style.display='flex';break;
     }
   }
 }
 function saveStats(){
-  localStorage.setItem('sk_stats_'+spaceCode,JSON.stringify(stats));
-  if(db)db.ref(`spaces/${spaceCode}/scores/${myName}`).set({name:myName,nour:stats.nour,ts:Date.now()});
+  localStorage.setItem('sk_s_'+spaceKey,JSON.stringify(stats));
+  if(db) db.ref(`sk/${spaceKey}/scores/${myName}`).set({name:myName,nour:stats.nour,ts:Date.now()});
 }
 function loadStats(){
-  const s=localStorage.getItem('sk_stats_'+spaceCode);
-  if(s)stats={...stats,...JSON.parse(s)};
-  earnedBadges=new Set();BADGES.forEach(b=>{if(b.cond(stats))earnedBadges.add(b.id)});
+  const s=localStorage.getItem('sk_s_'+spaceKey);
+  if(s) try{stats={...stats,...JSON.parse(s)};}catch(e){}
+  earnedBadges=new Set();BADGES.forEach(b=>{if(b.cond(stats))earnedBadges.add(b.id);});
 }
 function updateStatsUI(){
-  const s=(id,v)=>{const e=$(id);if(e)e.textContent=v};
-  s('stat-quiz',stats.quizDone);s('stat-hadith',stats.hadithRead);
-  s('stat-dhikr',stats.dhikrTotal);s('stat-words',stats.wordsFound);
-  const pf=(id,v,mx)=>{const e=$(id);if(e)e.style.width=Math.min(v/mx*100,100)+'%'};
+  const s=(id,v)=>{const e=$(id);if(e)e.textContent=v;};
+  s('st-quiz',stats.quizDone);s('st-hadith',stats.hadithRead);
+  s('st-dhikr',stats.dhikrTotal);s('st-words',stats.wordsFound);
+  const pf=(id,v,mx)=>{const e=$(id);if(e)e.style.width=Math.min(v/mx*100,100)+'%';};
   pf('pf-quiz',stats.quizDone,20);pf('pf-hadith',stats.hadithRead,HADITHS.length);
   pf('pf-dhikr',stats.dhikrTotal,500);pf('pf-words',stats.wordsFound,50);
 }
 
-/* ═══════════ CHAT ═══════════ */
+/* ═══ CHAT ═══ */
 function sendChat(){
-  const inp=$('chat-inp');const text=inp.value.trim();if(!text)return;inp.value='';
+  const inp=$('chat-inp');const text=inp.value.trim();if(!text) return;
+  inp.value='';
+  if(db) db.ref(`sk/${spaceKey}/typing/${myName}`).remove();
   const msg={from:myName,text,time:tnow(),ts:Date.now()};
-  if(db)db.ref(`spaces/${spaceCode}/chat`).push(msg);
+  if(db) db.ref(`sk/${spaceKey}/chat`).push(msg);
   else appendChatMsg(msg,'local_'+Date.now());
 }
 function quickSend(text){
   const msg={from:myName,text,time:tnow(),ts:Date.now()};
-  if(db)db.ref(`spaces/${spaceCode}/chat`).push(msg);
+  if(db) db.ref(`sk/${spaceKey}/chat`).push(msg);
   else appendChatMsg(msg,'local_'+Date.now());
 }
 function sendMedia(e){
-  const file=e.target.files[0];if(!file)return;
-  const isImg=file.type.startsWith('image/');const isVid=file.type.startsWith('video/');
-  if(!isImg&&!isVid){toast('Seulement images et vidéos');return}
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    const msg={from:myName,text:'',mediaType:isImg?'image':'video',mediaData:ev.target.result,time:tnow(),ts:Date.now()};
-    if(db)db.ref(`spaces/${spaceCode}/chat`).push(msg);
+  const file=e.target.files[0];if(!file) return;
+  if(!file.type.startsWith('image/')){toast('Seulement les images');return;}
+  const r=new FileReader();
+  r.onload=ev=>{
+    const msg={from:myName,text:'',mediaType:'image',mediaData:ev.target.result,time:tnow(),ts:Date.now()};
+    if(db) db.ref(`sk/${spaceKey}/chat`).push(msg);
     else appendChatMsg(msg,'local_'+Date.now());
   };
-  reader.readAsDataURL(file);
-  e.target.value='';
+  r.readAsDataURL(file);e.target.value='';
+}
+function sendGameInvite(game){
+  const invId='inv_'+Date.now();
+  const msg={from:myName,text:'__INVITE__'+JSON.stringify({from:myName,game,invId,ts:Date.now()}),time:tnow(),ts:Date.now()};
+  if(db) db.ref(`sk/${spaceKey}/chat`).push(msg);
+  else appendChatMsg(msg,'local_'+Date.now());
+  toast('Invitation envoyée');
 }
 function appendChatMsg(msg,key){
-  if(key&&chatMsgKeys.has(key))return;if(key)chatMsgKeys.add(key);
+  if(key&&chatKeys.has(key)) return;
+  if(key) chatKeys.add(key);
   const c=$('chat-msgs');
-  const atBot=c.scrollHeight-c.scrollTop<=c.clientHeight+100;
+  const atBot=c.scrollHeight-c.scrollTop<=c.clientHeight+120;
   const mine=msg.from===myName;
-  // Game invite
+
+  // Invite message
   if(msg.text&&msg.text.startsWith('__INVITE__')){
     try{
       const inv=JSON.parse(msg.text.replace('__INVITE__',''));
@@ -1024,451 +1385,499 @@ function appendChatMsg(msg,key){
       w.innerHTML=`<div class="m-av">${(msg.from||'?').charAt(0).toUpperCase()}</div>
 <div style="flex:1"><div class="m-name">${esc(msg.from||'')}</div>
 <div class="m-bubble invite-bubble">
-<div style="font-size:.74rem;font-weight:700;margin-bottom:4px">🎯 Invitation au Quiz Islam</div>
-<div style="font-size:.76rem;color:var(--muted)">Joue en tour par tour avec ${esc(inv.from)}</div>
-${!mine?`<button class="invite-btn" onclick="acceptInvite('${esc(inv.inviteId)}','${esc(inv.from)}');this.disabled=true;this.textContent='Rejoint !'">Rejoindre le quiz</button>`
-:'<div style="font-size:.72rem;color:var(--teal);margin-top:6px;font-weight:600">Invitation envoyée ✓</div>'}
+<div style="font-size:.73rem;font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:6px">
+<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+Invitation au Quiz Islam</div>
+<div style="font-size:.73rem;color:var(--muted)">Joue tour par tour avec ${esc(inv.from)}</div>
+${!mine?`<button class="invite-btn" onclick="acceptInvite('${esc(inv.invId)}','${esc(inv.from)}');this.disabled=true;this.textContent='Rejoint !'">Rejoindre</button>`
+:'<div style="font-size:.7rem;color:var(--teal);margin-top:5px;font-weight:600">Invitation envoyée</div>'}
 </div>
 <div class="m-time">${msg.time||''}</div></div>`;
       c.appendChild(w);
-      if(!inChat&&!mine){unreadChat++;updateChatBadge()}
-      if(atBot)c.scrollTop=c.scrollHeight;
-      // If I'm the host and someone joined
+      if(!inChat&&!mine){unread++;updateBadge();}
+      if(atBot) c.scrollTop=c.scrollHeight;
+      // Host: watch for joiner
       if(mine&&db){
-        db.ref(`spaces/${spaceCode}/quiz/${inv.inviteId}/joiner`).on('value',snap=>{
-          if(snap.val()&&snap.val()!==myName&&!quizState){
-            startQuizAsHost(inv.inviteId,snap.val());
+        db.ref(`sk/${spaceKey}/quiz/${inv.invId}/joiner`).on('value',snap=>{
+          if(snap.val()&&snap.val()!==myName&&!qState){
+            startQuiz(true,snap.val(),'host',inv.invId);
+            showPanel('quiz');
           }
         });
       }
-    }catch(e){}
+    }catch(ex){}
     return;
   }
+
   const w=document.createElement('div');w.className='msg-wrap'+(mine?' mine':'');
-  let bubbleInner='';
+  let inner='';
   if(msg.mediaType==='image'&&msg.mediaData){
-    bubbleInner=`${msg.text?linkify(msg.text)+'<br>':''}<img class="chat-img" src="${msg.mediaData}" onclick="openLightbox('${msg.mediaData}')">`;
-  }else if(msg.mediaType==='video'&&msg.mediaData){
-    bubbleInner=`${msg.text?linkify(msg.text)+'<br>':''}<video class="chat-vid" src="${msg.mediaData}" controls playsinline></video>`;
+    inner=`${msg.text?linkify(msg.text)+'<br>':''}<img class="chat-img" src="${msg.mediaData}" onclick="document.getElementById('lb-img').src=this.src;document.getElementById('lightbox').style.display='flex'">`;
   }else{
-    bubbleInner=linkify(msg.text||'');
+    inner=linkify(msg.text||'');
   }
   w.innerHTML=`<div class="m-av">${(msg.from||'?').charAt(0).toUpperCase()}</div>
 <div><div class="m-name">${esc(msg.from||'')}</div>
-<div class="m-bubble">${bubbleInner}</div>
+<div class="m-bubble">${inner}</div>
 <div class="m-time">${msg.time||''}</div></div>`;
+  // Remove typing indicator before appending
+  const ti=$('typing-indicator');if(ti)c.removeChild(ti);
   c.appendChild(w);
-  if(!inChat&&!mine){unreadChat++;updateChatBadge()}
-  if(atBot)c.scrollTop=c.scrollHeight;
+  if(ti)c.appendChild(ti);
+  if(!inChat&&!mine){unread++;updateBadge();}
+  if(atBot) c.scrollTop=c.scrollHeight;
 }
-function openLightbox(src){$('lb-img').src=src;$('lightbox').style.display='flex'}
 
-/* ═══════════ QUIZ ═══════════ */
-function startQuiz(multi=false,otherName='',myRole='host'){
+/* ═══ QUIZ ═══ */
+function acceptInvite(invId,fromUser){
+  qSessId=invId;
+  startQuiz(true,fromUser,'joiner',invId);
+  showPanel('quiz');
+  if(db) db.ref(`sk/${spaceKey}/quiz/${invId}/joiner`).set(myName);
+}
+function startQuiz(multi=false,otherName='',myRole='host',sessId=null){
+  qSessId=sessId||('solo_'+Date.now());
   const pool=shuffle([...QUIZ_DATA]);
-  quizState={pool,cur:0,score:0,total:20,multi,otherName,otherScore:0,myRole,currentTurn:'host'};
-  quizAnswered=false;
-  if(multi){
-    $('qn2').textContent=otherName||'Adversaire';
-    listenQuizMulti(quizSessionId,myRole);
-    if(myRole==='host')db&&db.ref(`spaces/${spaceCode}/quiz/${quizSessionId}/state`).set({currentTurn:'host',score_host:0,score_joiner:0,ts:Date.now()});
-  }else{$('qn2').textContent='—';$('qs2').textContent='—'}
-  $('qn1').textContent=myName;$('qs1').textContent='0';
+  qState={pool,cur:0,myScore:0,otherScore:0,total:20,multi,otherName,myRole,currentTurn:'host'};
+  qAnswered=false;qMulti=multi;
+  $('qn1').textContent=myName;
+  $('qn2').textContent=multi?otherName:'—';
+  $('qs1').textContent='0';$('qs2').textContent=multi?'0':'—';
   $('quiz-header').style.display='block';
   $('qpf').style.width='0%';
-  updateTurnUI();
-  renderQuizQ();
+  updateTurnBar();
+  if(multi){
+    listenQuizSession(qSessId,myRole);
+    if(myRole==='host'){
+      db&&db.ref(`sk/${spaceKey}/quiz/${qSessId}/state`).set({
+        currentTurn:'host',score_host:0,score_joiner:0,qIndex:0,ts:Date.now()
+      });
+    }
+  }
+  if(multi&&myRole==='joiner'){
+    // Wait for host to set state, render waiting screen
+    renderWaiting();
+  }else{
+    renderQuizQ();
+  }
+}
+function renderWaiting(){
+  $('quiz-body').innerHTML=`<div class="wait-screen"><div class="spinner"></div><div style="font-weight:600;color:var(--muted);font-size:.82rem">En attente du tour de ${esc(qState.otherName||'l\'adversaire')}...</div></div>`;
 }
 function renderQuizQ(){
-  const s=quizState;if(!s)return;
-  if(s.cur>=s.total){renderQuizResult();return}
-  if(s.multi&&!isMyTurn()){
-    $('quiz-body').innerHTML=`<div style="text-align:center;padding:40px 20px">
-<div class="wait-spinner" style="margin:0 auto 16px"></div>
-<div style="font-weight:600;color:var(--muted)">En attente du tour de ${esc(s.otherName)}…</div>
-</div>`;
-    return;
-  }
-  const q=s.pool[s.cur];const letters=['A','B','C','D'];const si=shuffle([0,1,2,3]);
+  if(!qState) return;
+  if(qState.cur>=qState.total){endQuiz();return;}
+  if(qState.multi&&!isMyTurn()){renderWaiting();return;}
+  const q=qState.pool[qState.cur];const letters=['A','B','C','D'];const si=shuffle([0,1,2,3]);
+  const catClass=q.cat==='Ramadan'||q.cat==='Coran'?'tag-gold':'tag-teal';
   let h=`<div class="q-card">
-<div style="margin-bottom:8px;display:flex;gap:6px;align-items:center"><span class="tag ${q.cat==='Ramadan'||q.cat==='Coran'?'gold':'teal'}">${q.cat}</span><span style="font-size:.65rem;font-weight:600;color:var(--muted)">Q${s.cur+1}/${s.total}</span></div>
+<div style="margin-bottom:8px;display:flex;gap:6px;align-items:center">
+<span class="tag ${catClass}">${esc(q.cat)}</span>
+<span style="font-size:.62rem;font-weight:600;color:var(--muted)">Q${qState.cur+1}/${qState.total}</span>
+</div>
 <div class="q-text">${esc(q.q)}</div></div>
 <div class="q-answers">`;
   si.forEach((orig,i)=>{
     h+=`<button class="q-ans" onclick="answerQ(this,${orig},${q.c})" data-orig="${orig}"><span class="q-lbl">${letters[i]}</span>${esc(q.a[orig])}</button>`;
   });
   h+=`</div>`;
-  $('quiz-body').innerHTML=h;quizAnswered=false;
+  $('quiz-body').innerHTML=h;qAnswered=false;
 }
 function answerQ(btn,orig,correct){
-  if(quizAnswered)return;quizAnswered=true;
+  if(qAnswered) return;qAnswered=true;
   const ok=orig===correct;
   document.querySelectorAll('.q-ans').forEach(b=>{
     b.disabled=true;
     const o=parseInt(b.getAttribute('data-orig'));
-    if(o===correct)b.classList.add(b===btn?'correct':'reveal');
-    else if(b===btn)b.classList.add('wrong');
+    if(o===correct) b.classList.add(b===btn?'correct':'reveal');
+    else if(b===btn) b.classList.add('wrong');
   });
   if(ok){
-    quizState.score++;
-    addNour(50);
-    const el=$('qs1');el.textContent=quizState.score;el.classList.add('sf');setTimeout(()=>el.classList.remove('sf'),400);
-    const r=btn.getBoundingClientRect();
-    for(let i=0;i<6;i++)setTimeout(()=>spawnParticle(r.left+r.width/2+Math.random()*30-15,r.top+10),i*60);
+    qState.myScore++;addNour(50);
+    const el=$('qs1');el.textContent=qState.myScore;
   }
-  if(quizState.multi){
-    // Switch turn
-    quizState.currentTurn=quizState.myRole==='host'?'joiner':'host';
-    pushQuizTurnState();
-  }
-  const q=quizState.pool[quizState.cur];
+  const q=qState.pool[qState.cur];
   $('quiz-body').insertAdjacentHTML('beforeend',
-    `<div class="q-expl show">💡 ${esc(q.expl)}</div><button class="q-next show" onclick="nextQ()">Suivant →</button>`);
+    `<div class="q-expl show">
+<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-right:4px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+${esc(q.expl)}</div>
+<button class="q-next show" onclick="nextQ()">Question suivante</button>`);
 }
 function nextQ(){
-  quizState.cur++;updateTurnUI();
-  if(quizState.cur>=quizState.total){renderQuizResult();return}
-  renderQuizQ();
+  if(!qState) return;
+  if(qState.multi){
+    pushTurnState();// increments cur, switches turn, pushes to Firebase
+    renderWaiting();
+  }else{
+    qState.cur++;
+    if(qState.cur>=qState.total)endQuiz();
+    else renderQuizQ();
+    $('qpf').style.width=(qState.cur/qState.total*100)+'%';
+  }
 }
-function renderQuizResult(){
+function endQuiz(){
   stats.quizDone++;saveStats();updateStatsUI();checkBadges();
   $('quiz-header').style.display='none';$('quiz-turn-bar').style.display='none';
-  const score=quizState.score;const total=quizState.total;
-  const msg=score>=16?'Mashallah, excellent ! 🌟':score>=12?'Très bien ! 👏':score>=8?'Pas mal ! 💪':'Continue à apprendre 📖';
+  if(qOtherRef){qOtherRef.off();qOtherRef=null;}
+  const sc=qState.myScore,tot=qState.total;
+  const msg=sc>=16?'Mashallah, excellent !':sc>=12?'Très bien !':sc>=8?'Pas mal !':'Continue à apprendre';
   $('quiz-body').innerHTML=`<div style="text-align:center;padding:24px 16px">
-<div style="font-size:3rem;margin-bottom:8px">🎯</div>
-<div style="font-size:1.8rem;font-weight:800;color:var(--text)">${score} / ${total}</div>
-<div style="font-size:.82rem;color:var(--muted);margin:6px 0 20px;font-weight:500">${msg} · +${score*50} Nour</div>
-<button class="btn-gold" style="max-width:220px;margin:0 auto 10px" onclick="startQuiz(false)">Rejouer en solo</button>
-<button class="btn-teal" style="max-width:220px;margin:0 auto" onclick="sendGameInvite('quiz');showPanel('chat')">Inviter quelqu'un</button>
+<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--gold2)" stroke-width="1.5" style="margin:0 auto 12px;display:block"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+<div style="font-size:1.8rem;font-weight:800">${sc} / ${tot}</div>
+<div style="font-size:.8rem;color:var(--muted);margin:6px 0 18px">${msg} · +${sc*50} Nour</div>
+<button class="btn btn-gold" style="max-width:220px;margin:0 auto 8px" onclick="startQuiz()">Rejouer en solo</button>
+<button class="btn btn-teal" style="max-width:220px;margin:0 auto" onclick="sendGameInvite('quiz');showPanel('chat')">Inviter quelqu'un</button>
 </div>`;
-  if(quizOtherRef){quizOtherRef.off();quizOtherRef=null}
-  quizState=null;quizMulti=false;
+  qState=null;qMulti=false;
 }
 
-/* ═══════════ SPRINT ═══════════ */
+/* ═══ SPRINT ═══ */
 function startSprint(){
-  if(sprintInterval)clearInterval(sprintInterval);
+  if(sprintTimer) clearInterval(sprintTimer);
   sprintScore=0;sprintTotal=0;sprintQIdx=0;sprintActive=true;sprintT=30;
   sprintPool=shuffle([...QUIZ_DATA]);renderSprintQ();
-  sprintInterval=setInterval(()=>{
+  sprintTimer=setInterval(()=>{
     sprintT--;
-    const tn=$('timer-num'),tc=$('timer-circle');
-    if(tn)tn.textContent=sprintT;
-    if(tc)tc.style.strokeDashoffset=213.6*(1-sprintT/30);
-    if(tn)tn.style.color=sprintT<=5?'var(--rose2)':'var(--text2)';
-    if(sprintT<=0){clearInterval(sprintInterval);sprintActive=false;endSprint()}
+    const tn=$('s-timer');const tc=$('s-circle');
+    if(tn) tn.textContent=sprintT;
+    if(tc){
+      const r=34,circ=2*Math.PI*r;
+      tc.style.strokeDashoffset=circ*(1-sprintT/30);
+      tc.style.stroke=sprintT<=5?'var(--rose)':'var(--teal)';
+    }
+    if(sprintT<=0){clearInterval(sprintTimer);sprintActive=false;endSprint();}
   },1000);
 }
 function renderSprintQ(){
-  if(!sprintActive)return;
-  if(sprintQIdx>=sprintPool.length)sprintPool=shuffle([...QUIZ_DATA]);
+  if(!sprintActive) return;
+  if(sprintQIdx>=sprintPool.length){sprintPool=shuffle([...QUIZ_DATA]);sprintQIdx=0;}
   const q=sprintPool[sprintQIdx];const si=shuffle([0,1,2,3]);const letters=['A','B','C','D'];
-  $('sprint-wrap').innerHTML=`<div class="sprint-score-bar">
-<span style="font-size:.7rem;font-weight:600;color:var(--muted)">Score</span>
-<span style="font-size:1.5rem;font-weight:800">${sprintScore}</span>
-<span style="font-size:.7rem;font-weight:600;color:var(--muted)">Q${sprintTotal+1}</span></div>
-<div class="timer-ring-wrap">
-<svg width="80" height="80" viewBox="0 0 80 80">
-<circle cx="40" cy="40" r="34" fill="none" stroke="var(--bg3)" stroke-width="5"/>
-<circle id="timer-circle" cx="40" cy="40" r="34" fill="none" stroke="${sprintT<=5?'var(--rose)':'var(--teal)'}" stroke-width="5" stroke-linecap="round" stroke-dasharray="213.6" stroke-dashoffset="${213.6*(1-sprintT/30)}" style="transition:stroke-dashoffset .9s linear;transform:rotate(-90deg);transform-origin:40px 40px"/>
+  const r=34,circ=2*Math.PI*r;
+  $('sprint-wrap').innerHTML=`
+<div class="sprint-score-bar">
+<span style="font-size:.68rem;font-weight:600;color:var(--muted)">Score</span>
+<span style="font-size:1.4rem;font-weight:800">${sprintScore}</span>
+<span style="font-size:.68rem;font-weight:600;color:var(--muted)">Q${sprintTotal+1}</span>
+</div>
+<div class="timer-wrap">
+<svg width="76" height="76" viewBox="0 0 76 76">
+<circle cx="38" cy="38" r="${r}" fill="none" stroke="var(--bg3)" stroke-width="5"/>
+<circle id="s-circle" cx="38" cy="38" r="${r}" fill="none" stroke="var(--teal)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${circ}" stroke-dashoffset="${circ*(1-sprintT/30)}" style="transform:rotate(-90deg);transform-origin:38px 38px;transition:stroke-dashoffset .9s linear"/>
 </svg>
-<div id="timer-num" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;font-weight:800;color:${sprintT<=5?'var(--rose2)':'var(--text)'}">${sprintT}</div>
+<div id="s-timer" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:800;color:var(--text)">${sprintT}</div>
 </div>
 <div class="sprint-q">${esc(q.q)}</div>
 <div class="sprint-opts">${si.map((orig,i)=>`<button class="sprint-opt" onclick="answerSprint(this,${orig},${q.c})">${letters[i]}. ${esc(q.a[orig])}</button>`).join('')}</div>`;
 }
 function answerSprint(btn,orig,correct){
-  if(!sprintActive)return;
+  if(!sprintActive) return;
   document.querySelectorAll('.sprint-opt').forEach(b=>b.disabled=true);
-  if(orig===correct){btn.classList.add('correct');sprintScore++;spawnParticle(btn.getBoundingClientRect().left+50,btn.getBoundingClientRect().top)}
+  if(orig===correct){btn.classList.add('correct');sprintScore++;}
   else btn.classList.add('wrong');
   sprintTotal++;sprintQIdx++;
-  setTimeout(()=>{if(sprintActive)renderSprintQ()},500);
+  setTimeout(()=>{if(sprintActive) renderSprintQ();},500);
 }
 function endSprint(){
-  if(sprintScore>stats.sprintBest)stats.sprintBest=sprintScore;
+  if(sprintScore>stats.sprintBest) stats.sprintBest=sprintScore;
   addNour(sprintScore*10);saveStats();checkBadges();updateStatsUI();
   $('sprint-wrap').innerHTML=`<div class="start-screen">
-<div style="font-size:3rem;margin-bottom:8px">⚡</div>
+<svg width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="var(--rose2)" stroke-width="1.5" style="margin:0 auto 10px;display:block"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
 <div class="start-title">Sprint terminé !</div>
-<div class="start-desc">Score : <strong style="font-size:1.3rem">${sprintScore}</strong> / ${sprintTotal}<br>+${sprintScore*10} Nour gagné<br><span style="color:var(--gold2);font-weight:700">Record : ${stats.sprintBest}</span></div>
-<button class="btn-ghost" style="max-width:200px;margin:0 auto" onclick="startSprint()">Rejouer</button></div>`;
+<div class="start-desc">Score : <strong style="font-size:1.2rem">${sprintScore}</strong> / ${sprintTotal}<br>+${sprintScore*10} Nour<br><span style="color:var(--gold2);font-weight:700">Record : ${stats.sprintBest}</span></div>
+<button class="btn btn-outline" style="max-width:200px;margin:0 auto" onclick="startSprint()">Rejouer</button></div>`;
 }
 
-/* ═══════════ MEMORY ═══════════ */
+/* ═══ MEMORY ═══ */
 function startMemory(){
   memMatched=0;memMoves=0;memFlipped=[];memLocked=false;
-  const pool=shuffle(DHIKR_MEMORY).slice(0,6);
-  memTotal=pool.length;
+  const pool=shuffle(DHIKR_MEM).slice(0,6);memTotal=pool.length;
   let cards=[];
   pool.forEach((d,i)=>{
-    cards.push({id:'a'+i,pairId:i,type:'ar',ar:d.ar,ph:d.ph,fr:d.fr,matched:false,flipped:false});
-    cards.push({id:'b'+i,pairId:i,type:'fr',ar:d.ar,ph:d.ph,fr:d.fr,matched:false,flipped:false});
+    cards.push({id:'a'+i,pair:i,type:'ar',ar:d.ar,ph:d.ph,fr:d.fr,matched:false,flipped:false});
+    cards.push({id:'b'+i,pair:i,type:'fr',ar:d.ar,ph:d.ph,fr:d.fr,matched:false,flipped:false});
   });
   memCards=shuffle(cards);renderMemory();
 }
 function renderMemory(){
   let h=`<div class="panel-title" style="margin-bottom:4px">Memory Dhikr</div>
-<div class="panel-sub">Associe le dhikr arabe ↔ sa traduction française</div>
+<div class="panel-sub">Associe le dhikr arabe à sa traduction</div>
 <div class="mem-stats">
-<div class="mem-stat"><div class="mem-stat-val" id="mem-pairs">${memMatched}/${memTotal}</div><div class="mem-stat-lbl">Paires</div></div>
-<div class="mem-stat"><div class="mem-stat-val" id="mem-moves">${memMoves}</div><div class="mem-stat-lbl">Coups</div></div>
+<div class="mem-stat"><div class="mem-stat-val" id="mm-pairs">${memMatched}/${memTotal}</div><div class="mem-stat-lbl">Paires</div></div>
+<div class="mem-stat"><div class="mem-stat-val" id="mm-moves">${memMoves}</div><div class="mem-stat-lbl">Coups</div></div>
 </div><div class="memory-grid" id="mem-grid">`;
   memCards.forEach((c,i)=>{
     const isAr=c.type==='ar';
     h+=`<div class="mem-card${c.flipped?' flipped':''}${c.matched?' matched':''}" id="mc-${c.id}" data-type="${c.type}" onclick="flipMem(${i})">
 <div class="mem-face-back">
-<svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--border2)" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
-<div style="font-size:.5rem;font-weight:700;color:var(--muted2);margin-top:3px;text-transform:uppercase;letter-spacing:1px">${isAr?'Arabe':'Traduction'}</div>
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--border2)" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+<div style="font-size:.48rem;font-weight:700;color:var(--muted2);margin-top:3px;text-transform:uppercase;letter-spacing:1px">${isAr?'AR':'FR'}</div>
 </div>
 <div class="mem-face-front">
-${isAr
-  ? `<div class="mem-ar">${c.ar}</div><div class="mem-ph">${c.ph}</div><div class="mem-type">Dhikr</div>`
-  : `<div class="mem-fr">${c.fr}</div><div class="mem-ph">${c.ph}</div><div class="mem-type">Traduction</div>`}
+${isAr?`<div class="mem-ar">${c.ar}</div><div class="mem-ph">${c.ph}</div>`
+:`<div class="mem-fr">${c.fr}</div><div class="mem-ph">${c.ph}</div>`}
 </div></div>`;
   });
   h+=`</div>`;
   $('memory-wrap').innerHTML=h;
 }
 function flipMem(i){
-  if(memLocked)return;
-  const c=memCards[i];if(c.flipped||c.matched)return;
+  if(memLocked) return;
+  const c=memCards[i];if(c.flipped||c.matched) return;
   c.flipped=true;const el=$('mc-'+c.id);if(el)el.classList.add('flipped');
   memFlipped.push(i);
   if(memFlipped.length===2){
     memMoves++;memLocked=true;
     const [a,b]=memFlipped;
-    if(memCards[a].pairId===memCards[b].pairId&&memCards[a].type!==memCards[b].type){
+    if(memCards[a].pair===memCards[b].pair&&memCards[a].type!==memCards[b].type){
       memCards[a].matched=true;memCards[b].matched=true;
-      const ea=$('mc-'+memCards[a].id),eb=$('mc-'+memCards[b].id);
-      if(ea)ea.classList.add('matched');if(eb)eb.classList.add('matched');
+      [$('mc-'+memCards[a].id),$('mc-'+memCards[b].id)].forEach(e=>e&&e.classList.add('matched'));
       memMatched++;
-      const pm=$('mem-pairs');if(pm)pm.textContent=memMatched+'/'+memTotal;
-      const mm=$('mem-moves');if(mm)mm.textContent=memMoves;
-      spawnParticle(window.innerWidth/2,window.innerHeight/3);
+      const pm=$('mm-pairs');if(pm)pm.textContent=memMatched+'/'+memTotal;
+      const mm=$('mm-moves');if(mm)mm.textContent=memMoves;
       addNour(15);toast(memCards[a].ph+' — '+memCards[a].fr);
       memFlipped=[];memLocked=false;
       if(memMatched===memTotal){
-        stats.memoryDone++;saveStats();updateStatsUI();checkBadges();
+        stats.memDone++;saveStats();updateStatsUI();checkBadges();
         setTimeout(()=>{
-          $('memory-wrap').insertAdjacentHTML('beforeend',`
-<div class="card" style="text-align:center;margin-top:10px;border-color:rgba(14,122,110,.3)">
-<div style="font-size:2.5rem;margin-bottom:8px">🎉</div>
+          $('memory-wrap').insertAdjacentHTML('beforeend',`<div class="card" style="text-align:center;margin-top:10px;border-color:rgba(14,122,110,.3)">
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.5" style="margin:0 auto 8px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
 <div style="font-size:1.1rem;font-weight:800;margin:4px 0">Memory complété !</div>
-<div style="font-size:.78rem;color:var(--muted);margin-bottom:12px">${memMoves} coups · +${memTotal*15} Nour</div>
-<button class="btn-teal" onclick="startMemory()">Rejouer</button></div>`);
-        },400);
+<div style="font-size:.76rem;color:var(--muted);margin-bottom:12px">${memMoves} coups · +${memTotal*15} Nour</div>
+<button class="btn btn-teal" onclick="startMemory()">Rejouer</button></div>`);
+        },300);
       }
     }else{
       setTimeout(()=>{
         memCards[a].flipped=false;memCards[b].flipped=false;
-        const ea=$('mc-'+memCards[a].id),eb=$('mc-'+memCards[b].id);
-        if(ea)ea.classList.remove('flipped');if(eb)eb.classList.remove('flipped');
+        [$('mc-'+memCards[a].id),$('mc-'+memCards[b].id)].forEach(e=>e&&e.classList.remove('flipped'));
         memFlipped=[];memLocked=false;
-        const mm=$('mem-moves');if(mm)mm.textContent=memMoves;
+        const mm=$('mm-moves');if(mm)mm.textContent=memMoves;
       },900);
     }
   }
 }
 
-/* ═══════════ WORD SEARCH ═══════════ */
+/* ═══ WORD SEARCH ═══ */
 function startWS(){
   wsFound=[];wsSelected=[];wsWords=shuffle(WS_WORDS).slice(0,7);
   const sz=10,grid=Array.from({length:sz},()=>Array(sz).fill(''));
   const dirs=[[0,1],[1,0],[0,-1],[-1,0],[1,1],[1,-1],[-1,1],[-1,-1]];
   wsWords.forEach(word=>{
     let placed=false,tries=0;
-    while(!placed&&tries<300){tries++;
+    while(!placed&&tries<400){tries++;
       const [dr,dc]=dirs[0|Math.random()*dirs.length];
       const r=0|Math.random()*sz,c=0|Math.random()*sz;let ok=true;
-      for(let i=0;i<word.length;i++){const nr=r+dr*i,nc=c+dc*i;if(nr<0||nr>=sz||nc<0||nc>=sz||grid[nr][nc]&&grid[nr][nc]!==word[i]){ok=false;break}}
-      if(ok){for(let i=0;i<word.length;i++)grid[r+dr*i][c+dc*i]=word[i];placed=true}
+      for(let i=0;i<word.length;i++){const nr=r+dr*i,nc=c+dc*i;if(nr<0||nr>=sz||nc<0||nc>=sz||grid[nr][nc]&&grid[nr][nc]!==word[i]){ok=false;break;}}
+      if(ok){for(let i=0;i<word.length;i++)grid[r+dr*i][c+dc*i]=word[i];placed=true;}
     }
   });
   const alpha='ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-  for(let r=0;r<sz;r++)for(let c=0;c<sz;c++)if(!grid[r][c])grid[r][c]=alpha[0|Math.random()*26];
+  for(let r=0;r<sz;r++) for(let c=0;c<sz;c++) if(!grid[r][c])grid[r][c]=alpha[0|Math.random()*26];
   wsGrid=grid;renderWS();
 }
 function renderWS(){
   const sz=10;
   let h=`<div class="panel-title" style="margin-bottom:8px">Mots mêlés</div>
-<div class="ws-words" id="ws-words-list">`;
-  wsWords.forEach(w=>{h+=`<div class="ws-word${wsFound.includes(w)?' found':''}" id="ww-${w}">${w}</div>`});
+<div class="ws-words" id="ws-words">`;
+  wsWords.forEach(w=>{h+=`<div class="ws-word${wsFound.includes(w)?' found':''}" id="ww-${w}">${w}</div>`;});
   h+=`</div><div class="ws-grid" id="ws-grid">`;
-  for(let r=0;r<sz;r++)for(let c=0;c<sz;c++){
+  for(let r=0;r<sz;r++) for(let c=0;c<sz;c++){
     const idx=r*sz+c;
     h+=`<div class="ws-cell" id="wsc-${idx}" onmousedown="wsDown(${idx})" onmouseover="wsOver(${idx})" onmouseup="wsUp()" ontouchstart="event.preventDefault();wsDown(${idx})" ontouchmove="wsTM(event)" ontouchend="wsUp()">${wsGrid[r][c]}</div>`;
   }
   h+=`</div><div style="text-align:center;margin-top:8px"><button class="btn-sm" onclick="startWS()">Nouvelle grille</button></div>`;
   $('ws-wrap').innerHTML=h;
 }
-function wsDown(idx){wsDragging=true;wsStartCell=idx;wsSelected=[idx];refreshWSCells()}
+function wsDown(idx){wsDrag=true;wsStart=idx;wsSelected=[idx];refreshWS();}
 function wsOver(idx){
-  if(!wsDragging||wsStartCell===null)return;
-  const sz=10,sr=0|wsStartCell/sz,sc=wsStartCell%sz,er=0|idx/sz,ec=idx%sz;
+  if(!wsDrag||wsStart===null) return;
+  const sz=10,sr=0|wsStart/sz,sc=wsStart%sz,er=0|idx/sz,ec=idx%sz;
   const dr=er-sr,dc=ec-sc,len=Math.max(Math.abs(dr),Math.abs(dc));
-  if(len===0){wsSelected=[wsStartCell];refreshWSCells();return}
-  if(Math.abs(dr)!==Math.abs(dc)&&dr!==0&&dc!==0)return;
+  if(len===0){wsSelected=[wsStart];refreshWS();return;}
+  if(Math.abs(dr)!==Math.abs(dc)&&dr!==0&&dc!==0) return;
   const stepR=dr===0?0:dr/Math.abs(dr),stepC=dc===0?0:dc/Math.abs(dc);
-  wsSelected=[];for(let i=0;i<=len;i++)wsSelected.push((sr+stepR*i)*sz+(sc+stepC*i));
-  refreshWSCells();
+  wsSelected=[];for(let i=0;i<=len;i++) wsSelected.push((sr+stepR*i)*sz+(sc+stepC*i));
+  refreshWS();
 }
-function wsTM(e){const el=document.elementFromPoint(e.touches[0].clientX,e.touches[0].clientY);if(el?.id?.startsWith('wsc-'))wsOver(parseInt(el.id.replace('wsc-','')))}
-function wsUp(){wsDragging=false;checkWSWord()}
-function refreshWSCells(){document.querySelectorAll('.ws-cell').forEach((el,i)=>el.classList.toggle('selected',wsSelected.includes(i)))}
+function wsTM(e){
+  const t=e.touches[0];const el=document.elementFromPoint(t.clientX,t.clientY);
+  if(el&&el.id&&el.id.startsWith('wsc-')) wsOver(parseInt(el.id.replace('wsc-','')));
+}
+function wsUp(){wsDrag=false;checkWSWord();}
+function refreshWS(){
+  document.querySelectorAll('.ws-cell').forEach((el,i)=>{
+    if(wsFound.some(w=>el.classList.contains('found-cell'))) return;
+    el.classList.toggle('selected',wsSelected.includes(i));
+  });
+}
 function checkWSWord(){
-  const sz=10,letters=wsSelected.map(i=>wsGrid[0|i/sz][i%sz]).join('');
+  const sz=10;
+  const letters=wsSelected.map(i=>wsGrid[0|i/sz][i%sz]).join('');
   const rev=letters.split('').reverse().join('');
   const match=wsWords.find(w=>w===letters||w===rev);
   if(match&&!wsFound.includes(match)){
     wsFound.push(match);
     const ww=$('ww-'+match);if(ww)ww.classList.add('found');
-    wsSelected.forEach(i=>{const el=$('wsc-'+i);if(el)el.classList.add('found-cell')});
+    wsSelected.forEach(i=>{const el=$('wsc-'+i);if(el){el.classList.remove('selected');el.classList.add('found-cell');}});
     stats.wordsFound++;saveStats();addNour(35);updateStatsUI();checkBadges();
-    for(let i=0;i<6;i++)setTimeout(()=>spawnParticle(window.innerWidth/2+Math.random()*80-40,window.innerHeight/2),i*70);
     toast(match+' trouvé ! +35 Nour');
     if(wsFound.length===wsWords.length){
       setTimeout(()=>{
         $('ws-wrap').insertAdjacentHTML('beforeend',`<div class="card" style="text-align:center;margin-top:10px;border-color:rgba(109,61,204,.3)">
-<div style="font-size:2.5rem;margin-bottom:8px">🔍</div>
-<div style="font-size:1.1rem;font-weight:800;margin:4px 0;color:var(--purple2)">Tous les mots trouvés !</div>
-<div style="font-size:.78rem;color:var(--muted);margin-bottom:12px">+${wsWords.length*35} Nour</div>
-<button class="btn-ghost" style="border-color:var(--purple);color:var(--purple2);max-width:200px;margin:0 auto" onclick="startWS()">Nouvelle grille</button></div>`);
-      },400);
+<svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--purple2)" stroke-width="1.5" style="margin:0 auto 8px;display:block"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+<div style="font-size:1.1rem;font-weight:800;margin:4px 0;color:var(--purple2)">Tous trouvés !</div>
+<div style="font-size:.76rem;color:var(--muted);margin-bottom:12px">+${wsWords.length*35} Nour</div>
+<button class="btn btn-outline" style="border-color:var(--purple);color:var(--purple2);max-width:200px;margin:0 auto" onclick="startWS()">Nouvelle grille</button></div>`);
+      },300);
     }
   }
-  wsSelected=[];refreshWSCells();
+  wsSelected=[];refreshWS();
 }
 
-/* ═══════════ HADITHS ═══════════ */
+/* ═══ HADITHS ═══ */
 function renderHadiths(){
-  const liked=JSON.parse(localStorage.getItem('sk_liked_'+spaceCode)||'[]');
-  const seen=JSON.parse(localStorage.getItem('sk_seen_'+spaceCode)||'[]');
-  const list=$('hadith-list');if(!list)return;list.innerHTML='';
+  const liked=JSON.parse(localStorage.getItem('sk_lk_'+spaceKey)||'[]');
+  const seen=JSON.parse(localStorage.getItem('sk_seen_'+spaceKey)||'[]');
+  const list=$('hadith-list');if(!list) return;list.innerHTML='';
   HADITHS.forEach((h,i)=>{
     const isLiked=liked.includes(i);
     const d=document.createElement('div');d.className='h-card';
-    d.innerHTML=`<div class="h-num">Hadith ${h.num} · <span class="tag ${h.cat==='Ramadan'||h.cat==='Coran'?'gold':'teal'}">${h.cat}</span></div>
-<div class="h-ar">${h.ar}</div><div class="h-fr">"${h.fr}"</div><div class="h-src">— ${h.src}</div>
+    const catClass=h.cat==='Ramadan'||h.cat==='Coran'?'tag-gold':'tag-teal';
+    d.innerHTML=`<div class="h-num">Hadith ${h.num} · <span class="tag ${catClass}">${h.cat}</span></div>
+<div class="h-ar">${h.ar}</div><div class="h-fr">"${h.fr}"</div>
+<div class="h-src">— ${h.src}</div>
 <div class="h-reveal"><p class="h-vertu">${h.vertu}</p></div>
 <div class="h-actions" onclick="event.stopPropagation()">
 <button class="action-btn${isLiked?' liked':''}" onclick="toggleLike(${i})">
-<svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="${isLiked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>${isLiked?'Aimé':'Aimer'}</button>
+<svg width="11" height="11" viewBox="0 0 24 24" fill="${isLiked?'currentColor':'none'}" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+${isLiked?'Aimé':'Aimer'}</button>
 <button class="action-btn" onclick="shareHadith(${i})">
-<svg class="icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Partager</button>
+<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+Partager</button>
 </div>`;
     d.addEventListener('click',()=>{
       d.classList.toggle('open');
-      if(!seen.includes(i)){seen.push(i);localStorage.setItem('sk_seen_'+spaceCode,JSON.stringify(seen));stats.hadithRead=seen.length;addNour(5);saveStats();updateStatsUI();checkBadges()}
+      if(!seen.includes(i)){seen.push(i);localStorage.setItem('sk_seen_'+spaceKey,JSON.stringify(seen));stats.hadithRead=seen.length;addNour(5);saveStats();updateStatsUI();checkBadges();}
     });
     list.appendChild(d);
   });
 }
 function toggleLike(i){
-  const liked=JSON.parse(localStorage.getItem('sk_liked_'+spaceCode)||'[]');
+  const liked=JSON.parse(localStorage.getItem('sk_lk_'+spaceKey)||'[]');
   const idx=liked.indexOf(i);if(idx>=0)liked.splice(idx,1);else liked.push(i);
-  localStorage.setItem('sk_liked_'+spaceCode,JSON.stringify(liked));renderHadiths();
+  localStorage.setItem('sk_lk_'+spaceKey,JSON.stringify(liked));renderHadiths();
 }
 function shareHadith(i){
   const h=HADITHS[i];
   const msg={from:myName,text:'"'+h.fr+'" — '+h.src,time:tnow(),ts:Date.now()};
-  if(db)db.ref(`spaces/${spaceCode}/chat`).push(msg);else appendChatMsg(msg,'local_'+Date.now());
+  if(db) db.ref(`sk/${spaceKey}/chat`).push(msg);
+  else appendChatMsg(msg,'local_'+Date.now());
   showPanel('chat');toast('Hadith partagé au chat');
 }
 
-/* ═══════════ DUAS ═══════════ */
+/* ═══ DUAS ═══ */
 let activeDuaCat='Tous';
 function renderDuas(){
   const cats=['Tous',...new Set(DUAS.map(d=>d.cat))];
-  const ce=$('dua-cats');if(!ce)return;ce.innerHTML='';
-  cats.forEach(c=>{const b=document.createElement('div');b.className='dua-cat'+(c===activeDuaCat?' active':'');b.textContent=c;b.onclick=()=>{activeDuaCat=c;renderDuas()};ce.appendChild(b)});
-  const dl=$('dua-list');if(!dl)return;dl.innerHTML='';
+  const ce=$('dua-cats');if(!ce) return;ce.innerHTML='';
+  cats.forEach(c=>{
+    const b=document.createElement('div');b.className='dua-cat'+(c===activeDuaCat?' active':'');
+    b.textContent=c;b.onclick=()=>{activeDuaCat=c;renderDuas();};
+    ce.appendChild(b);
+  });
+  const dl=$('dua-list');if(!dl) return;dl.innerHTML='';
   DUAS.filter(d=>activeDuaCat==='Tous'||d.cat===activeDuaCat).forEach(d=>{
     const el=document.createElement('div');el.className='dua-card';
-    el.innerHTML=`<div class="dua-sit">${d.sit}</div><div class="dua-ar">${d.ar}</div><div class="dua-ph">${d.ph}</div><div class="dua-fr">${d.fr}</div><div class="dua-src">— ${d.src}</div>`;
+    el.innerHTML=`<div class="dua-sit">${esc(d.sit)}</div>
+<div class="dua-ar">${d.ar}</div>
+<div class="dua-ph">${esc(d.ph)}</div>
+<div class="dua-fr">${esc(d.fr)}</div>
+<div class="dua-src">— ${esc(d.src)}</div>`;
     dl.appendChild(el);
   });
 }
 
-/* ═══════════ DHIKR ═══════════ */
+/* ═══ DHIKR ═══ */
 function setTarget(t,btn){
   dhikrTarget=t;dhikrCount=Math.min(dhikrCount,t);
-  document.querySelectorAll('.dhikr-target-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-  DHIKR_LIST[dhikrIdx].target=t;updateDhikrUI();
+  document.querySelectorAll('.dhikr-tb').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');updateDhikrUI();
 }
-function renderDhikrSelect(){
-  const el=$('dhikr-select');if(!el)return;el.innerHTML='';
+function renderDhikrSel(){
+  const el=$('dhikr-sel');if(!el) return;el.innerHTML='';
   DHIKR_LIST.forEach((d,i)=>{
     const b=document.createElement('div');b.className='dhikr-opt'+(i===dhikrIdx?' active':'');
-    b.innerHTML=`<span class="do-ar">${d.ar}</span><span class="do-fr">${d.ph}</span>`;
-    b.onclick=()=>{dhikrIdx=i;dhikrCount=0;renderDhikrSelect();updateDhikrUI()};
+    b.innerHTML=`<span class="do-ar">${d.ar}</span><span class="do-fr">${esc(d.ph)}</span>`;
+    b.onclick=()=>{dhikrIdx=i;dhikrCount=0;renderDhikrSel();updateDhikrUI();};
     el.appendChild(b);
-  });updateDhikrUI();
+  });
+  updateDhikrUI();
 }
 function updateDhikrUI(){
-  const d=DHIKR_LIST[dhikrIdx];const t=dhikrTarget||d.target;
-  const s=(id,v)=>{const e=$(id);if(e)e.textContent=v};
-  s('dhikr-ar',d.ar);s('dhikr-ph-txt',d.ph);s('dhikr-fr-txt',d.fr);
-  s('dhikr-count',dhikrCount);s('dhikr-target',dhikrCount+' / '+t);
-  const ring=$('dhikr-ring');if(ring)ring.style.strokeDashoffset=301.6*(1-Math.min(dhikrCount/t,1));
+  const d=DHIKR_LIST[dhikrIdx];const t=dhikrTarget||d.def;
+  const s=(id,v)=>{const e=$(id);if(e)e.textContent=v;};
+  s('dhikr-ar',d.ar);s('dhikr-ph',d.ph);s('dhikr-fr',d.fr);
+  s('dhikr-count',dhikrCount);s('dhikr-target-lbl',dhikrCount+' / '+t);
+  const ring=$('dhikr-ring');
+  if(ring) ring.style.strokeDashoffset=301.6*(1-Math.min(dhikrCount/t,1));
 }
 function tapDhikr(){
-  const d=DHIKR_LIST[dhikrIdx];const t=dhikrTarget||d.target;
-  if(dhikrCount>=t){toast(d.ph+' — complété !');return}
+  const d=DHIKR_LIST[dhikrIdx];const t=dhikrTarget||d.def;
+  if(dhikrCount>=t){toast(d.ph+' — complété !');return;}
   dhikrCount++;stats.dhikrTotal++;updateDhikrUI();
-  spawnParticle(window.innerWidth/2+Math.random()*40-20,window.innerHeight/2);
-  if(dhikrCount===t){toast('Mashallah ! '+t+'× — '+d.fr);addNour(20)}
-  if(stats.dhikrTotal%50===0)addNour(10);
+  if(dhikrCount===t){addNour(20);toast('Mashallah ! '+t+' fois — '+d.fr);}
+  if(stats.dhikrTotal%50===0) addNour(10);
   saveStats();updateStatsUI();checkBadges();
 }
-function undoDhikr(){if(dhikrCount>0){dhikrCount--;if(stats.dhikrTotal>0)stats.dhikrTotal--;updateDhikrUI()}}
-function resetDhikr(){dhikrCount=0;updateDhikrUI()}
+function undoDhikr(){if(dhikrCount>0){dhikrCount--;if(stats.dhikrTotal>0)stats.dhikrTotal--;updateDhikrUI();}}
+function resetDhikr(){dhikrCount=0;updateDhikrUI();}
 
-/* ═══════════ LEADERBOARD ═══════════ */
+/* ═══ LEADERBOARD ═══ */
 function renderLeaderboard(){
-  const lb=$('lb-list');if(!lb)return;
-  lb.innerHTML=`<div style="color:var(--muted);font-size:.8rem;text-align:center;padding:10px">Chargement…</div>`;
-  let players=[{name:myName,nour:stats.nour,isMe:true}];
-  if(db){
-    db.ref(`spaces/${spaceCode}/scores`).once('value',snap=>{
-      const sc=snap.val()||{};
-      players=Object.values(sc).map(s=>({name:s.name,nour:s.nour||0,isMe:s.name===myName}));
-      if(!players.find(p=>p.isMe))players.push({name:myName,nour:stats.nour,isMe:true});
-      renderLBList(players);
+  const lb=$('lb-list');if(!lb) return;
+  lb.innerHTML='<div style="color:var(--muted);font-size:.76rem;text-align:center;padding:16px">Chargement...</div>';
+  const renderList=(players)=>{
+    players.sort((a,b)=>b.nour-a.nour);lb.innerHTML='';
+    const medals=['🥇','🥈','🥉'];
+    players.forEach((p,i)=>{
+      const lv=getLevel(p.nour);
+      const d=document.createElement('div');d.className='lb-item'+(p.isMe?' me':'');
+      const avBg=p.isMe?'var(--gold-light)':'var(--teal-light)';
+      const avBorder=p.isMe?'var(--gold)':'var(--teal)';
+      const avColor=p.isMe?'var(--gold2)':'var(--teal)';
+      d.innerHTML=`<div class="lb-rank">${i<3?medals[i]:'#'+(i+1)}</div>
+<div class="lb-av" style="background:${avBg};border-color:${avBorder};color:${avColor}">${(p.name||'?').charAt(0).toUpperCase()}</div>
+<div class="lb-info"><div class="lb-name">${esc(p.name||'?')}${p.isMe?' <span style="font-size:.58rem;color:var(--muted)">(moi)</span>':''}</div><div class="lb-pts">${lv.name}</div></div>
+<div class="lb-nour"><div class="lb-n-val">${p.nour}</div><div class="lb-n-lbl">Nour</div></div>`;
+      lb.appendChild(d);
     });
-  }else renderLBList(players);
-  const bg=$('badges-grid');if(!bg)return;bg.innerHTML='';
+  };
+  if(db){
+    db.ref(`sk/${spaceKey}/scores`).once('value',snap=>{
+      let players=Object.values(snap.val()||{}).map(s=>({name:s.name,nour:s.nour||0,isMe:s.name===myName}));
+      if(!players.find(p=>p.isMe)) players.push({name:myName,nour:stats.nour,isMe:true});
+      renderList(players);
+    }).catch(()=>renderList([{name:myName,nour:stats.nour,isMe:true}]));
+  }else{
+    renderList([{name:myName,nour:stats.nour,isMe:true}]);
+  }
+  const bg=$('badges-grid');if(!bg) return;bg.innerHTML='';
   BADGES.forEach(b=>{
-    const u=earnedBadges.has(b.id);const d=document.createElement('div');d.className='badge-card '+(u?'unlocked':'locked');
-    d.innerHTML=`<div class="bc-icon">${BSVG[b.svgKey]||''}</div><div class="bc-name">${b.name}</div><div class="bc-req">${b.req}</div>`;
+    const u=earnedBadges.has(b.id);
+    const d=document.createElement('div');d.className='badge-card '+(u?'unlocked':'locked');
+    d.innerHTML=`<div style="display:flex;justify-content:center">${BADGE_SVG[b.svg]||''}</div>
+<div class="bc-name">${b.name}</div><div class="bc-req">${b.req}</div>`;
     bg.appendChild(d);
   });
 }
-function renderLBList(players){
-  const lb=$('lb-list');if(!lb)return;
-  players.sort((a,b)=>b.nour-a.nour);lb.innerHTML='';
-  const medals=['🥇','🥈','🥉'];
-  players.forEach((p,i)=>{
-    const lv=getLevel(p.nour);
-    const d=document.createElement('div');d.className='lb-card'+(p.isMe?' me':'');
-    const avBg=p.isMe?'var(--gold-light)':'var(--teal-light)';
-    const avBorder=p.isMe?'var(--gold)':'var(--teal)';
-    const avColor=p.isMe?'var(--gold2)':'var(--teal)';
-    d.innerHTML=`<div class="lb-rank">${medals[i]||`<span style="font-size:.82rem;font-weight:700;color:var(--muted)">#${i+1}</span>`}</div>
-<div class="lb-av" style="background:${avBg};border-color:${avBorder};color:${avColor}">${(p.name||'?').charAt(0).toUpperCase()}</div>
-<div class="lb-info"><div class="lb-name">${esc(p.name||'?')}${p.isMe?' <span style="font-size:.62rem;color:var(--muted);font-weight:500">(moi)</span>':''}</div><div class="lb-pts">${lv.name}</div></div>
-<div style="text-align:right"><div class="lb-nour">${p.nour}</div><div class="lb-nour-lbl">Nour</div></div>`;
-    lb.appendChild(d);
-  });
-}
 
-/* ═══════════ BOOT ═══════════ */
-window.onload=()=>{
-  const name=localStorage.getItem('sk_name');const code=localStorage.getItem('sk_code');
-  if(name)$('ln').value=name;if(code)$('lcode').value=code;
-};
+/* ═══ BOOT ═══ */
+window.addEventListener('load',()=>{
+  const n=localStorage.getItem('sk_name');
+  const c=localStorage.getItem('sk_code');
+  if(n) $('ln').value=n;
+  if(c) $('lcode').value=c;
+});
 </script>
 
 </body>
