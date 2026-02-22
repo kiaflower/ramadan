@@ -594,7 +594,7 @@ display: none; align-items: center; justify-content: center; cursor: pointer;
 <!-- LOGIN -->
 
 <div id="login-screen">
-  <div class="lcard">
+  <div class="lcard" style="background:#ffffff;outline:3px solid #9a8e7e;border-radius:24px;padding:32px 28px;width:100%;max-width:380px">
     <div class="lcard-logo">&#x2736;</div>
     <h1>Sakina Space</h1>
     <div class="lcard-sub">Ton espace spirituel partagé</div>
@@ -1746,6 +1746,7 @@ function renderHadiths(){
     const isLiked=liked.includes(i);
     const d=document.createElement('div');d.className='h-card';
     const catClass=h.cat==='Ramadan'||h.cat==='Coran'?'tag-gold':'tag-teal';
+    d.style.cssText='background:#ffffff;outline:3px solid #9a8e7e;border-radius:14px;padding:14px;margin-bottom:8px;cursor:pointer;position:relative;overflow:hidden';
     d.innerHTML=`<div class="h-num">Hadith ${h.num} · <span class="tag ${catClass}">${h.cat}</span></div>
 <div class="h-ar">${h.ar}</div><div class="h-fr">"${h.fr}"</div>
 <div class="h-src">— ${h.src}</div>
@@ -1791,6 +1792,7 @@ function renderDuas(){
   const dl=$('dua-list');if(!dl) return;dl.innerHTML='';
   DUAS.filter(d=>activeDuaCat==='Tous'||d.cat===activeDuaCat).forEach(d=>{
     const el=document.createElement('div');el.className='dua-card';
+    el.style.cssText='background:#ffffff;outline:3px solid #9a8e7e;border-radius:14px;padding:14px;margin-bottom:8px';
     el.innerHTML=`<div class="dua-sit">${esc(d.sit)}</div>
 <div class="dua-ar">${d.ar}</div>
 <div class="dua-ph">${esc(d.ph)}</div>
@@ -1843,7 +1845,8 @@ function renderLeaderboard(){
     players.sort((a,b)=>b.nour-a.nour);lb.innerHTML='';
     const medals=['🥇','🥈','🥉'];
     players.forEach((p,i)=>{
-      const lv=getLevel(p.nour);
+      d.style.cssText='background:#ffffff;outline:3px solid #9a8e7e;border-radius:14px;padding:12px 14px;margin-bottom:7px;display:flex;align-items:center;gap:10px';
+    const lv=getLevel(p.nour);
       const d=document.createElement('div');d.className='lb-item'+(p.isMe?' me':'');
       const avBg=p.isMe?'var(--gold-light)':'var(--teal-light)';
       const avBorder=p.isMe?'var(--gold)':'var(--teal)';
@@ -1868,6 +1871,7 @@ function renderLeaderboard(){
   BADGES.forEach(b=>{
     const u=earnedBadges.has(b.id);
     const d=document.createElement('div');d.className='badge-card '+(u?'unlocked':'locked');
+    d.style.cssText=u?'background:#fff8e6;outline:3px solid #b8860b;border-radius:11px;padding:10px;text-align:center':'background:#ffffff;outline:2px solid #9a8e7e;border-radius:11px;padding:10px;text-align:center;opacity:.4';
     d.innerHTML=`<div style="display:flex;justify-content:center">${BADGE_SVG[b.svg]||''}</div>
 <div class="bc-name">${b.name}</div><div class="bc-req">${b.req}</div>`;
     bg.appendChild(d);
